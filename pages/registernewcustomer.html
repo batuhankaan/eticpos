@@ -1,0 +1,57 @@
+<fieldset id="payment_form" class="hidden">
+    <legend>MobilPOS Başvuru !</legend>
+    <br/>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><img src="img/icons/person.svg" class="bicon-dark"></span>
+        </div>
+        <input type="text" name="customer_firstname" class="form-control form-control" id="customer_firstname" placeholder="Ad">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><img src="img/icons/person.svg" class="bicon-dark"></span>
+        </div>
+        <input type="text" name="customer_lastname" class="form-control form-control" id="customer_lastname" placeholder="Soyad">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><img src="img/icons/shop.svg" class="bicon-dark"></span>
+        </div>
+        <input type="text" name="customer_company" class="form-control form-control" id="customer_company" placeholder="Firma Ünvanı">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><img src="img/icons/telephone.svg" class="bicon-dark"></span>
+        </div>
+        <input type="number" name="customer_phone" class="form-control form-control" id="customer_phone" placeholder="Telefon No">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><img src="img/icons/envelope.svg" class="bicon-dark"></span>
+        </div>
+        <input type="text" name="customer_email" class="form-control form-control" id="customer_email" placeholder="E-posta">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><img src="img/icons/flag-fill.svg" class="bicon-dark"></span>
+        </div>
+        <select name="customer_city" class="form-control form-control" id="customer_city">
+            <option>Seçiniz</option>
+            <option>İstanbul</option>
+        </select>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><img src="img/icons/flag.svg" class="bicon-dark"></span>
+        </div>
+        <select name="customer_town" class="form-control form-control" id="customer_town">
+            <option>Seçiniz</option>
+            <option>Beşiktaş</option>
+        </select>
+    </div>
+    <div class="form-group mt-2">
+        <div class="col-lg-10 col-lg-offset-2">
+            <a href="#" onclick="app.handleRegisterNewCustomer()" class="btn btn-success"><img src="img/icons/person-plus.svg" class="bicon"> Devam &RightTriangle;</a>
+        </div>
+    </div>
+</fieldset>

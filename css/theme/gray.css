@@ -1,0 +1,11 @@
+body{
+    font-weight: lighter;
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(to left, #d6d6d6, #ffffff);
+}
+a, small{
+    color:#e4606d;
+}
+.typ_content {
+    color: #373b44;
+}

@@ -1,0 +1,47 @@
+<fieldset id="gettoken" class="text-center">
+    <br/>
+    <br/>
+    <h2>İyi Günler</h2>
+    <br/>
+    <input type="hidden" name="actionname" class="form-control actionname" value="gettoken">
+    <div class="col-12">
+        <small>Telefon Numaranız</small>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><img src="img/icons/telephone-fill.svg" class="bicon-dark"></span>
+            </div>
+            <input type="number" name="phone" class="form-control" id="login_phone" value="javascript(app.getFromLocal('userinfo_phone'))" placeholder="0555AAABBCC">
+        </div>
+
+    </div>
+    <div class="col-12">
+        <small>Şifreniz</small>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><img src="img/icons/eye-slash.svg" class="bicon-dark"></span>
+            </div>
+        <input type="password" name="password" class="form-control" id="login_password" placeholder="Şifre">
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" checked="checked" value="1"> <small>Açık kal</small>
+            </label>
+        </div>
+    </div>
+    <br/>
+    <div class="form-group">
+        <div class="col-12 col-lg-offset-3">
+            <button onclick="app.actionLogin()" id="actionlogin_button" class="btn btn-success" >Giriş</button>
+        </div>
+    </div>      
+</fieldset>
+<hr/>
+<br/>
+<div class="row">
+    <div class="col-6">
+        <a onclick="app.run('register');" href="#">Üye Ol</a>
+    </div>
+    <div class="col-6 text-right">
+        <a onclick="app.run('resetpassword');" href="#">Şifremi Unuttum</a>
+    </div>
+</div>
