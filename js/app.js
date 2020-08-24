@@ -19,17 +19,17 @@ class EmlakPosApp {
             'register',
             'registercustomer',
             'login',
-//            'registercustomer_attn',
-//            'registercustomer_comp',
-//            'registercustomer_docs',
+            //            'registercustomer_attn',
+            //            'registercustomer_comp',
+            //            'registercustomer_docs',
             'registernewcustomer',
             'resetpassword',
             'error'
         ];
-        
+
         this.defines = {
-            external_content:{
-                tos:'http://localhost/wtf/apps/static/apiclient/pages/static/tos.html'
+            external_content: {
+                tos: 'http://localhost/wtf/apps/static/apiclient/pages/static/tos.html'
             }
         };
     }
@@ -38,7 +38,7 @@ class EmlakPosApp {
         if (this.getToken() !== null) {
             this.setToken(this.getToken());
             return this.run('dashboard');
-       }
+        }
         return this.run('login');
     }
 
@@ -47,15 +47,15 @@ class EmlakPosApp {
         console.log("App::run(" + view + ")");
         $("div#main_messages").hide();
 
-        
+
         if (!this.actionCheckAuth()) { // user logged in ?
             if (this.public_pages.indexOf(view) === -1) { // is the view public or requires to be logged 
                 this.viewlogin();
-                return  this.displayMessage(this.l('Lütfen giriş yapınız.'));
+                return this.displayMessage(this.l('Lütfen giriş yapınız.'));
 
             }
         }
-        
+
         let view_name = 'view' + view;
         if (typeof this[view_name] === "function") {
             console.log(view + " called");
@@ -87,12 +87,11 @@ class EmlakPosApp {
         }
         // 
     }
-    
+
 
     actionCheckAuth() {
         let token = this.getToken();
-        if (this.getToken() === null || this.getToken() === 'undefined')
-        {
+        if (this.getToken() === null || this.getToken() === 'undefined') {
             return false;
         }
         return true;
@@ -106,8 +105,8 @@ class EmlakPosApp {
     viewlogin() {
         this.loadTemplate('pages/login', 'main_body', 'renderLogin');
     }
-    
-    renderLogin(){
+
+    renderLogin() {
         $("#login_phone").val(this.getFromLocal('user_info_login_phone'));
     }
 
@@ -129,12 +128,12 @@ class EmlakPosApp {
         this.saveToLocal('token', token);
         return this.ac.setAuthParam('token', token);
     }
-    
-    renderAlertPage(data){
-        if(data.header){
+
+    renderAlertPage(data) {
+        if (data.header) {
             $("#alert_view_header").html(data.header);
         }
-        if(data.body ){
+        if (data.body) {
             $("#alert_view_body").html(data.body);
         }
     }
@@ -146,72 +145,83 @@ class EmlakPosApp {
 
     renderDashboard() {
         $("span#userinfo_name").html(
-                this.getFromLocal('user_info_firstname')
-                + " " + this.getFromLocal('user_info_lastname')
-                );
+            this.getFromLocal('user_info_firstname')
+            + " " + this.getFromLocal('user_info_lastname')
+        );
     }
 
     viewregister() {
         this.loadTemplate('pages/register', 'main_body');
     }
-    
-    viewregistercustomer(){
+
+    viewregistercustomer() {
         this.loadTemplate('pages/registercustomer', 'main_body');
     }
-    
-    handleRegisterCustomer(){
+
+    handleRegisterCustomer() {
         // TODO //
         let phone = $("input#phone").val();
         let email = $("input#email").val();
-        
+
         this.saveToLocal('registercustomerdata',
-        {
-            phone: phone,
-            email: email
-        });
+            {
+                phone: phone,
+                email: email
+            });
         let data = {
-            header : 'Özür Dileriz.',
-            body : 'Şu an başvurunuzu kayıt edemiyoruz. <br/>Başvurunuz için lütfen daha sonra tekrar deneyiniz.'
+            header: 'Özür Dileriz.',
+            body: 'Şu an başvurunuzu kayıt edemiyoruz. <br/>Başvurunuz için lütfen daha sonra tekrar deneyiniz.'
         };
         this.loadTemplate('pages/warning', 'main_body', 'renderAlertPage', data);
-                
+
     }
-    
-    handleRegisterNewCustomer(){
-        
+
+    handleRegisterNewCustomer() {
+
         //TODO //
         let data = {
-            header : 'Teşekkürler!',
-            body : 'Başvurunuz kayıt edilmiştir. <br/> Müşteri temsilcimiz en kısa sürede sizinle temasa geçecektir.\n\
+            header: 'Teşekkürler!',
+            body: 'Başvurunuz kayıt edilmiştir. <br/> Müşteri temsilcimiz en kısa sürede sizinle temasa geçecektir.\n\
             <br/> Başvurunuz ile ilgili gelişmeleri size SMS ve E-posta ile bildireceğiz.'
         };
         this.loadTemplate('pages/info', 'main_body', 'renderAlertPage', data);
-        
+
     }
-    
-    viewmodalexternal(url, header = false, footer = false){
+
+    viewmodalexternal(url, header = false, footer = false) {
         $("#main_modal_body").load(url);
-        if(header){
+        if (header) {
             $("#main_modal_header").html(header).show();
         }
-        else{
-            $("#main_modal_header").hide(); 
+        else {
+            $("#main_modal_header").hide();
         }
-        if(footer){
+        if (footer) {
             $("#main_modal_footer").html(footer).show();
         }
-        else{
-            $("#main_modal_footer").hide(); 
+        else {
+            $("#main_modal_footer").hide();
         }
         $("#main_modal").modal();
     }
-    
-    viewmodal(content, header = false, footer = false){
-        
+
+    viewmodal(content, header = false, footer = false) {
+
     }
-    
+
     displayError(message) {
         this.loadTemplate('pages/error', 'main_body', 'renderError', message);
+    }
+
+    popupError(message,status) {
+        document.getElementById("status_es").innerHTML=`
+        <div style="background:${status ? "green" : "red"}; text-align:center;">
+        <img src="img/icons/exclamation-diamond-fill.svg" class="bicon fullpage_alert_icon" id="fullpage_alert_icon">
+        <h5 style="color: #fff;" id="alert_view_header">${message}</h5>
+        </div>`
+        setTimeout(() => {
+            document.getElementById("status_es").innerHTML=""
+        }, 3000);
     }
 
     renderError(message) {
@@ -219,7 +229,7 @@ class EmlakPosApp {
     }
 
     displayMessage(message) {
-        console.log("error message "+ message);
+        console.log("error message " + message);
         this.loadTemplate('pages/errormessage', 'main_messages', 'renderMessage', message);
     }
 
@@ -239,15 +249,15 @@ class EmlakPosApp {
     viewqr_generate() {
         this.loadTemplate('pages/qr_generate', 'main_body');
     }
-    
-    viewregisternewcustomer(){
+
+    viewregisternewcustomer() {
         this.loadTemplate('pages/registernewcustomer', 'main_body');
     }
 
     loadTemplate(template, to = 'main', callback = false, data = false) {
 
         this.arrba.push(template)
-        
+
         if (!callback) {
             $("#" + to + "").load(template + '.html');
         } else {
@@ -259,29 +269,47 @@ class EmlakPosApp {
         }
     }
 
-    backButton(){
-       this.loadTemplate(this.arrba[this.arrba.length-2],'main_body')
+
+    backButton() {
+        this.loadTemplate(this.arrba[this.arrba.length - 2], 'main_body')
     }
 
-// codes inside this function will be changed depending on the app platform
-// currently it is saving to browser local storage
+    formControl(id) {
+        let elements = document.getElementById(id);
+        let input = elements.getElementsByTagName("input");
+        let arr = new Array();
+
+        for (let index = 0; index < input.length; index++) {
+
+        if(!input[index].value){
+            this.popupError("Lütfen girdiğiniz bilgileri kontrol ediniz.", false)
+            return;
+        }
+
+          arr[input[index].name] = input[index].value;
+          console.log(arr);
+        }
+    }
+
+    // codes inside this function will be changed depending on the app platform
+    // currently it is saving to browser local storage
     saveToLocal(key, value) {
         return localStorage.setItem(key, value);
     }
 
-// codes inside this function will be changed depending on the app platform
-// currently it is deleting to browser local storage by key
+    // codes inside this function will be changed depending on the app platform
+    // currently it is deleting to browser local storage by key
     deleteLocal(key) {
         return localStorage.removeItem(key);
     }
 
-// codes inside this function will be changed depending on the app platform
-// currently it is saving to browser local storage
+    // codes inside this function will be changed depending on the app platform
+    // currently it is saving to browser local storage
     getFromLocal(key) {
         return localStorage.getItem(key);
     }
 
-// codes inside this function will be changed depending on the app platform
+    // codes inside this function will be changed depending on the app platform
     redirect(action) {
 
         $("select#function").val(action);
@@ -309,7 +337,7 @@ class EmlakPosApp {
 $(document).ready(function () {
     return;
     $("form#call").submit(function (event) {
-//ac.clearParams();
+        //ac.clearParams();
         event.preventDefault();
         let action = $("form#call").find("input.actionname").val()
         ac.setCallAction(action);
@@ -321,7 +349,7 @@ $(document).ready(function () {
             ac.callApi();
             return;
         }
-// Every other actions will go with the token
+        // Every other actions will go with the token
         else {
             ac.setRequestData(getFormPostData(document.getElementById('call')));
         }
