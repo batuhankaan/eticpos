@@ -15,6 +15,7 @@ class EmlakPosApp {
         this.last_response = {};
         this.message = null;
         this.arrba = new Array();
+        this.formDataArr = new Array();
         this.public_pages = [
             'register',
             'registercustomer',
@@ -161,12 +162,12 @@ class EmlakPosApp {
     handleRegisterCustomer() {
         // TODO //
         let phone = $("input#phone").val();
-        let email = $("input#email").val();
+        let e = $("input#e").val();
 
         this.saveToLocal('registercustomerdata',
             {
                 phone: phone,
-                email: email
+                e: e
             });
         let data = {
             header: 'Özür Dileriz.',
@@ -238,12 +239,24 @@ class EmlakPosApp {
         $("div#main_messages").show();
     }
 
+    viewnewpayment() {
+        this.loadTemplate('pages/newpayment', 'main_body');
+    }
+
+    viewnewpayment_options() {
+        this.loadTemplate('pages/newpayment_options', 'main_body');
+    }
+
     viewcc_form() {
         this.loadTemplate('pages/cc_form', 'main_body');
     }
 
     viewsend_email() {
         this.loadTemplate('pages/send_email', 'main_body');
+    }
+
+    viewsend_sms() {
+        this.loadTemplate('pages/send_sms', 'main_body');
     }
 
     viewqr_generate() {
@@ -257,7 +270,7 @@ class EmlakPosApp {
     loadTemplate(template, to = 'main', callback = false, data = false) {
 
         this.arrba.push(template)
-
+        // console.log(this.arrba + " sayfa")
         if (!callback) {
             $("#" + to + "").load(template + '.html');
         } else {
@@ -274,10 +287,10 @@ class EmlakPosApp {
         this.loadTemplate(this.arrba[this.arrba.length - 2], 'main_body')
     }
 
-    formControl(id) {
+    formControl(id,page) {
         let elements = document.getElementById(id);
         let input = elements.getElementsByTagName("input");
-        let arr = new Array();
+        
 
         for (let index = 0; index < input.length; index++) {
 
@@ -286,8 +299,9 @@ class EmlakPosApp {
             return;
         }
 
-          arr[input[index].name] = input[index].value;
-          console.log(arr);
+        this.formDataArr[input[index].name] = input[index].value;
+        this.run(page);
+          console.log(this.formDataArr);
         }
     }
 
