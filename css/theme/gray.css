@@ -1,10 +1,23 @@
+html,body,main,#main_cover,#main_body{
+    height: 100%;
+}
+
 body{
-    font-weight: lighter;
-    font-family: 'Quicksand', sans-serif;
-    background: linear-gradient(to left, #d6d6d6, #ffffff);
+    /* font-weight: lighter;     */
+    /* font-family: 'Quicksand', sans-serif; */
+    /* background-color: linear-gradient(to left, #ededed, #ffffff); */
+    background-image: url('../../img/background.svg'),linear-gradient(#fff, #ededed);
+    background-repeat: no-repeat, repeat;
+    background-position: center;
+    /* background-size: contain; */
+}
+p{
+    font-weight: 600;
+    color:#013f69;
 }
 a, small{
-    color:#e4606d;
+    font-weight: 600;
+    color:#001422;
 }
 .typ_content {
     color: #373b44;

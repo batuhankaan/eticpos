@@ -1,17 +1,60 @@
-<div class="typ_content">
-<br/><br/>
-<h2>EmlakPOS</h2>
-    <br/>
-    <p>
-        İstediğiniz yerdem EmlakPOS'a başvurun, ceo telefonunuzdan ödeme alın.
-    </p>
-<br/><br/>
-    <button onclick="app.run('registercustomer');" class="btn btn-success">
-        <img src="img/icons/emoji-sunglasses.svg" class="bicon">  Emlak Katılımlıyım
-    </button>
-    <br/>
-    <br/>
-    <button onclick="app.run('registernewcustomer');" class="btn btn-info">
-        <img src="img/icons/hand-thumbs-up.svg" class="bicon"> Emlak Katılımlı Olmak İstiyorum
-    </button>
+<div class="zone">
+    <div class="row e_logo">
+        <div class="col-md-12">
+            <img style="height:fit-content;" src="../img/logo_bg.svg">
+        </div>
+    </div>
+
+    <div class="row r_desc center_item">
+        <div class="col-md-12">
+            <p style="text-align: center;">İstediğiniz yerden <br>
+                <b>CepPos'a</b><br>başvurun, cep telefonunuzdan ödeme almanın keyfini yaşayın!
+            </p>
+        </div>
+    </div>
+
+    <div class="row r_button center_item">
+        <div class="col-md-12">
+            <button onclick="app.run('registercustomer');" class="form-green-button">
+                <!-- <p class="form-button-text">Emlak Katılımlıyım</p> -->
+                Emlak Katılımlıyım
+            </button>
+            <button onclick="app.run('registernewcustomer');" class="form-green-button">
+                <!-- <p class="form-button-text">Emlak Katılımlı Olmak İstiyorum</p> -->
+                Emlak Katılımlı Olmak İstiyorum
+            </button>
+        </div>
+    </div>
+
+    <div class="row u_button center_item">
+        <div class="col">
+            <a style="float: left;" href="#">Şifremi Unuttum</a>
+        </div>
+        <div class="col">
+            <a style="float: right;" href="#">Üye Ol</a>
+        </div>
+    </div>
 </div>
+
+<style>
+    .zone {
+        height: 100%;
+    }
+
+    .e_logo {
+        height: 20%;
+        text-align: center;
+    }
+
+    .r_desc {
+        height: 30%;
+    }
+
+    .r_button {
+        height: 30%;
+    }
+
+    .u_button {
+        height: 10%;
+    }
+</style>

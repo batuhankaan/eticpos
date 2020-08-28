@@ -24,6 +24,7 @@ class EmlakPosApp {
             //            'registercustomer_comp',
             //            'registercustomer_docs',
             'registernewcustomer',
+            'registernewcompany',
             'resetpassword',
             'error'
         ];
@@ -265,6 +266,14 @@ class EmlakPosApp {
 
     viewregisternewcustomer() {
         this.loadTemplate('pages/registernewcustomer', 'main_body');
+    }
+
+    viewregisternewcustomerauth() {
+        this.loadTemplate('pages/registernewcustomerauth', 'main_body');
+    }
+
+    viewregisternewcompany() {
+        this.loadTemplate('pages/registernewcompany', 'main_body');
     }
 
     loadTemplate(template, to = 'main', callback = false, data = false) {
