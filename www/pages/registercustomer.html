@@ -1,0 +1,58 @@
+<fieldset id="payment_form" class="hidden">
+    <legend>MobilPOS Başvuru !</legend>
+    <br/>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><img src="img/icons/phone.svg" class="bicon-dark"></span>
+        </div>
+        <input type="number" name="customer_phone" class="form-control form-control" id="phone" placeholder="Telefon No">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><img src="img/icons/envelope.svg" class="bicon-dark"></span>
+        </div>
+        <input type="text" name="customer_e" class="form-control form-control" id="phone" placeholder="E-posta">
+    </div>
+    <div class="checkbox_list">
+        <div class="mb-3 mt-2 mt-2">
+            <div class="form-check pull-left">
+                <input type="checkbox" class="form-check-input" id="check_tos" name="check_tos" value="1">
+                <label class="form-check-label" for="check_tos">Kullanıcı Sözleşmesi </label>
+                <a onclick="app.viewmodalexternal(app.defines.external_content.tos, 'Kullanıcı Sözleşmesi')"><img src="img/icons/link.svg" class="bicon"></a>
+            </div>
+        </div>
+        <div class="mb-3 mt-2">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="check_tos5" name="check_tos5" value="1">
+                <label class="form-check-label" for="check_tos5">KVKK Aydınlatma Metni</label>
+                <a onclick="app.viewmodalexternal(app.defines.external_content.tos, 'KVKK Aydınlatma Metni')"><img src="img/icons/link.svg" class="bicon"></a>
+            </div>
+        </div>
+        <div class="mb-3 mt-2">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="check_tos2" name="check_tos2" value="1">
+                <label class="form-check-label" for="check_tos2">KVKK Açık Rıza Sözleşmesi </label>
+                <a onclick="app.viewmodalexternal(app.defines.external_content.tos, 'KVKK Açık Rıza Sözleşmesi')"><img src="img/icons/link.svg" class="bicon"></a>
+            </div>
+        </div>
+        <div class="mb-3 mt-2">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="check_tos3" name="check_tos3" value="1">
+                <label class="form-check-label" for="check_tos3">Çerçeve Sözleşmesi</label>
+                <a onclick="app.viewmodalexternal(app.defines.external_content.tos, 'Çerçeve Sözleşmesi')"><img src="img/icons/link.svg" class="bicon"></a>
+            </div>
+        </div>
+        <div class="mb-3 mt-2">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="check_tos4" name="check_tos4" value="1">
+                <label class="form-check-label" for="check_tos4">Kampanyalardan Haberdar Ol</label>
+                <a onclick="app.viewmodalexternal(app.defines.external_content.tos, 'Kampanyalardan Haberdar Ol')"><img src="img/icons/link.svg" class="bicon"></a>
+            </div>
+        </div>
+    </div>
+    <div class="form-group mt-2">
+        <div class="col-lg-10 col-lg-offset-2">
+            <a href="#" onclick="app.handleRegisterCustomer()" class="btn btn-success"><img src="img/icons/person-plus.svg" class="bicon"> Devam &RightTriangle;</a>
+        </div>
+    </div>
+</fieldset>

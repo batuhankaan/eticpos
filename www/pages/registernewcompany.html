@@ -1,0 +1,84 @@
+<div class="zone">
+    <div class="row e_logo">
+        <div class="col-md-12">
+            <img style="height:fit-content;" src="../img/logo_bg.svg">
+        </div>
+    </div>
+
+    <div class="row r_desc center_item">
+        <div class="col-md-12">
+            <p style="text-align: center;">Doğrulama</p>
+            <p style="text-align: center;">Cep Telefonunuza gönderilen doğrulama kodunu giriniz.</p>
+        </div>
+    </div>
+
+    <div class="row r_button center_item">
+        <div class="col-md-12">
+            <input type="text" placeholder="İşyeri Ünvanı" class="form-input">
+            <input type="text" placeholder="Şehir" class="form-input">
+            <input type="text" placeholder="İlçe" class="form-input">
+            <div class="selectbox-container">
+                <select name="account">
+                    <option selected disabled>Adres</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="selectbox-container">
+                <select name="account">
+                    <option selected disabled>Hesap Numarası</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <input type="text" placeholder="Vergi Dairesi" class="form-input">
+            <input type="text" placeholder="Vergi Numarası" class="form-input">
+            <div class="selectbox-container">
+                <select name="account">
+                    <option selected disabled>Kategori Kodu</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row u_button center_item">
+        <div class="col-md-12">
+            <button onclick="app.run('login');" class="form-green-button">
+                Devam
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .zone {
+        height: 100%;
+    }
+
+    .e_logo {
+        height: 20%;
+        text-align: center;
+    }
+
+    .r_desc {
+        /* height: 3%; */
+    }
+
+    .r_button {
+        height: auto;
+    }
+
+    .u_button {
+        height: auto;
+    }
+
+    .center_item {
+        justify-content: center;
+        align-items: center;
+    }
+</style>
