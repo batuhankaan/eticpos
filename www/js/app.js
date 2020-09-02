@@ -41,7 +41,7 @@ class EmlakPosApp {
     init() {
         if (this.getToken() !== null) {
             this.setToken(this.getToken());
-            return this.run('listtransactions');
+            return this.run('dashboard');
         }
         return this.run('login');
     }
@@ -210,7 +210,20 @@ class EmlakPosApp {
     }
 
     viewmodal(content, header = false, footer = false) {
-
+        $("#main_modal_body").html(content).show();
+        if (header) {
+            $("#main_modal_header").html(header).show();
+        }
+        else {
+            $("#main_modal_header").hide();
+        }
+        if (footer) {
+            $("#main_modal_footer").html(footer).show();
+        }
+        else {
+            $("#main_modal_footer").hide();
+        }
+        $("#main_modal").modal();
     }
 
     displayError(message) {
