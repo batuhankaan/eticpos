@@ -34,12 +34,14 @@ class EmlakPosApp {
                 tos: 'http://localhost/wtf/apps/static/apiclient/pages/static/tos.html'
             }
         };
+        // document.addEventListener("backbutton", leavePage, false);
     }
+    
 
     init() {
         if (this.getToken() !== null) {
             this.setToken(this.getToken());
-            return this.run('dashboard');
+            return this.run('listtransactions');
         }
         return this.run('login');
     }
@@ -215,14 +217,14 @@ class EmlakPosApp {
         this.loadTemplate('pages/error', 'main_body', 'renderError', message);
     }
 
-    popupError(message,status) {
-        document.getElementById("status_es").innerHTML=`
+    popupError(message, status) {
+        document.getElementById("status_es").innerHTML = `
         <div style="background:${status ? "green" : "red"}; text-align:center;">
         <img src="img/icons/exclamation-diamond-fill.svg" class="bicon fullpage_alert_icon" id="fullpage_alert_icon">
         <h5 style="color: #fff;" id="alert_view_header">${message}</h5>
         </div>`
         setTimeout(() => {
-            document.getElementById("status_es").innerHTML=""
+            document.getElementById("status_es").innerHTML = ""
         }, 3000);
     }
 
@@ -276,6 +278,10 @@ class EmlakPosApp {
         this.loadTemplate('pages/registernewcompany', 'main_body');
     }
 
+    viewlisttransactions() {
+        this.loadTemplate('pages/listtransactions', 'main_body');
+    }
+
     loadTemplate(template, to = 'main', callback = false, data = false) {
 
         this.arrba.push(template)
@@ -296,21 +302,21 @@ class EmlakPosApp {
         this.loadTemplate(this.arrba[this.arrba.length - 2], 'main_body')
     }
 
-    formControl(id,page) {
+    formControl(id, page) {
         let elements = document.getElementById(id);
         let input = elements.getElementsByTagName("input");
-        
+
 
         for (let index = 0; index < input.length; index++) {
 
-        if(!input[index].value){
-            this.popupError("Lütfen girdiğiniz bilgileri kontrol ediniz.", false)
-            return;
-        }
+            if (!input[index].value) {
+                this.popupError("Lütfen girdiğiniz bilgileri kontrol ediniz.", false)
+                return;
+            }
 
-        this.formDataArr[input[index].name] = input[index].value;
-        this.run(page);
-          console.log(this.formDataArr);
+            this.formDataArr[input[index].name] = input[index].value;
+            this.run(page);
+            console.log(this.formDataArr);
         }
     }
 
@@ -353,6 +359,32 @@ class EmlakPosApp {
         }
         return jsonObject;
     }
+
+
+
+    // BACK BUTTON TEST
+
+    
+
+    // onPageLeave(buttonIndex) {
+
+    //     if (buttonIndex == 1) {
+    //         window.history.back();
+    //     }
+    //     else {
+    //     }
+    // }
+
+    // leavePage() {
+    //     navigator.notification.confirm(
+    //         'Would you like to leave  ?', // message
+    //         onPageLeave,            // callback to invoke with index of button pressed
+    //         'Leaving page request',           // title
+    //         ['Yes', 'No']         // buttonLabels
+    //     );
+    // }
+
+    // BACK BUTTON TEST
 
 }
 

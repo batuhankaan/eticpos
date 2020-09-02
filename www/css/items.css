@@ -78,7 +78,7 @@
     left: 0;
     height: 25px;
     width: 25px;
-    background-color: #eee;
+    background-color: #ccc;
     border-radius: 50%;
   }
   
@@ -118,7 +118,7 @@
     padding-left: 35px;
     margin-bottom: 12px;
     cursor: pointer;
-    font-size: 22px;
+    /* font-size: 22px; */
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -139,7 +139,7 @@
     left: 0;
     height: 25px;
     width: 25px;
-    background-color: #eee;
+    background-color: #ccc;
   }
   
   .checkbox-button-container:hover input ~ .checkbox-button-checkmark {

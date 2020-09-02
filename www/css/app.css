@@ -313,3 +313,26 @@ div.alert img.bicon{
 .checkbox_list{
     padding: 10px;
 }
+
+
+/* BK */
+
+.spacing_10{
+    margin:10% 0%;
+}
+
+.spacing_5{
+    margin:5% 0%;
+}
+
+.center_text{
+    text-align:center;
+}
+
+.height_100{
+    height: 100%;
+}
+
+.margin_auto{
+    margin:auto;
+}

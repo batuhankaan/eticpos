@@ -1,34 +1,29 @@
 <div class="zone">
     <div class="row e_logo">
-        <div class="col-md-12">
+        <div class="col-md-12 center_text">
             <img style="height:150px;" style="height:fit-content;" src="img/logo.png">
         </div>
     </div>
-
-    <div class="row r_desc center_item">
-        <div style="text-align: center;" class="col-md-12">
-            <p>İyi Günler</p>
+    <div class="row center_item">
+        <div class="col-md-12 spacing_10 center_text">
+            <h4 class="center_text">İyi Günler</h4>
             <img style="height: 100px;background: #00709461;padding: 5px;" class="md-avatar rounded-circle"
                 src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" />
             <p>A İşletmesi</p>
-            <input type="hidden" name="actionname" class="form-control actionname" value="gettoken">
         </div>
     </div>
 
-    <div class="row r_button center_item">
+    <div class="row spacing_10">
         <div class="col-md-12">
             <input type="number" name="phone" id="login_phone" value="javascript(app.getFromLocal('userinfo_phone'))"
                 placeholder="0555AAABBCC" class="form-input">
             <input type="password" name="password" id="login_password" placeholder="Şifre" class="form-input">
             <div class="checkbox">
-                <!-- <label>
-                    <input type="checkbox" checked="checked" value="1"> <small>Açık kal</small>
-                </label> -->
             </div>
         </div>
     </div>
 
-    <div class="row u_button center_item">
+    <div class="row">
         <div class="col-md-12">
             <button onclick="app.actionLogin()" id="actionlogin_button" class="form-green-button">
                 Giriş
@@ -42,32 +37,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .zone {
-        height: 100%;
-        /* display: flex; align-items: center; */
-    }
-
-    .e_logo {
-        height: 20%;
-        text-align: center;
-    }
-
-    .r_desc {
-        /* height: 3%; */
-    }
-
-    .r_button {
-        height: 30%;
-    }
-
-    .u_button {
-        height: 10%;
-    }
-
-    .center_item {
-        justify-content: center;
-        align-items: center;
-    }
-</style>

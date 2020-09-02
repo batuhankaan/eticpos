@@ -1,61 +1,68 @@
-<!-- <div id="view_dahsboard">
-    <button onclick="app.run('send_email');" class="btn btn-success">
-        <img src="img/icons/mailbox2.svg" class="bicon"> E-mail İle Gönder
-    </button>
-    <button onclick="app.run('qr_generate');" class="btn btn-success">
-        <img src="img/icons/hr.svg" class="bicon"> QR Kodu Oluştur
-    </button>
-</div> -->
-<fieldset id="payment" class="hidden">
-    <legend>Alıcı Bilgileri</legend>
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text"><img src="img/icons/person.svg"></span>
+<div class="zone">
+    <div class="row e_logo">
+        <div class="col-md-12 center_text">
+            <img style="height:150px;" style="height:fit-content;" src="img/logo.png">
         </div>
-        <input type="text" name="name" class="form-control" placeholder="İsim Soyisim">
+    </div>
+    <div class="row center_item">
+        <div class="col-md-12 spacing_10 center_text">
+            <h4 class="center_text">Hızlı Ödeme</h4>
+        </div>
     </div>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text"><img src="img/icons/mailbox.svg" class="bicon-dark"></span>
+    <div id="payment" class="row ">
+        <div class="col-md-12">
+            <legend>Alıcı Bilgileri</legend>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="img/icons/person.svg"></span>
+                </div>
+                <input type="text" name="name" class="form-control" placeholder="İsim Soyisim">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="img/icons/mailbox.svg" class="bicon-dark"></span>
+                </div>
+                <input type="text" name="email" class="form-control" placeholder="E-Posta">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="img/icons/telephone.svg" class="bicon-dark"></span>
+                </div>
+                <input type="text" name="phone" class="form-control" placeholder="Telefon Numarası">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="img/icons/credit-card-2-front.svg"
+                            class="bicon-dark"></span>
+                </div>
+                <input type="text" name="address" class="form-control" placeholder="Adres">
+            </div>
+            <legend>Ödeme Bilgileri</legend>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="img/icons/paperclip.svg" class="bicon-dark"></span>
+                </div>
+                <input type="text" name="title" class="form-control" placeholder="Açıklama">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="img/icons/cash.svg" class="bicon-dark"></span>
+                </div>
+                <input type="text" name="amount" class="form-control" placeholder="Tutar">
+            </div>
         </div>
-        <input type="text" name="email" class="form-control" placeholder="E-Posta">
     </div>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text"><img src="img/icons/telephone.svg" class="bicon-dark"></span>
-        </div>
-        <input type="text" name="phone" class="form-control" placeholder="Telefon Numarası">
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text"><img src="img/icons/credit-card-2-front.svg" class="bicon-dark"></span>
-        </div>
-        <input type="text" name="address" class="form-control" placeholder="Adres">
-    </div>
-    <legend>Ödeme Bilgileri</legend>
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text"><img src="img/icons/paperclip.svg" class="bicon-dark"></span>
-        </div>
-        <input type="text" name="title" class="form-control" placeholder="Açıklama">
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text"><img src="img/icons/cash.svg" class="bicon-dark"></span>
-        </div>
-        <input type="text" name="amount" class="form-control" placeholder="Tutar">
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-lg-10 col-lg-offset-2">
+    <div class="row center_item">
+        <div class="col-md-12">
             <button onclick="app.formControl('payment','newpayment_options')" type="submit" class="form-green-button">
                 Ödeme
             </button>
         </div>
     </div>
-</fieldset>
+</div>
