@@ -5,10 +5,12 @@ class EmlakPosApp {
         this.default_view = 'dashboard';
         this.view = null;
         this.last_view = null;
-
         this.lang = 'tr';
         this.render_params = {};
         this.template = '';
+
+        this.isActive = true;
+        this.smsValidate = true;
 
         this.ac = new EmlakPosApiClient();
 
@@ -34,18 +36,17 @@ class EmlakPosApp {
                 tos: 'http://localhost/wtf/apps/static/apiclient/pages/static/tos.html'
             }
         };
-        // document.addEventListener("backbutton", leavePage, false);
     }
     
 
     init() {
         if (this.getToken() !== null) {
             this.setToken(this.getToken());
-            return this.run('dashboard');
+            return this.loginControl()
         }
         return this.run('login');
     }
-
+ 
     run(view) {
         this.view = view;
         console.log("App::run(" + view + ")");
@@ -87,7 +88,7 @@ class EmlakPosApp {
         }
         // Redirect view if set in response
         if (this.last_response.header.redirect) {
-            return this.run(this.last_response.header.redirect);
+            return this.loginControl();
         }
         // 
     }
@@ -294,6 +295,15 @@ class EmlakPosApp {
     viewlisttransactions() {
         this.loadTemplate('pages/listtransactions', 'main_body');
     }
+    viewsmsvalidation() {
+        this.loadTemplate('pages/smsvalidation', 'main_body');
+    }
+    viewcashupz() {
+        this.loadTemplate('pages/cashupz', 'main_body');
+    }
+    viewusermanagement() {
+        this.loadTemplate('pages/usermanagement', 'main_body');
+    }
 
     loadTemplate(template, to = 'main', callback = false, data = false) {
 
@@ -330,6 +340,24 @@ class EmlakPosApp {
             this.formDataArr[input[index].name] = input[index].value;
             this.run(page);
             console.log(this.formDataArr);
+        }
+    }
+
+    smsValidation(){
+        // It will be arranged to communicate with the api
+        if($("#sms_code").val() == 123456){
+            this.smsValidate = true;
+            return this.init();
+        }
+    }
+
+    loginControl(){
+        if(!this.isActive){
+            return this.run('warning')
+        }else if(!this.smsValidate){
+            return this.run('smsvalidation')
+        }else{
+            return this.run('dashboard');
         }
     }
 
@@ -372,33 +400,6 @@ class EmlakPosApp {
         }
         return jsonObject;
     }
-
-
-
-    // BACK BUTTON TEST
-
-    
-
-    // onPageLeave(buttonIndex) {
-
-    //     if (buttonIndex == 1) {
-    //         window.history.back();
-    //     }
-    //     else {
-    //     }
-    // }
-
-    // leavePage() {
-    //     navigator.notification.confirm(
-    //         'Would you like to leave  ?', // message
-    //         onPageLeave,            // callback to invoke with index of button pressed
-    //         'Leaving page request',           // title
-    //         ['Yes', 'No']         // buttonLabels
-    //     );
-    // }
-
-    // BACK BUTTON TEST
-
 }
 
 
