@@ -27,6 +27,7 @@ class EmlakPosApp {
             //            'registercustomer_docs',
             'registernewcustomer',
             'registernewcompany',
+            'registernewcustomerauth',
             'resetpassword',
             'error'
         ];
@@ -156,11 +157,11 @@ class EmlakPosApp {
     }
 
     viewregister() {
-        this.loadTemplate('pages/register', 'main_body');
+        this.loadTemplate('pages/register/register', 'main_body');
     }
 
     viewregistercustomer() {
-        this.loadTemplate('pages/registercustomer', 'main_body');
+        this.loadTemplate('pages/register/registercustomer', 'main_body');
     }
 
     handleRegisterCustomer() {
@@ -257,52 +258,55 @@ class EmlakPosApp {
     }
 
     viewnewpayment() {
-        this.loadTemplate('pages/newpayment', 'main_body');
+        this.loadTemplate('pages/dashboard/payment/newpayment', 'main_body');
     }
 
     viewnewpayment_options() {
-        this.loadTemplate('pages/newpayment_options', 'main_body');
+        this.loadTemplate('pages/dashboard/payment/newpayment_options', 'main_body');
     }
 
     viewcc_form() {
-        this.loadTemplate('pages/cc_form', 'main_body');
+        this.loadTemplate('pages/dashboard/payment/cc_form', 'main_body');
     }
 
     viewsend_email() {
-        this.loadTemplate('pages/send_email', 'main_body');
+        this.loadTemplate('pages/dashboard/payment/paymentoptions/send_email', 'main_body');
     }
 
     viewsend_sms() {
-        this.loadTemplate('pages/send_sms', 'main_body');
+        this.loadTemplate('pages/dashboard/payment/paymentoptions/send_sms', 'main_body');
     }
 
     viewqr_generate() {
-        this.loadTemplate('pages/qr_generate', 'main_body');
+        this.loadTemplate('pages/dashboard/payment/paymentoptions/qr_generate', 'main_body');
     }
 
     viewregisternewcustomer() {
-        this.loadTemplate('pages/registernewcustomer', 'main_body');
+        this.loadTemplate('pages/register/registernewcustomer', 'main_body');
     }
 
     viewregisternewcustomerauth() {
-        this.loadTemplate('pages/registernewcustomerauth', 'main_body');
+        this.loadTemplate('pages/register/registernewcustomerauth', 'main_body');
     }
 
     viewregisternewcompany() {
-        this.loadTemplate('pages/registernewcompany', 'main_body');
+        this.loadTemplate('pages/register/registernewcompany', 'main_body');
     }
 
     viewlisttransactions() {
-        this.loadTemplate('pages/listtransactions', 'main_body');
+        this.loadTemplate('pages/dashboard/listtransactions', 'main_body');
     }
+
     viewsmsvalidation() {
         this.loadTemplate('pages/smsvalidation', 'main_body');
     }
+
     viewcashupz() {
-        this.loadTemplate('pages/cashupz', 'main_body');
+        this.loadTemplate('pages/dashboard/cashupz', 'main_body');
     }
+    
     viewusermanagement() {
-        this.loadTemplate('pages/usermanagement', 'main_body');
+        this.loadTemplate('pages/dashboard/usermanagement', 'main_body');
     }
 
     loadTemplate(template, to = 'main', callback = false, data = false) {
