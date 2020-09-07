@@ -16,7 +16,7 @@ class EmlakPosApp {
 
         this.last_response = {};
         this.message = null;
-        this.arrba = new Array();
+        this.pagesHistory = new Array();
         this.formDataArr = new Array();
         this.public_pages = [
             'register',
@@ -38,7 +38,7 @@ class EmlakPosApp {
             }
         };
     }
-    
+
 
     init() {
         if (this.getToken() !== null) {
@@ -47,7 +47,8 @@ class EmlakPosApp {
         }
         return this.run('login');
     }
- 
+
+
     run(view) {
         this.view = view;
         console.log("App::run(" + view + ")");
@@ -178,7 +179,8 @@ class EmlakPosApp {
             header: 'Özür Dileriz.',
             body: 'Şu an başvurunuzu kayıt edemiyoruz. <br/>Başvurunuz için lütfen daha sonra tekrar deneyiniz.'
         };
-        this.loadTemplate('pages/warning', 'main_body', 'renderAlertPage', data);
+        // this.loadTemplate('pages/warning', 'main_body', 'renderAlertPage', data);
+        this.loadTemplate('pages/smsvalidation', 'main_body');
 
     }
 
@@ -304,15 +306,20 @@ class EmlakPosApp {
     viewcashupz() {
         this.loadTemplate('pages/dashboard/cashupz', 'main_body');
     }
-    
+
     viewusermanagement() {
         this.loadTemplate('pages/dashboard/usermanagement', 'main_body');
     }
 
+    viewresetpassword() {
+        this.loadTemplate('pages/register/resetpassword', 'main_body');
+    }
+
     loadTemplate(template, to = 'main', callback = false, data = false) {
 
-        this.arrba.push(template)
-        // console.log(this.arrba + " sayfa")
+        this.pagesHistory.includes(template) ? null : this.pagesHistory.push(template)
+
+        console.log(this.pagesHistory)
         if (!callback) {
             $("#" + to + "").load(template + '.html');
         } else {
@@ -326,7 +333,8 @@ class EmlakPosApp {
 
 
     backButton() {
-        this.loadTemplate(this.arrba[this.arrba.length - 2], 'main_body')
+        this.loadTemplate(this.pagesHistory[this.pagesHistory.length - 2], 'main_body')
+        this.pagesHistory.splice(this.pagesHistory.length - 1, 1)
     }
 
     formControl(id, page) {
@@ -347,20 +355,20 @@ class EmlakPosApp {
         }
     }
 
-    smsValidation(){
+    smsValidation() {
         // It will be arranged to communicate with the api
-        if($("#sms_code").val() == 123456){
+        if ($("#sms_code").val() == 123456) {
             this.smsValidate = true;
             return this.init();
         }
     }
 
-    loginControl(){
-        if(!this.isActive){
+    loginControl() {
+        if (!this.isActive) {
             return this.run('warning')
-        }else if(!this.smsValidate){
+        } else if (!this.smsValidate) {
             return this.run('smsvalidation')
-        }else{
+        } else {
             return this.run('dashboard');
         }
     }
