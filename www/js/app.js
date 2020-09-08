@@ -31,7 +31,10 @@ class EmlakPosApp {
             'resetpassword',
             'error'
         ];
-
+        this.back_buttonDisplay = [
+            'login',
+            'dashboard',
+        ]
         this.defines = {
             external_content: {
                 tos: 'http://localhost/wtf/apps/static/apiclient/pages/static/tos.html'
@@ -54,6 +57,8 @@ class EmlakPosApp {
         console.log("App::run(" + view + ")");
         $("div#main_messages").hide();
 
+        this.back_buttonDisplay.includes(view) ? $("#back_button").hide() : $("#back_button").show();
+        this.pagesHistory.includes(view) ? null : this.pagesHistory.push(view)
 
         if (!this.actionCheckAuth()) { // user logged in ?
             if (this.public_pages.indexOf(view) === -1) { // is the view public or requires to be logged 
@@ -236,7 +241,7 @@ class EmlakPosApp {
 
     popupError(message, status) {
         document.getElementById("status_es").innerHTML = `
-        <div style="background:${status ? "green" : "red"}; text-align:center;">
+        <div class="animate__bounceInUp" style="width:100%; height:auto; position: absolute; left: 0; right:0; bottom:0; background:${status ? "green" : "red"}; text-align:center;">
         <img src="img/icons/exclamation-diamond-fill.svg" class="bicon fullpage_alert_icon" id="fullpage_alert_icon">
         <h5 style="color: #fff;" id="alert_view_header">${message}</h5>
         </div>`
@@ -317,7 +322,7 @@ class EmlakPosApp {
 
     loadTemplate(template, to = 'main', callback = false, data = false) {
 
-        this.pagesHistory.includes(template) ? null : this.pagesHistory.push(template)
+        
 
         console.log(this.pagesHistory)
         if (!callback) {
@@ -333,7 +338,7 @@ class EmlakPosApp {
 
 
     backButton() {
-        this.loadTemplate(this.pagesHistory[this.pagesHistory.length - 2], 'main_body')
+        this.run(this.pagesHistory[this.pagesHistory.length - 2])
         this.pagesHistory.splice(this.pagesHistory.length - 1, 1)
     }
 

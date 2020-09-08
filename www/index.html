@@ -15,6 +15,7 @@
     <link href="css/google-fonts/quicksand.css" rel="stylesheet" type="text/css" />
     <link href="css/theme/gray.css" rel="stylesheet" type="text/css" />
     <link href="css/items.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -68,15 +69,19 @@
             </div> -->
             <div id="main_messages"></div>
             <!-- style sonradan eklendi main body'e -->
-            <div id="main_body"></div>
-            <div style="position:absolute; left:0; top:0;" id="main_footer">
-                <div id="status_es">
-
-                </div>
-                <a style="display:flex; justify-content: center;" href="#"
+            <div id="main_body">
+            </div>
+            <div id="main_footer">
+                <div id="back_button" style="position:absolute; left:0; top:0;">
+                    <a style="display:flex; justify-content: center;" href="#"
                     onclick="app.backButton()">
                     <img style="height: 30px;" src="img/icons/arrow-left.svg" />
                 </a>
+                
+                </div>
+                <div id="status_es">
+
+                </div>
             </div>
 
         </div>
