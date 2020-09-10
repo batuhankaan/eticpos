@@ -8,7 +8,7 @@ body{
     /* background-color: linear-gradient(to left, #ededed, #ffffff); */
     background-image: url('../../img/background.svg');
     /* background:linear-gradient(#fff, #ededed); */
-    /* background-repeat: no-repeat, repeat; */
+    background-repeat: no-repeat, repeat;
     /* background-position: center; */
     /* height: 100%; */
     /* background-size: contain; */
