@@ -259,9 +259,10 @@ div.alert{
 }
 
 div.alert-danger{
-    background: linear-gradient(135deg, #373b44, #c8262c);
+    background: #cc2727;
     border: none;
     color: #fff;
+    padding: 22px 9px;
 }
 
 div.alert img.bicon{
@@ -282,20 +283,22 @@ div.alert img.bicon{
 }
 
 .fullpage_alert_error{
-    background: #e7464c;
-}
-
-.fullpage_alert_warning{
-    background: linear-gradient(to right, #865b0c, #ffa700);
-}
-
-.fullpage_alert_info{
-    background: linear-gradient(to right, #373b44, #005baa);
-}
-
-.fullpage_alert_success{
-    background: linear-gradient(to right, #0e3405, #35c804)
-}
+    background: linear-gradient(to top, #b30f0f 53%, #e5f5f7 95%);
+    }
+    
+    .fullpage_alert_warning{
+        background: linear-gradient(to top, #d8d21a 53%, #e5f5f7 95%);
+        color: #333;
+    }
+    
+    .fullpage_alert_info{
+        background: linear-gradient(to bottom, #e5f4f6 1%, #005baa 38%);
+    }
+    
+    .fullpage_alert_success{
+        background: linear-gradient(to top, #35f109, #e6f5f6);
+        color: #333;
+    }
 
 .fullpage_alert img.fullpage_alert_icon{
     width: 100px;
@@ -320,9 +323,6 @@ div.alert img.bicon{
     text-align:center;
 }
 
-.height_100{
-    height: 100%;
-}
 
 .margin_auto{
     margin:auto;

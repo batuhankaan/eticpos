@@ -1,26 +1,19 @@
 <div class="zone">
-    <div class="row e_logo">
-        <div class="col-md-12 center_text">
-            <img style="height:150px;" style="height:fit-content;" src="img/logo.png">
-        </div>
-    </div>
     <div class="row center_item">
-        <div class="col-md-12 mt-5 center_text">
-            <h4 class="center_text">Üye Ol</h4>
+        <div class="col-md-12 center_text m-5">
+            <h4 class="center_text">Cep Telefonu Numaranızı Girin</h4>
         </div>
     </div>
 
-    <div class="row mt-5">
-        <div class="col-md-12">
-            <input type="text" placeholder="TC Kimlik No/Vergi No" class="form-input">
-            <input type="text" placeholder="Telefon Numarası" class="form-input">
-            <input type="text" placeholder="E-Posta Adresi" class="form-input">
+    <div class="row">
+        <div class="col-md-12 mb-5">
+            <input type="text" placeholder="Telefon Numarası" id="registernewcustomer_phone" class="form-input">
         </div>
     </div>
 
     <div class="row center_item">
         <div class="col-md-12">
-            <button onclick="app.run('registernewcustomerauth');" class="form-green-button">
+            <button onclick="app.actionRegisterNewCustomer();" class="form-green-button">
                 Devam
             </button>
         </div>

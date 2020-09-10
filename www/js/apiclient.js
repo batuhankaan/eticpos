@@ -4,32 +4,31 @@
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 var def_auth_type = 'token';
-var def_user_type = 'merchant';
+var def_user_level = 'pos';
 var def_user_lang = 'tr';
 
 class EmlakPosApiClient {
     constructor() {
 
-        this.last_response = {};
+        this.last_response = {};		
+		this.call_action = '/';
         this.call_params = {
-            auth: {
+            head: {
                 auth_type: def_auth_type,
-                user_type: def_user_type, //(merchant/admin/gateway)
+                user_level: def_user_level, //(merchant/admin/gateway)
                 user_lang: def_user_lang,
                 token: null,
                 phone: null,
                 password: null,
-                id_merchant: 1
+                id_user: 1
             },
-            request: {
-                action: null,
-                params: {
-
-                }
+            data: {
+               
             }
         };
         this.device_id = false;
-        this.api_base = 'http://localhost/wtf/apps/api';
+ //       this.api_base = 'http://localhost/wtf/apps/api/?/mobil/v2/';
+        this.api_base = 'https://mobilapi.eticsoft.net/api/?/mobil/v2/';
 
 
         this.headers = {
@@ -38,37 +37,36 @@ class EmlakPosApiClient {
         };
     }
 
-    setAuthParam(name, value) {
-        return this.call_params.auth[name] = value;
+    setHeadParam(name, value) {
+        return this.call_params.head[name] = value;
     }
 
     setCallAction(value) {
-        return this.call_params.request.action = value;
+        return this.call_action = value;
     }
 
     setRequestData(value) {
-        return this.call_params.request.params = value;
+        return this.call_params.data = value;
     }
 
     setRequestDataParam(name, value) {
-        return this.call_params.request.params[name] = value;
+        return this.call_params.data[name] = value;
     }
 
     removeParam(name) {
         return delete this.call_params[name];
     }
 
-    clearAuthParams() {
-        this.call_params.auth = {};
-        this.call_params.auth.auth_type = def_auth_type;
-        this.call_params.auth.user_type = def_user_type;
-        this.call_params.auth.user_lang = def_user_lang;
-        this.call_params.auth.token = null;
+    clearHeadParams() {
+        this.call_params.head = {};
+        this.call_params.head.auth_type = def_auth_type;
+        this.call_params.head.user_level = def_user_level;
+        this.call_params.head.user_lang = def_user_lang;
+        this.call_params.head.token = null;
     }
 
     clearRequestParams() {
-        this.call_params.request.action = null;
-        this.call_params.request.params = {};
+        this.call_params.data = {};
     }
 
     clearAllParams() {
@@ -82,19 +80,9 @@ class EmlakPosApiClient {
     }
 
     callApi(callback = 'handleResponse') {
-        
-        // OFFLINE
-        let response = JSON.parse('{"data":{"firstname":"Mahmut","lastname":"G\u00dcLERCE","phone":"05073591548","merchant":"Merchant","id_merchant":"1","last_login":"none"},"header":{"auth_result":true,"result_code":1,"result_message":"token generated","result_details":" Api::getToken","token":"Y1gxc3AvSVZ1UTh6alZ1ZGNQV3R1QT09","redirect":"dashboard"}}');
-        ac.last_response = response;
-        if (typeof app[callback] === "function") {
-            app[callback](response);
-        }
-        app.handleResponse(response);
 
-        return response;
-        // OFFLINE
-
-        let end_url = this.api_base + '/?' + (new Date().getTime()) + Math.random() + "";
+        //let end_url = this.api_base + this.call_action +'&' +(new Date().getTime()) + Math.random() + "";
+        let end_url = this.api_base + this.call_action;
         document.getElementById("loader").style.display = "block";
         //    document.getElementById("request_viewer").innerHTML = end_url + '' + "\n" + JSON.stringify(this.call_params, null, 2);
 
@@ -104,7 +92,7 @@ class EmlakPosApiClient {
                     ac.last_response = response.data;
 
                     if (typeof app[callback] === "function") {
-                        app[callback](response.data);
+                        return app[callback](response.data);
                     }
                     app.handleResponse(response.data);
 

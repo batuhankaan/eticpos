@@ -1,4 +1,5 @@
 var ac = new EmlakPosApiClient();
+var ev = new EmValidator();
 var app = new EmlakPosApp();
 $(document).ready(function () {
     app.init();

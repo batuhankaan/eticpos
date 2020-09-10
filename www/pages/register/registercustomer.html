@@ -2,36 +2,29 @@
     <div class="row">
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-12 center_text">
-                    <img style="height:150px;" src="img/logo.png">
+                <div class="col-md-12">
+                    <h4 class="center_text">MobilPOS Başvuru !</h4>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 mt-5">
-                    <h4 class="center_text">MobilPOS Başvuru !</h4>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-md-12">
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><img src="img/icons/phone.svg" class="bicon-dark"></span>
-                        </div>
-                        <input type="number" name="customer_phone" class="form-control form-control" id="phone"
-                            placeholder="Telefon No">
+                        <input type="number" id="customer_cid" class="form-input"
+                            placeholder="Kimlik No veya Vergi No">
                     </div>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><img src="img/icons/envelope.svg" class="bicon-dark"></span>
-                        </div>
-                        <input type="text" name="customer_e" class="form-control form-control" id="phone"
+                        <input type="number" id="customer_phone" class="form-input"
+                            placeholder="Cep Telefonu">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-input" id="customer_email"
                             placeholder="E-posta">
                     </div>
                     <div>
-                        <div class="mb-3 mt-2 mt-2">
+                        <div class="mb-3 mt-2">
                             <div class="form-check pull-left">
                                 <label class="checkbox-button-container">Kullanıcı Sözleşmesi
-                                    <input type="checkbox">
+                                    <input type="checkbox" id="checkbox_tos">
                                     <span class="checkbox-button-checkmark"></span>
                                     <a onclick="app.viewmodalexternal(app.defines.external_content.tos, 'Kullanıcı Sözleşmesi')"><img
                                         src="img/icons/link.svg"></a>
@@ -41,7 +34,7 @@
                         <div class="mb-3 mt-2">
                             <div class="form-check">
                                 <label class="checkbox-button-container">KVKK Aydınlatma Metni
-                                    <input type="checkbox">
+                                    <input type="checkbox" id="checkbox_kvkk">
                                     <span class="checkbox-button-checkmark"></span>
                                     <a
                                     onclick="app.viewmodalexternal(app.defines.external_content.tos, 'KVKK Aydınlatma Metni')"><img
@@ -52,7 +45,7 @@
                         <div class="mb-3 mt-2">
                             <div class="form-check">
                                 <label class="checkbox-button-container">KVKK Açık Rıza Sözleşmesi
-                                    <input type="checkbox">
+                                    <input type="checkbox" id="checkbox_kvkk2">
                                     <span class="checkbox-button-checkmark"></span>
                                     <a
                                     onclick="app.viewmodalexternal(app.defines.external_content.tos, 'KVKK Açık Rıza Sözleşmesi')"><img
@@ -63,7 +56,7 @@
                         <div class="mb-3 mt-2">
                             <div class="form-check">
                                 <label class="checkbox-button-container">Çerçeve Sözleşmesi
-                                    <input type="checkbox">
+                                    <input type="checkbox" id="checkbox_pfc" value="1">
                                     <span class="checkbox-button-checkmark"></span>
                                     <a
                                     onclick="app.viewmodalexternal(app.defines.external_content.tos, 'Çerçeve Sözleşmesi')"><img
@@ -74,7 +67,7 @@
                         <div class="mb-3 mt-2">
                             <div class="form-check">
                                 <label class="checkbox-button-container">Kampanyalardan Haberdar Ol
-                                    <input type="checkbox">
+                                    <input type="checkbox" id="checkbox_subs">
                                     <span class="checkbox-button-checkmark"></span>
                                     <a
                                     onclick="app.viewmodalexternal(app.defines.external_content.tos, 'Kampanyalardan Haberdar Ol')"><img
@@ -85,19 +78,9 @@
                     </div>
                     <div class="form-group mt-2">
                         <div class="col-lg-10 col-lg-offset-2">
-                            <button href="#" onclick="app.handleRegisterCustomer()" class="form-green-button"> Devam
+                            <button onclick="app.actionRegisterCustomer()" class="form-green-button"> Devam
                             </button>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col">
-                        <a style="float: left;" href="#">Şifremi Unuttum</a>
-                    </div>
-                    <div class="col">
-                        <a style="float: right;" href="#">Üye Ol</a>
                     </div>
                 </div>
             </div>
