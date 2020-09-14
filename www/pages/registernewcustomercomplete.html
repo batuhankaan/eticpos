@@ -1,0 +1,34 @@
+<div class="zone">
+    <div class="row center_item">
+        <div class="col-md-12 center_text">
+            <h4 class="center_text">Üye Ol</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <input type="text" placeholder="Adınız" id="registernewcustomer_firstname" class="form-input">
+            <input type="text" placeholder="Soyadınız" id="registernewcustomer_lastname" class="form-input">
+            <input type="text" placeholder="Firma Unvanı" id="registernewcustomer_company" class="form-input">
+            <input type="text" placeholder="TC Kimlik No/Vergi No" id="registernewcustomer_cid" class="form-input">
+            <input type="text" placeholder="Telefon Numarası" id="registernewcustomer_phone" class="form-input">
+            <input type="text" placeholder="E-Posta Adresi" id="registernewcustomer_email" class="form-input">
+	    <select id="registernewcustomer_city" class="form-control">
+		<option>İl</option>
+		<option value="istanbul">İstanbul</option>
+	    </select>
+	    <select id="registernewcustomer_address" class="form-control">
+		<option>İlçe</option>
+		<option value="kadikoy">Kadıköy</option>
+	    </select>
+        </div>
+    </div>
+
+    <div class="row center_item">
+        <div class="col-md-12">
+            <button onclick="app.actionRegisterNewCustomerComplete();" class="form-green-button">
+                Devam
+            </button>
+        </div>
+    </div>
+</div>

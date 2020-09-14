@@ -1,24 +1,22 @@
-/* global ac, app */
+/* global ac, app, ev */
 
 class EmlakPosApp {
     constructor() {
         this.uploadedfiles = new Array();
         this.default_view = 'dashboard';
         this.view = null;
-        this.last_view = null;
+        this.last_views = new Array();
+        
 
         this.lang = 'tr';
         this.render_params = {};
         this.template = '';
 
-        this.isActive = true;
-        this.smsValidate = true;
-
         this.ac = new EmlakPosApiClient();
 
         this.last_response = {};
         this.message = null;
-        this.pagesHistory = new Array();
+        this.arrba = new Array();
         this.formDataArr = new Array();
         this.public_pages = [
             'register',
@@ -38,32 +36,30 @@ class EmlakPosApp {
             'resetpassword',
             'error'
         ];
-        this.back_buttonDisplay = [
-            'login',
-            'dashboard',
-        ]
+
         this.defines = {
             external_content: {
                 tos: 'http://localhost/wtf/apps/static/apiclient/pages/static/tos.html'
             }
         };
+        // document.addEventListener("backbutton", leavePage, false);
     }
 
     init() {
         if (this.getToken() !== null) {
             this.setToken(this.getToken());
-            return this.loginControl()
+            return this.run('dashboard');
         }
         return this.run('login');
     }
 
     run(view) {
+        
         this.view = view;
+        
         console.log("App::run(" + view + ")");
         $("div#main_messages").hide();
 
-        this.back_buttonDisplay.includes(view) ? $("#back_button").hide() : $("#back_button").show();
-        this.pagesHistory.includes(view) ? null : this.pagesHistory.push(view)
 
         if (!this.actionCheckAuth()) { // user logged in ?
             if (this.public_pages.indexOf(view) === -1) { // is the view public or requires to be logged 
@@ -96,11 +92,11 @@ class EmlakPosApp {
         if (this.last_response.header.result_code != 1) {
             this.displayMessage(this.last_response.header.result_message + " (" + this.last_response.header.result_code + ')');
         }
+
         // Redirect view if set in response
         if (this.last_response.header.redirect) {
-            return this.loginControl();
-            // console.log("Redirecting " + this.last_response.header.redirect)
-            // this.run(this.last_response.header.redirect);
+            console.log("Redirecting " + this.last_response.header.redirect)
+            this.run(this.last_response.header.redirect);
         }
 
     }
@@ -160,9 +156,9 @@ class EmlakPosApp {
 
     renderDashboard() {
         $("span#userinfo_name").html(
-            this.getFromLocal('user_info_firstname')
-            + " " + this.getFromLocal('user_info_lastname')
-        );
+                this.getFromLocal('user_info_firstname')
+                + " " + this.getFromLocal('user_info_lastname')
+                );
     }
 
     viewmodalexternal(url, header = false, footer = false) {
@@ -181,35 +177,12 @@ class EmlakPosApp {
     }
 
     viewmodal(content, header = false, footer = false) {
-        $("#main_modal_body").html(content).show();
-        if (header) {
-            $("#main_modal_header").html(header).show();
-        }
-        else {
-            $("#main_modal_header").hide();
-        }
-        if (footer) {
-            $("#main_modal_footer").html(footer).show();
-        }
-        else {
-            $("#main_modal_footer").hide();
-        }
-        $("#main_modal").modal();
+
     }
 
     displayError(message) {
-        this.loadTemplate('pages/informationpages/error', 'main_body', 'renderError', message);
-    }
-
-    popupError(message, status) {
-        document.getElementById("status_es").innerHTML = `
-        <div style="background:${status ? "green" : "red"}; text-align:center;">
-        <img src="img/icons/exclamation-diamond-fill.svg" class="bicon fullpage_alert_icon" id="fullpage_alert_icon">
-        <h5 style="color: #fff;" id="alert_view_header">${message}</h5>
-        </div>`
-        setTimeout(() => {
-            document.getElementById("status_es").innerHTML = ""
-        }, 3000);
+   //    $(window).scrollTop(0);
+       this.loadTemplate('pages/error', 'main_body', 'renderError', message);
     }
 
     renderError(message) {
@@ -217,8 +190,9 @@ class EmlakPosApp {
     }
 
     displayMessage(message) {
+        $(window).scrollTop(0);
         console.log("error message " + message);
-        this.loadTemplate('pages/informationpages/errormessage', 'main_messages', 'renderMessage', message);
+        this.loadTemplate('pages/errormessage', 'main_messages', 'renderMessage', message);
     }
 
     renderMessage(message) {
@@ -227,127 +201,38 @@ class EmlakPosApp {
     }
 
     viewnewpayment() {
-        this.loadTemplate('pages/dashboard/payment/newpayment', 'main_body');
+        this.loadTemplate('pages/newpayment', 'main_body');
     }
 
     viewnewpayment_options() {
-        this.loadTemplate('pages/dashboard/payment/newpayment_options', 'main_body');
+        this.loadTemplate('pages/newpayment_options', 'main_body');
     }
 
     viewcc_form() {
-        this.loadTemplate('pages/dashboard/payment/cc_form', 'main_body');
+        this.loadTemplate('pages/cc_form', 'main_body');
     }
 
     viewsend_email() {
-        this.loadTemplate('pages/dashboard/payment/paymentoptions/send_email', 'main_body');
+        this.loadTemplate('pages/send_email', 'main_body');
     }
 
     viewsend_sms() {
-        this.loadTemplate('pages/dashboard/payment/paymentoptions/send_sms', 'main_body');
+        this.loadTemplate('pages/send_sms', 'main_body');
     }
 
     viewqr_generate() {
-        this.loadTemplate('pages/dashboard/payment/paymentoptions/qr_generate', 'main_body');
+        this.loadTemplate('pages/qr_generate', 'main_body');
     }
 
+    /* START resigterCustomer "I'm a customer flow" */
+
     viewregister() {
-        this.loadTemplate('pages/register/register', 'main_body');
+        this.loadTemplate('pages/register', 'main_body');
     }
 
     viewregistercustomer() {
-        this.loadTemplate('pages/register/registercustomer', 'main_body');
+        this.loadTemplate('pages/registercustomer', 'main_body');
     }
-
-    viewregisternewcustomer() {
-        this.loadTemplate('pages/register/registernewcustomer', 'main_body');
-    }
-
-    viewregisternewcustomerauth() {
-        this.loadTemplate('pages/register/registernewcustomerauth', 'main_body');
-    }
-
-    viewregisternewcompany() {
-        this.loadTemplate('pages/register/registernewcompany', 'main_body');
-    }
-
-    viewlisttransactions() {
-        this.loadTemplate('pages/dashboard/listtransactions', 'main_body');
-    }
-
-    viewsmsvalidation() {
-        this.loadTemplate('pages/smsvalidation', 'main_body');
-    }
-
-    viewcashupz() {
-        this.loadTemplate('pages/dashboard/cashupz', 'main_body');
-    }
-
-    viewusermanagement() {
-        this.loadTemplate('pages/dashboard/usermanagement', 'main_body');
-    }
-
-    viewresetpassword() {
-        this.loadTemplate('pages/register/resetpassword', 'main_body');
-    }
-
-    loadTemplate(template, to = 'main', callback = false, data = false) {
-        console.log(this.pagesHistory)
-        if (!callback) {
-            $("#" + to + "").load(template + '.html');
-        } else {
-            $("#" + to + "").load(template + '.html', function () {
-                if (typeof app[callback] === "function") {
-                    app[callback](data);
-                }
-            });
-        }
-    }
-
-
-
-    backButton() {
-        this.run(this.pagesHistory[this.pagesHistory.length - 2])
-        this.pagesHistory.splice(this.pagesHistory.length - 1, 1)
-    }
-
-    formControl(id, page) {
-        let elements = document.getElementById(id);
-        let input = elements.getElementsByTagName("input");
-
-
-        for (let index = 0; index < input.length; index++) {
-
-            if (!input[index].value) {
-                this.popupError("Lütfen girdiğiniz bilgileri kontrol ediniz.", false)
-                return;
-            }
-
-            this.formDataArr[input[index].name] = input[index].value;
-            this.run(page);
-            console.log(this.formDataArr);
-        }
-    }
-
-    smsValidation() {
-        // It will be arranged to communicate with the api
-        if ($("#sms_code").val() == 123456) {
-            this.smsValidate = true;
-            return this.init();
-        }
-    }
-
-    loginControl() {
-        if (!this.isActive) {
-            return this.run('warning')
-        } else if (!this.smsValidate) {
-            return this.run('smsvalidation')
-        } else {
-            return this.run('dashboard');
-        }
-    }
-
-
-    /* START resigterCustomer "I'm a customer flow" */
 
     actionRegisterCustomer() {
         if (!ev.email("input#customer_email"))
@@ -410,6 +295,11 @@ class EmlakPosApp {
 
     }
 
+    viewregistercustomercompany() {
+        this.loadTemplate('pages/registercustomercompany', 'main_body');
+
+    }
+
     actionAddCompany() {
         $("div#main_messages").hide();
         if ($("input#customer_company").val().length < 3)
@@ -456,7 +346,7 @@ class EmlakPosApp {
     }
 
     viewregistercustomerfiles() {
-        this.loadTemplate('pages/register/registercustomerfiles', 'main_body');
+        this.loadTemplate('pages/registercustomerfiles', 'main_body');
     }
 
     actionRegisterCustomerFiles() {
@@ -489,7 +379,7 @@ class EmlakPosApp {
             reader.readAsDataURL(current_file);
         } else {
             return this.displayMessage(file_name + ' dosyasını kontrol ediniz.');
-        }
+    }
     }
 
     setFile(file_id, context, file_name) {
@@ -501,21 +391,21 @@ class EmlakPosApp {
             return this.displayMessage(file_name + ' dosyası çok büyük.');
         }
         this.uploadedfiles[file_id] = {
-            name: file.name,
+            name: file_name,
             type: file.type,
             size: file.size,
             file_context: context
         };
-        $("#" + file_id + "_info").text(file.name);
+        $("#"+file_id+"_info").text(file.name);
 
     }
 
     viewregistercustomercontact() {
-        this.loadTemplate('pages/register/registercustomercontact', 'main_body');
+        this.loadTemplate('pages/registercustomercontact', 'main_body');
     }
 
     viewregistercustomersms() {
-        this.loadTemplate('pages/register/registercustomersms', 'main_body', 'setsmscounter');
+        this.loadTemplate('pages/registercustomersms', 'main_body', 'setsmscounter');
     }
 
     setsmscounter() {
@@ -540,6 +430,9 @@ class EmlakPosApp {
     }
 
     /* START RegisterNewCustomer I want to be a customer  */
+    viewregisternewcustomer() {
+        this.loadTemplate('pages/registernewcustomer', 'main_body');
+    }
 
     actionRegisterNewCustomer() {
         if (!ev.mobilephone("input#registernewcustomer_phone"))
@@ -561,7 +454,7 @@ class EmlakPosApp {
     }
 
     viewregisternewcustomersms() {
-        this.loadTemplate('pages/register/registercustomersms', 'main_body');
+        this.loadTemplate('pages/registercustomersms', 'main_body');
     }
 
     actionRegisterCustomerSmsRequest() {
@@ -603,7 +496,7 @@ class EmlakPosApp {
     }
 
     viewregisternewcustomercomplete() {
-        this.loadTemplate('pages/register/registernewcustomercomplete', 'main_body');
+        this.loadTemplate('pages/registernewcustomercomplete', 'main_body');
     }
 
     actionRegisterNewCustomerComplete() {
@@ -621,12 +514,20 @@ class EmlakPosApp {
         ac.setCallAction('application/completenewcustomer');
         ac.callApi();
     }
-
+    
     viewregisternewcustomersuccess() {
-        this.loadTemplate('pages/register/registernewcustomersuccess', 'main_body');
+        this.loadTemplate('pages/registernewcustomersuccess', 'main_body');
     }
 
     /* END RegisterNewCustomer I want to be a customer  */
+
+    viewregisternewcompany() {
+        this.loadTemplate('pages/registernewcompany', 'main_body');
+    }
+
+    viewlisttransactions() {
+        this.loadTemplate('pages/listtransactions', 'main_body');
+    }
 
     loadTemplate(template, to = 'main', callback = false, data = false) {
         if (!callback) {
@@ -637,7 +538,11 @@ class EmlakPosApp {
                     app[callback](data);
                 }
             });
-        }
+    }
+    }
+
+    backButton() {
+        return this.run("dashboard");
     }
 
     // codes inside this function will be changed depending on the app platform
@@ -679,5 +584,37 @@ class EmlakPosApp {
         }
         return jsonObject;
     }
+    isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
 
+    ccFormatExpiry(e) {
+        var inputChar = String.fromCharCode(event.keyCode);
+        var code = event.keyCode;
+        var allowedKeys = [8];
+        if (allowedKeys.indexOf(code) !== -1) {
+            return;
+        }
+
+        event.target.value = event.target.value.replace(
+            /^([1-9]\/|[2-9])$/g, '0$1/'
+        ).replace(
+            /^(0[1-9]|1[0-2])$/g, '$1/'
+        ).replace(
+            /^([0-1])([3-9])$/g, '0$1/$2'
+        ).replace(
+            /^(0?[1-9]|1[0-2])([0-9]{2})$/g, '$1/$2'
+        ).replace(
+            /^([0]+)\/|[0]+$/g, '0'
+        ).replace(
+            /[^\d\/]|^[\/]*$/g, ''
+        ).replace(
+            /\/\//g, '/'
+        );
+    }
 }

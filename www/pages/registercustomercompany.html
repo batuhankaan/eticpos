@@ -1,0 +1,63 @@
+<div class="zone">
+    <div class="row center_item">
+	<div class="col-md-12 center_text">
+	    <h4 class="center_text">Firma Bilgileri</h4>
+	</div>
+    </div>
+
+    <div class="row spacing_10">
+	<div class="col-md-12">
+	    <input type="text" id="customer_company" placeholder="Firma Ünvanı" class="form-input">
+	    <div class="selectbox-container">
+			<!-- SERVIS İLE BAĞLANTI YAPILACAK -->
+		<select disabled id="customer_city" class="">
+		    <option>İl</option>
+		    <option selected value="istanbul">İstanbul</option>
+		</select>
+	    </div>
+	    <div class="selectbox-container">	   
+		<select disabled id="customer_town" class="">
+		    <option>İlçe</option>
+		    <option selected value="kadikoy">Kadıköy</option>
+		</select>
+		<!-- SERVIS İLE BAĞLANTI YAPILACAK -->
+	    </div>
+	    <div class="selectbox-container">
+		<select name="account" id="customer_address" >
+		    <option disabled="disabled">Adres</option>
+		    <option value="1">Bankaya kayıtlı adres 1</option>
+		    <option value="2">2</option>
+		    <option value="3">3</option>
+		</select>
+	    </div>
+	    <div class="selectbox-container">
+		<select name="account" id="customer_iban" >
+		    <option selected disabled>Hesap Numarası</option>
+		    <option value="1">Bankaya kayıtlı hesap no 1</option>
+		    <option value="2">2</option>
+		    <option value="3">3</option>
+		</select>
+		</div>
+		<!-- SERVIS İLE BAĞLANTI YAPILACAK -->
+	    <input disabled type="text" value="1234567890" placeholder="Vergi Dairesi"  id="customer_tax_info_office"  class="form-input">
+		<input disabled type="text" value="2154865989" placeholder="Vergi Numarası"  id="customer_tax_info_id"  class="form-input">
+		<!-- SERVIS İLE BAĞLANTI YAPILACAK -->
+	    <div class="selectbox-container">
+		<select name="account"  id="customer_mcc" >
+		    <option selected disabled>Kategori Kodu</option>
+		    <option value="1">1</option>
+		    <option value="2">2</option>
+		    <option value="3">3</option>
+		</select>
+	    </div>
+	</div>
+    </div>
+
+    <div class="row">
+	<div class="col-md-12">
+	    <button onclick="app.actionAddCompany();" class="form-green-button">
+		Devam
+	    </button>
+	</div>
+    </div>
+</div>

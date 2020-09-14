@@ -7,19 +7,30 @@
                 </div>
             </div>
             <div class="row">
-                <div id="registercustomercontact" class="col-md-12 mt-5">
-                    <div class="input-group mb-3">
-                        <input type="text" id="customer_firstname" class="form-input" placeholder="Adınız">
+                <div class="col-md-12 mt-5">
+                    <div class="input-group mb-3 selectbox-container">
+                        <select id="customer_firstname" class="">
+                            <option value="name"> Adınız</option>
+                            <option value="a"> A</option>
+                            <option value="b"> B</option>
+                        </select>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="text" id="customer_lastname" class="form-input" placeholder="Soyadınız">
+                    <div class="input-group mb-3 selectbox-container">
+                        <select id="customer_lastname" class="">
+                            <option value="surname"> Soyadınız</option>
+                            <option value="a"> A</option>
+                            <option value="b"> B</option>
+                        </select>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="number" id="customer_identification" class="form-input"
-                            placeholder="T.C. Kimlik No" errorMessage="Test">
+                    <div class="input-group mb-3 selectbox-container">
+                        <select id="customer_identification" class="">
+                            <option value="tc"> Tc Kimlik</option>
+                            <option value="a"> A</option>
+                            <option value="b"> B</option>
+                        </select>
                     </div>
                     Doğum Tarihiniz
-                    <div class="input-group mb-3 ">
+                    <div class="input-group mb-3 selectbox-container">
                         <input type="date" id="customer_birthday" class="form-input">
                     </div>
                     Cinsiyetiniz
@@ -41,15 +52,3 @@
         </div>
     </div>
 </div>
-
-<script>
-   const form = document.getElementById("registercustomercontact");
-
-   function getFormInputs(params) {
-       
-
-    // callApi();
-   }
-
-   console.log(form)
-</script>

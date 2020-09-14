@@ -1,0 +1,53 @@
+<div class="zone">
+    <div class="row center_item">
+        <div class="col-md-12 spacing_10 center_text">
+            <h4 class="center_text">Hızlı Ödeme</h4>
+        </div>
+    </div>
+
+    <div class="row spacing_10">
+        <div class="col-md-12">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">₺</span>
+                </div>
+                <input onkeypress="return app.isNumber(event)" type="text" pattern="\d*" maxlength="5" name="cc_amount" class="form-control form-control-lg"
+                    id="login_password" placeholder="Tutar">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="img/icons/person.svg" class="bicon-dark"></span>
+                </div>
+                <input type="text" name="cc_name" class="form-control" id="login_password"
+                    placeholder="Kart Üzerindeki İsim">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="img/icons/credit-card-2-front.svg"
+                            class="bicon-dark"></span>
+                </div>
+                <!-- KART FORMATLAMA EKLENECEK -->
+                <input onkeypress="return app.isNumber(event)" maxlength="16" type="text" pattern="\d*" name="cc_number" class="form-control" id="login_password" placeholder="Kart No">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="img/icons/credit-card-2-back.svg"
+                            class="bicon-dark"></span>
+                </div>
+                <input type="text" pattern="\d*" name="cc_cvv" maxlength="3" class="form-control" id="login_password" placeholder="Kart CVV">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="img/icons/calendar-date.svg" class="bicon-dark"></span>
+                </div>
+                <input type="text" onkeyup="return app.ccFormatExpiry(event)" pattern="\d*" name="cc_history" maxlength="7" class="form-control" id="login_password" placeholder="AA/YYYY">
+            </div>
+        </div>
+    </div>
+
+    <div class="row center_item">
+        <div class="col-md-12">
+            <button onclick="app.formControl('payment_form')" type="submit" class="form-green-button">
+                Ödeme
+            </button>
+        </div>
+    </div>
+</div>

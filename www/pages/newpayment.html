@@ -1,6 +1,6 @@
 <div class="zone">
     <div class="row center_item">
-        <div class="col-md-12 mt-5 center_text">
+        <div class="col-md-12 spacing_10 center_text">
             <h4 class="center_text">Hızlı Ödeme</h4>
         </div>
     </div>
@@ -12,57 +12,53 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><img src="img/icons/person.svg"></span>
                 </div>
-                <input type="text" name="name" class="form-control" placeholder="İsim Soyisim"
-                    errormessage="İsminizi ve soyisiminiz kontrol ediniz.">
+                <input type="text" name="name" class="form-control" placeholder="İsim Soyisim">
             </div>
 
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><img src="img/icons/mailbox.svg" class="bicon-dark"></span>
                 </div>
-                <input type="text" name="email" class="form-control" placeholder="E-Posta"
-                    errormessage="İsminizi ve soyisiminiz kontrol ediniz.">
+                <input type="text" name="email" class="form-control" placeholder="E-Posta">
             </div>
 
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><img src="img/icons/telephone.svg" class="bicon-dark"></span>
                 </div>
-                <input type="text" name="phone" class="form-control" placeholder="Telefon Numarası"
-                    errormessage="Telefon numaranızı kontrol ediniz.">
+                <input type="text" name="phone" class="form-control" placeholder="Telefon Numarası">
             </div>
 
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><img src="img/icons/credit-card-2-front.svg"
-                            class="bicon-dark"></span>
-                </div>
-                <input type="text" name="address" class="form-control" placeholder="Adres"
-                    errormessage="Adresinizi kontrol ediniz.">
-            </div>
             <legend>Ödeme Bilgileri</legend>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><img src="img/icons/paperclip.svg" class="bicon-dark"></span>
                 </div>
-                <input type="text" name="title" class="form-control" placeholder="Açıklama"
-                    errormessage="Açıklamayı kontrol ediniz.">
+                <input type="text" name="title" class="form-control" placeholder="Açıklama">
             </div>
 
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><img src="img/icons/cash.svg" class="bicon-dark"></span>
                 </div>
-                <input type="text" name="amount" class="form-control" placeholder="Tutar"
-                    errormessage="Tutarı kontrol ediniz.">
+                <input type="text" name="amount" class="form-control" placeholder="Tutar">
+            </div>
+            <div class="selectbox-container">
+                <!-- SERVIS İLE BAĞLANTI YAPILACAK -->
+            <select id="customer_city" class="">
+                <option>Ödeme Türü</option>
+                <option value="qr_generate">QR Kodu Oluştur</option>
+                <option value="send_sms">Sms İle Gönder</option>
+                <option value="send_email">E-Mail ile Gönder</option>
+                <option value="cc_form">Kredi Kartı İle Öde</option>
+            </select>
             </div>
         </div>
     </div>
 
     <div class="row center_item">
         <div class="col-md-12">
-            <button onclick="app.formControl('payment','newpayment_options',app.tester())" type="submit"
-                class="form-green-button">
+            <button onclick="app.run($('#customer_city')[0].value)" type="submit" class="form-green-button">
                 Ödeme
             </button>
         </div>

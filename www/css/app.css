@@ -283,22 +283,22 @@ div.alert img.bicon{
 }
 
 .fullpage_alert_error{
-    background: linear-gradient(to top, #b30f0f 53%, #e5f5f7 95%);
-    }
-    
-    .fullpage_alert_warning{
-        background: linear-gradient(to top, #d8d21a 53%, #e5f5f7 95%);
-        color: #333;
-    }
-    
-    .fullpage_alert_info{
-        background: linear-gradient(to bottom, #e5f4f6 1%, #005baa 38%);
-    }
-    
-    .fullpage_alert_success{
-        background: linear-gradient(to top, #35f109, #e6f5f6);
-        color: #333;
-    }
+background: linear-gradient(to top, #b30f0f 53%, #e5f5f7 95%);
+}
+
+.fullpage_alert_warning{
+    background: linear-gradient(to top, #d8d21a 53%, #e5f5f7 95%);
+    color: #333;
+}
+
+.fullpage_alert_info{
+    background: linear-gradient(to bottom, #e5f4f6 1%, #005baa 38%);
+}
+
+.fullpage_alert_success{
+	background: linear-gradient(to top, #35f109, #e6f5f6);
+    color: #333;
+}
 
 .fullpage_alert img.fullpage_alert_icon{
     width: 100px;
@@ -319,11 +319,27 @@ div.alert img.bicon{
 
 
 /* BK */
+
+.spacing_10{
+    margin:10% 0%;
+}
+
+.spacing_5{
+    margin:5% 0%;
+}
+
 .center_text{
     text-align:center;
 }
 
+.height_100{
+    height: 100%;
+}
 
 .margin_auto{
     margin:auto;
+}
+
+.fileupload{
+    
 }
