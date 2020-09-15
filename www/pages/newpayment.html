@@ -5,8 +5,8 @@
         </div>
     </div>
 
-    <div id="payment" class="row ">
-        <div class="col-md-12">
+    <div class="row ">
+        <div id="payment" class="col-md-12">
             <legend>Alıcı Bilgileri</legend>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -19,14 +19,14 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><img src="img/icons/mailbox.svg" class="bicon-dark"></span>
                 </div>
-                <input type="text" name="email" class="form-control" placeholder="E-Posta">
+                <input type="email" name="email" class="form-control" placeholder="E-Posta">
             </div>
 
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><img src="img/icons/telephone.svg" class="bicon-dark"></span>
                 </div>
-                <input type="text" name="phone" class="form-control" placeholder="Telefon Numarası">
+                <input type="tel" maxlength="11" name="phone" class="form-control" placeholder="Telefon Numarası">
             </div>
 
             <legend>Ödeme Bilgileri</legend>
@@ -41,12 +41,11 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><img src="img/icons/cash.svg" class="bicon-dark"></span>
                 </div>
-                <input type="text" name="amount" class="form-control" placeholder="Tutar">
+                <input type="tel" name="amount" class="form-control" placeholder="Tutar">
             </div>
             <div class="selectbox-container">
                 <!-- SERVIS İLE BAĞLANTI YAPILACAK -->
             <select id="customer_city" class="">
-                <option>Ödeme Türü</option>
                 <option value="qr_generate">QR Kodu Oluştur</option>
                 <option value="send_sms">Sms İle Gönder</option>
                 <option value="send_email">E-Mail ile Gönder</option>
@@ -58,7 +57,7 @@
 
     <div class="row center_item">
         <div class="col-md-12">
-            <button onclick="app.run($('#customer_city')[0].value)" type="submit" class="form-green-button">
+            <button onclick="app.formControl('payment',$('#customer_city')[0].value)" type="submit" class="form-green-button">
                 Ödeme
             </button>
         </div>

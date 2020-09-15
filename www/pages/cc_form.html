@@ -6,12 +6,12 @@
     </div>
 
     <div class="row spacing_10">
-        <div class="col-md-12">
+        <div id="fastpayment_form" class="col-md-12">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">₺</span>
                 </div>
-                <input onkeypress="return app.isNumber(event)" type="text" pattern="\d*" maxlength="5" name="cc_amount" class="form-control form-control-lg"
+                <input onkeypress="return app.isNumber(event)" type="tel" pattern="\d*" maxlength="5" name="cc_amount" class="form-control form-control-lg"
                     id="login_password" placeholder="Tutar">
             </div>
             <div class="input-group mb-3">
@@ -27,25 +27,25 @@
                             class="bicon-dark"></span>
                 </div>
                 <!-- KART FORMATLAMA EKLENECEK -->
-                <input onkeypress="return app.isNumber(event)" maxlength="16" type="text" pattern="\d*" name="cc_number" class="form-control" id="login_password" placeholder="Kart No">
+                <input onkeypress="return app.isNumber(event)" maxlength="16" type="tel" pattern="\d*" name="cc_number" class="form-control" id="login_password" placeholder="Kart No">
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><img src="img/icons/credit-card-2-back.svg"
                             class="bicon-dark"></span>
                 </div>
-                <input type="text" pattern="\d*" name="cc_cvv" maxlength="3" class="form-control" id="login_password" placeholder="Kart CVV">
+                <input type="tel" pattern="\d*" name="cc_cvv" maxlength="3" class="form-control" id="login_password" placeholder="Kart CVV">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><img src="img/icons/calendar-date.svg" class="bicon-dark"></span>
                 </div>
-                <input type="text" onkeyup="return app.ccFormatExpiry(event)" pattern="\d*" name="cc_history" maxlength="7" class="form-control" id="login_password" placeholder="AA/YYYY">
+                <input type="tel" onkeyup="return app.ccFormatExpiry(event)" pattern="\d*" name="cc_history" maxlength="7" class="form-control" id="login_password" placeholder="AA/YYYY">
             </div>
         </div>
     </div>
 
     <div class="row center_item">
         <div class="col-md-12">
-            <button onclick="app.formControl('payment_form')" type="submit" class="form-green-button">
+            <button onclick="app.formControl('fastpayment_form')" type="submit" class="form-green-button">
                 Ödeme
             </button>
         </div>

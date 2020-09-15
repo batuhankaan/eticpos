@@ -36,6 +36,11 @@ class EmlakPosApp {
             'resetpassword',
             'error'
         ];
+        this.pagesHistory = new Array();
+        this.back_buttonDisplay = [
+            'login',
+            'dashboard',
+        ]
 
         this.defines = {
             external_content: {
@@ -55,6 +60,10 @@ class EmlakPosApp {
 
     run(view) {
         
+        this.back_buttonDisplay.includes(view) ? $("#back_button").hide() : $("#back_button").show();
+        this.pagesHistory.includes(view) ? null : this.pagesHistory.push(view)
+        // this.pagesHistory.includes('dashboard') ? this.pagesHistory.splice(this.pagesHistory.indexOf('login'),1) : null
+        // Giriş yaptıktan sonra bug düzenlenecek
         this.view = view;
         
         console.log("App::run(" + view + ")");
@@ -177,7 +186,20 @@ class EmlakPosApp {
     }
 
     viewmodal(content, header = false, footer = false) {
-
+        $("#main_modal_body").html(content).show();
+        if (header) {
+            $("#main_modal_header").html(header).show();
+        }
+        else {
+            $("#main_modal_header").hide();
+        }
+        if (footer) {
+            $("#main_modal_footer").html(footer).show();
+        }
+        else {
+            $("#main_modal_footer").hide();
+        }
+        $("#main_modal").modal();
     }
 
     displayError(message) {
@@ -198,6 +220,9 @@ class EmlakPosApp {
     renderMessage(message) {
         $("div#error_container").append(message);
         $("div#main_messages").show();
+        setTimeout(() => {
+            $("div#main_messages").hide();
+        }, 3000);
     }
 
     viewnewpayment() {
@@ -541,10 +566,6 @@ class EmlakPosApp {
     }
     }
 
-    backButton() {
-        return this.run("dashboard");
-    }
-
     // codes inside this function will be changed depending on the app platform
     // currently it is saving to browser local storage
     saveToLocal(key, value) {
@@ -617,4 +638,36 @@ class EmlakPosApp {
             /\/\//g, '/'
         );
     }
+    backButton() {
+        // this.loadTemplate(this.pagesHistory[this.pagesHistory.length - 2], 'main_body')
+        this.run(this.pagesHistory[this.pagesHistory.length - 2])
+        this.pagesHistory.splice(this.pagesHistory.length - 1, 1)
+    }
+
+    formControl(id, page = null) {
+        let elements = document.getElementById(id);
+        let input = elements.getElementsByTagName("input");
+
+
+        for (let index = 0; index < input.length; index++) {
+            if (!input[index].value) {
+                this.displayMessage("Lütfen girdiğiniz bilgileri kontrol ediniz.")
+                // console.log("eksik bilgiler var")
+                return;
+            }
+
+            this.formDataArr[input[index].name] = input[index].value;
+            this.run(page);
+            console.log(this.formDataArr);
+        }
+    }
+
+    viewcashupz() {
+        this.loadTemplate('pages/cashupz', 'main_body');
+    }
+
+    viewusermanagement() {
+        this.loadTemplate('pages/usermanagement', 'main_body');
+    }
+
 }

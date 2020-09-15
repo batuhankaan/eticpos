@@ -9,16 +9,15 @@
             <div class="row">
                 <div class="col-md-12 mt-5">
                     <div class="input-group mb-3">
-                        <input type="number" id="customer_cid" class="form-input"
-                            placeholder="Kimlik No veya Vergi No">
+                        <input onkeypress="return app.isNumber(event)" type="tel" maxlength="11" id="customer_cid"
+                            class="form-input" placeholder="Kimlik No veya Vergi No">
                     </div>
                     <div class="input-group mb-3">
-                        <input type="number" id="customer_phone" class="form-input"
-                            placeholder="Cep Telefonu">
+                        <input onkeypress="return app.isNumber(event)" type="tel" maxlength="11" id="customer_phone"
+                            class="form-input" placeholder="Cep Telefonu">
                     </div>
                     <div class="input-group mb-3">
-                        <input type="email" class="form-input" id="customer_email"
-                            placeholder="E-posta">
+                        <input type="email" class="form-input" id="customer_email" placeholder="E-posta">
                     </div>
                     <div>
                         <div class="mb-3 mt-2">
@@ -26,8 +25,9 @@
                                 <label class="checkbox-button-container">Kullanıcı Sözleşmesi
                                     <input type="checkbox" id="checkbox_tos">
                                     <span class="checkbox-button-checkmark"></span>
-                                    <a onclick="app.viewmodalexternal(app.defines.external_content.tos, 'Kullanıcı Sözleşmesi')"><img
-                                        src="img/icons/link.svg"></a>
+                                    <a
+                                        onclick="app.viewmodalexternal(app.defines.external_content.tos, 'Kullanıcı Sözleşmesi')"><img
+                                            src="img/icons/link.svg"></a>
                                 </label>
                             </div>
                         </div>
@@ -37,8 +37,8 @@
                                     <input type="checkbox" id="checkbox_kvkk">
                                     <span class="checkbox-button-checkmark"></span>
                                     <a
-                                    onclick="app.viewmodalexternal(app.defines.external_content.tos, 'KVKK Aydınlatma Metni')"><img
-                                        src="img/icons/link.svg"></a>
+                                        onclick="app.viewmodalexternal(app.defines.external_content.tos, 'KVKK Aydınlatma Metni')"><img
+                                            src="img/icons/link.svg"></a>
                                 </label>
                             </div>
                         </div>
@@ -48,8 +48,8 @@
                                     <input type="checkbox" id="checkbox_kvkk2">
                                     <span class="checkbox-button-checkmark"></span>
                                     <a
-                                    onclick="app.viewmodalexternal(app.defines.external_content.tos, 'KVKK Açık Rıza Sözleşmesi')"><img
-                                        src="img/icons/link.svg"></a>
+                                        onclick="app.viewmodalexternal(app.defines.external_content.tos, 'KVKK Açık Rıza Sözleşmesi')"><img
+                                            src="img/icons/link.svg"></a>
                                 </label>
                             </div>
                         </div>
@@ -59,8 +59,8 @@
                                     <input type="checkbox" id="checkbox_pfc" value="1">
                                     <span class="checkbox-button-checkmark"></span>
                                     <a
-                                    onclick="app.viewmodalexternal(app.defines.external_content.tos, 'Çerçeve Sözleşmesi')"><img
-                                        src="img/icons/link.svg"></a>
+                                        onclick="app.viewmodalexternal(app.defines.external_content.tos, 'Çerçeve Sözleşmesi')"><img
+                                            src="img/icons/link.svg"></a>
                                 </label>
                             </div>
                         </div>
@@ -70,8 +70,8 @@
                                     <input type="checkbox" id="checkbox_subs">
                                     <span class="checkbox-button-checkmark"></span>
                                     <a
-                                    onclick="app.viewmodalexternal(app.defines.external_content.tos, 'Kampanyalardan Haberdar Ol')"><img
-                                        src="img/icons/link.svg"></a>
+                                        onclick="app.viewmodalexternal(app.defines.external_content.tos, 'Kampanyalardan Haberdar Ol')"><img
+                                            src="img/icons/link.svg"></a>
                                 </label>
                             </div>
                         </div>
