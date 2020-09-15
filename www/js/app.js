@@ -300,20 +300,20 @@ class EmlakPosApp {
 
     actionAddContact() {
         $("div#main_messages").hide();
-        if ($("input#customer_firstname").val().length < 3)
-            return this.displayMessage('Adınızı kontrol ediniz.');
-        if ($("input#customer_lastname").val().length < 3)
-            return this.displayMessage('Soyadınızı kontrol ediniz.');
-        if ($("input#customer_identification").val().length !== 11)
-            return this.displayMessage('Kimlik numaranızı kontrol ediniz.');
+        // if ($("input#customer_firstname").val().length < 3)
+        //     return this.displayMessage('Adınızı kontrol ediniz.');
+        // if ($("input#customer_lastname").val().length < 3)
+        //     return this.displayMessage('Soyadınızı kontrol ediniz.');
+        // if ($("input#customer_identification").val().length !== 11)
+        //     return this.displayMessage('Kimlik numaranızı kontrol ediniz.');
 
         ac.clearHeadParams();
         ac.clearRequestParams();
         ac.setRequestDataParam('id_application', this.getFromLocal('id_application'));
         ac.setRequestDataParam('application_key', this.getFromLocal('application_key'));
-        ac.setRequestDataParam('firstname', $("input#customer_firstname").val());
-        ac.setRequestDataParam('lastname', $("input#customer_lastname").val());
-        ac.setRequestDataParam('identification', $("input#customer_identification").val());
+        ac.setRequestDataParam('firstname', $("#customer_firstname")[0].value);
+        ac.setRequestDataParam('lastname', $("#customer_lastname")[0].value);
+        ac.setRequestDataParam('identification', $("#customer_identification")[0].value);
         ac.setRequestDataParam('birthday', $("input#customer_birthday").val());
         ac.setCallAction('application/addcontact');
         ac.callApi();
