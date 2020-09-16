@@ -203,8 +203,16 @@ class EmlakPosApp {
     }
 
     displayError(message) {
-   //    $(window).scrollTop(0);
+       $(window).scrollTop(0);
        this.loadTemplate('pages/error', 'main_body', 'renderError', message);
+    }
+    displayWarning(message) {
+       $(window).scrollTop(0);
+       this.loadTemplate('pages/warning', 'main_body', 'renderError', message);
+    }
+    displaySuccess(message) {
+       $(window).scrollTop(0);
+       this.loadTemplate('pages/success', 'main_body', 'renderError', message);
     }
 
     renderError(message) {
@@ -220,9 +228,6 @@ class EmlakPosApp {
     renderMessage(message) {
         $("div#error_container").append(message);
         $("div#main_messages").show();
-        setTimeout(() => {
-            $("div#main_messages").hide();
-        }, 3000);
     }
 
     viewnewpayment() {
@@ -249,11 +254,16 @@ class EmlakPosApp {
         this.loadTemplate('pages/qr_generate', 'main_body');
     }
 
-    /* START resigterCustomer "I'm a customer flow" */
 
     viewregister() {
+		if(this.getFromLocal('id_application') && this.getFromLocal('application_status')&& this.getFromLocal('application_key')){
+			let message = 'Bu cihazla yapılmış bir başvuru var. Bu başvurunun durumunu sorgulamak için '
+			+ '<button class="form-green-button" onclick="app.actionGetApplicationStatus()"> buraya dokunun </button>. ';
+			return this.displayWarning(message);
+		}
         this.loadTemplate('pages/register', 'main_body');
     }
+    /* START resigterCustomer "I'm a customer flow" */
 
     viewregistercustomer() {
         this.loadTemplate('pages/registercustomer', 'main_body');
@@ -300,69 +310,80 @@ class EmlakPosApp {
 
     actionAddContact() {
         $("div#main_messages").hide();
-        // if ($("input#customer_firstname").val().length < 3)
-        //     return this.displayMessage('Adınızı kontrol ediniz.');
-        // if ($("input#customer_lastname").val().length < 3)
-        //     return this.displayMessage('Soyadınızı kontrol ediniz.');
-        // if ($("input#customer_identification").val().length !== 11)
-        //     return this.displayMessage('Kimlik numaranızı kontrol ediniz.');
+        if (!$("select#id_person").val())
+            return this.displayMessage('Adınızı kontrol ediniz.');
 
         ac.clearHeadParams();
         ac.clearRequestParams();
         ac.setRequestDataParam('id_application', this.getFromLocal('id_application'));
         ac.setRequestDataParam('application_key', this.getFromLocal('application_key'));
-        ac.setRequestDataParam('firstname', $("#customer_firstname")[0].value);
-        ac.setRequestDataParam('lastname', $("#customer_lastname")[0].value);
-        ac.setRequestDataParam('identification', $("#customer_identification")[0].value);
-        ac.setRequestDataParam('birthday', $("input#customer_birthday").val());
+        ac.setRequestDataParam('id_person', $("select#id_person").val());
         ac.setCallAction('application/addcontact');
         ac.callApi();
 
     }
 
     viewregistercustomercompany() {
-        this.loadTemplate('pages/registercustomercompany', 'main_body');
+        this.loadTemplate('pages/registercustomercompany', 'main_body', 'renderregistercompany');
 
     }
+	
+	renderregistercompany(){
+		$.each(app.last_response.data.Firm.AddressList, function(key, value) {   
+		$('select#company_address')
+			.append($("<option></option>")
+					.attr("value", value.AddressId)
+					.text(value.Location)); 
+		});
+		$.each(app.last_response.data.Firm.AccountList, function(key, value) {   
+		$('select#company_account')
+			.append($("<option></option>")
+					.attr("value", value.AccountNumber)
+					.text(value.AccountName)); 
+		});
+	}
 
     actionAddCompany() {
         $("div#main_messages").hide();
-        if ($("input#customer_company").val().length < 3)
-            return this.displayMessage('İşyeri ünvanınızı kontrol ediniz.');
+		
+        if (!$("select#company_account"))
+            return this.displayMessage('Bağlı hesap seçiminizi kontrol ediniz.');
+        if (!$("select#company_address").val())
+            return this.displayMessage('Adres seçiminizi kontrol ediniz.');
+        if (!$("select#customer_mcc").val())
+            return this.displayMessage('Kategori seçiminizi kontrol ediniz.');
+		
+        // if ($("input#customer_company").val().length < 3)
+            // return this.displayMessage('İşyeri ünvanınızı kontrol ediniz.');
 
-        if ($("select#customer_city").val().length < 3)
-            return this.displayMessage('Şehir bilgisini kontrol ediniz.');
+        // if ($("select#customer_city").val().length < 3)
+            // return this.displayMessage('Şehir bilgisini kontrol ediniz.');
 
-        if ($("select#customer_town").val().length < 3)
-            return this.displayMessage('İlçe bilgisini kontrol ediniz.');
+        // if ($("select#customer_town").val().length < 3)
+            // return this.displayMessage('İlçe bilgisini kontrol ediniz.');
 
-        if ($("select#customer_address").val() === null)
-            return this.displayMessage('Adresinizi kontrol ediniz.');
+        // if ($("select#customer_address").val() === null)
+            // return this.displayMessage('Adresinizi kontrol ediniz.');
 
-        if ($("select#customer_iban").val() === null)
-            return this.displayMessage('Hesap numarasını kontrol ediniz.');
+        // if ($("select#customer_iban").val() === null)
+            // return this.displayMessage('Hesap numarasını kontrol ediniz.');
 
-        if ($("input#customer_tax_info_office").val().length < 3)
-            return this.displayMessage('Vergi dairesini kontrol ediniz.');
+        // if ($("input#customer_tax_info_office").val().length < 3)
+            // return this.displayMessage('Vergi dairesini kontrol ediniz.');
 
-        if ($("input#customer_tax_info_id").val().length !== 10)
-            return this.displayMessage('Vergi numarasını kontrol ediniz.');
+        // if ($("input#customer_tax_info_id").val().length !== 10)
+            // return this.displayMessage('Vergi numarasını kontrol ediniz.');
 
-        if (!$("select#customer_mcc").val() === null)
-            return this.displayMessage('Kategori kodunuzu kontrol ediniz.');
+        // if (!$("select#customer_mcc").val() === null)
+            // return this.displayMessage('Kategori kodunuzu kontrol ediniz.');
 
         ac.clearHeadParams();
         ac.clearRequestParams();
         ac.setRequestDataParam('id_application', this.getFromLocal('id_application'));
         ac.setRequestDataParam('application_key', this.getFromLocal('application_key'));
 
-        ac.setRequestDataParam('company', $("input#customer_company").val());
-        ac.setRequestDataParam('city', $("select#customer_city").val());
-        ac.setRequestDataParam('town', $("select#customer_town").val());
-        ac.setRequestDataParam('address', $("select#customer_address").val());
-        ac.setRequestDataParam('iban', $("select#customer_iban").val());
-        ac.setRequestDataParam('tax_info_office', $("input#customer_tax_info_office").val());
-        ac.setRequestDataParam('tax_info_id', $("input#customer_tax_info_id").val());
+        ac.setRequestDataParam('id_address', $("select#company_address").val());
+        ac.setRequestDataParam('id_account', $("select#company_account").val());
         ac.setRequestDataParam('mcc', $("select#customer_mcc").val());
 
         ac.setCallAction('application/addcompany');
@@ -417,6 +438,7 @@ class EmlakPosApp {
         }
         this.uploadedfiles[file_id] = {
             name: file_name,
+            oname: file.name,
             type: file.type,
             size: file.size,
             file_context: context
@@ -426,8 +448,18 @@ class EmlakPosApp {
     }
 
     viewregistercustomercontact() {
-        this.loadTemplate('pages/registercustomercontact', 'main_body');
+        this.loadTemplate('pages/registercustomercontact', 'main_body', 'rendercustomercontact');
     }
+	
+	rendercustomercontact(){
+		$.each(app.last_response.data.person, function(key, value) {   
+		$('select#id_person')
+			.append($("<option></option>")
+					.attr("value", key)
+					.text(value.NameAndSurname)); 
+		});
+
+	}
 
     viewregistercustomersms() {
         this.loadTemplate('pages/registercustomersms', 'main_body', 'setsmscounter');
