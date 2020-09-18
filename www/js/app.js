@@ -129,6 +129,10 @@ class EmlakPosApp {
         this.loadTemplate('pages/login', 'main_body', 'renderLogin');
     }
 
+    viewresetpassword() {
+        this.loadTemplate('pages/resetpassword', 'main_body',);
+    }
+
     renderLogin() {
         $("#login_phone").val(this.getFromLocal('user_info_login_phone'));
     }
@@ -756,6 +760,10 @@ class EmlakPosApp {
 
     viewusermanagement() {
         this.loadTemplate('pages/usermanagement', 'main_body');
+    }
+
+    viewhelp() {
+        this.loadTemplate('pages/help', 'main_body',);
     }
 
 }
