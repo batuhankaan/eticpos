@@ -11,14 +11,14 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">₺</span>
                 </div>
-                <input onkeypress="return app.isNumber(event)" type="tel" pattern="\d*" maxlength="5" name="cc_amount" class="form-control form-control-lg"
-                    id="login_password" placeholder="Tutar">
+                <input onkeypress="return app.isNumber(event)" value="" id="cc_amount" type="tel" pattern="\d*"
+                    maxlength="5" name="cc_amount" class="form-control form-control-lg" placeholder="Tutar">
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><img src="img/icons/person.svg" class="bicon-dark"></span>
                 </div>
-                <input type="text" name="cc_name" class="form-control" id="login_password"
+                <input type="text" id="cc_name" value="" name="cc_name" class="form-control"
                     placeholder="Kart Üzerindeki İsim">
             </div>
             <div class="input-group mb-3">
@@ -27,18 +27,20 @@
                             class="bicon-dark"></span>
                 </div>
                 <!-- KART FORMATLAMA EKLENECEK -->
-                <input onkeypress="return app.isNumber(event)" maxlength="16" type="tel" pattern="\d*" name="cc_number" class="form-control" id="login_password" placeholder="Kart No">
+                <input onkeypress="return app.isNumber(event)" maxlength="16" type="tel" pattern="\d*" name="cc_number"
+                    class="form-control" placeholder="Kart No">
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><img src="img/icons/credit-card-2-back.svg"
                             class="bicon-dark"></span>
                 </div>
-                <input type="tel" pattern="\d*" name="cc_cvv" maxlength="3" class="form-control" id="login_password" placeholder="Kart CVV">
+                <input type="tel" pattern="\d*" name="cc_cvv" maxlength="3" class="form-control" placeholder="Kart CVV">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><img src="img/icons/calendar-date.svg" class="bicon-dark"></span>
                 </div>
-                <input type="tel" onkeyup="return app.ccFormatExpiry(event)" pattern="\d*" name="cc_history" maxlength="7" class="form-control" id="login_password" placeholder="AA/YYYY">
+                <input type="tel" onkeyup="return app.ccFormatExpiry(event)" pattern="\d*" name="cc_history"
+                    maxlength="7" class="form-control" placeholder="AA/YYYY">
             </div>
         </div>
     </div>
@@ -51,3 +53,9 @@
         </div>
     </div>
 </div>
+<script>
+    if (app.formDataArr.name && app.formDataArr.amount) {
+        $('#cc_amount')[0].value = app.formDataArr.amount;
+        $('#cc_name')[0].value = app.formDataArr.name;
+    }
+</script>

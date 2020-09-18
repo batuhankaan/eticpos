@@ -4,7 +4,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"><img src="img/icons/person.svg" class="bicon-dark"></span>
             </div>
-            <input type="tel" name="cc_name" class="form-control" id="login_password" placeholder="Telefon Numarası">
+            <input type="tel" name="sendpayment_sms" value="" class="form-control" id="sendpayment_sms" placeholder="Telefon Numarası">
         </div>
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
@@ -13,3 +13,6 @@
         </div>
     </div>
 </div>
+<script>
+$('#sendpayment_sms')[0].value = app.formDataArr.phone;
+</script>

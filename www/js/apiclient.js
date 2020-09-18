@@ -27,10 +27,9 @@ class EmlakPosApiClient {
             }
         };
         this.device_id = false;
-        // this.api_base = 'http://localhost/wtf/apps/api/?/mobil/v2/';
+
        this.api_base = 'https://mobilapi.eticsoft.net/api/?/mobil/v2/';
-
-
+       
         this.headers = {
             'Content-Type': 'application/x-www-form-urlencoded'
                     //  'x-requested-with': 'eticsoft-pfcs' 

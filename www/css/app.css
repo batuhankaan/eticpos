@@ -292,7 +292,8 @@ background: linear-gradient(to top, #b30f0f 53%, #e5f5f7 95%);
 }
 
 .fullpage_alert_info{
-    background: linear-gradient(to bottom, #e5f4f6 1%, #005baa 38%);
+    background: linear-gradient(to top, #8dbfcf 51%, #e7f5f7 97%);
+    color: #113;
 }
 
 .fullpage_alert_success{

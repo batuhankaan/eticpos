@@ -7,19 +7,13 @@ class EmlakPosUserData {
 
     }
 
-
-
-    pastTransaction() {
-        // this.saveToLocal('user_info_login_phone', $("input#login_phone").val());
-        ac.clearHeadParams();
-        ac.clearRequestParams()
-        // ac.setHeadParam('phone', $("input#login_phone").val());
-        // ac.setHeadParam('password', $("input#login_password").val());
-        ac.setCallAction('merchant/get/1');
-        ac.callApi();
-        // console.log(this)
-        // return;
-        // return tes
-    }
+    // pastTransaction() {
+    //     ac.clearHeadParams();
+    //     ac.clearRequestParams()
+    //     ac.setRequestDataParam('email', $("input#customer_email").val());
+    //     ac.setCallAction('merchant/get/1');
+    //     ac.callApi();
+    //     return;
+    // }
 
 }
