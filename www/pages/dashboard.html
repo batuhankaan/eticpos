@@ -99,6 +99,9 @@
     <button onclick="app.run('newpayment');" class="form-blue-button">
         Yeni Ödeme Formu
     </button>
+    <button onclick="app.run('newpaymentstep');" class="form-blue-button">
+        Yeni Ödeme Formu(Yenilenmiş)
+    </button>
     <button onclick="app.run('listtransactions');" class="form-blue-button">
         Geçmiş İşlemler
     </button>
@@ -114,6 +117,5 @@
     <a class="nav-link" href="#" onclick="app.actionLogout();" tabindex="-1" aria-disabled="true">Çıkış</a>
 </div>
 <script>
-    location.reload();
-    return;
+    app.pagesHistory = ["dashboard"];
 </script>
