@@ -1,7 +1,7 @@
 /* BUTTON */
 
 .form-green-button {	
-    background-image: radial-gradient(27% 37% at top ,#2faa6b 77%,#3b6467 167%, #3b6467 36%);
+    background-image: radial-gradient(28% 22% at top ,#41a113 142%,#1e7900 154%, #277900 29%);
     border-radius: 10px;
     border-radius: 10px;
     border: 1px solid #2faa6b;
@@ -17,7 +17,8 @@
     box-shadow: inset 0px 10px 0px rgba(0,0,0,0.5); */
   }
   .form-blue-button {
-    background-image: radial-gradient(47% 67% at top ,#397e9e 61%,#3b6467 92%);    border-radius: 10px;
+    background-image: radial-gradient(28% 22% at top ,#137da1 142%,#005179 154%, #005279 29%);  
+    border-radius: 10px;
     border: 1px solid #6998b0;
     width: 100%;
     cursor: pointer;
@@ -41,12 +42,15 @@
   
   /* INPUT */
   
-  .form-input {
-    width: 100%;
-    background:none;
+ .form-input, input.form-control {
+width: 100%;
+    background: none;
     border: none;
     border-bottom: 2px solid #00476e2e;
-    margin:10px 0px 10px 0px;
+    margin: 5px 0px 5px 0px;
+    font-size: 1em;
+    /* text-align: center; */
+    color: #005078;
   }
   
   /* INPUT */

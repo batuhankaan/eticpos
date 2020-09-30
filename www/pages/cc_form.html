@@ -1,61 +1,50 @@
 <div class="zone">
     <div class="row center_item">
-        <div class="col-md-12 spacing_10 center_text">
-            <h4 class="center_text">Hızlı Ödeme</h4>
-        </div>
+	<div class="col-md-12 m-4 center_text">
+	    <h4 class="center_text">Hızlı Ödeme</h4>
+	</div>
     </div>
 
-    <div class="row spacing_10">
-        <div id="fastpayment_form" class="col-md-12">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">₺</span>
-                </div>
-                <input onkeypress="return app.isNumber(event)" value="" id="cc_amount" type="tel" pattern="\d*"
-                    maxlength="5" name="cc_amount" class="form-control form-control-lg" placeholder="Tutar">
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><img src="img/icons/person.svg" class="bicon-dark"></span>
-                </div>
-                <input type="text" id="cc_name" value="" name="cc_name" class="form-control"
-                    placeholder="Kart Üzerindeki İsim">
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><img src="img/icons/credit-card-2-front.svg"
-                            class="bicon-dark"></span>
-                </div>
-                <!-- KART FORMATLAMA EKLENECEK -->
-                <input onkeypress="return app.isNumber(event)" maxlength="16" type="tel" pattern="\d*" name="cc_number"
-                    class="form-control" placeholder="Kart No">
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><img src="img/icons/credit-card-2-back.svg"
-                            class="bicon-dark"></span>
-                </div>
-                <input type="tel" pattern="\d*" name="cc_cvv" maxlength="3" class="form-control" placeholder="Kart CVV">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><img src="img/icons/calendar-date.svg" class="bicon-dark"></span>
-                </div>
-                <input type="tel" onkeyup="return app.ccFormatExpiry(event)" pattern="\d*" name="cc_history"
-                    maxlength="7" class="form-control" placeholder="AA/YYYY">
-            </div>
-        </div>
+    <div class="row">
+	<div id="fastpayment_form" class="col-md-12">
+	    <div class="input-group mb-3">
+		<div class="input-group-prepend">
+		    <span class="input-group-text"><img src="img/icons/wallet2.svg" class="bicon"></span>
+		</div>
+		<input  type="number" value="10.00" step="0.01" id="cc_amount" maxlength="7" name="cc_amount" class="form-control form-control-lg" placeholder="Tutar"/>
+	    </div>
+	    <div class="input-group mb-3">
+		<div class="input-group-prepend">
+		    <span class="input-group-text"><img src="img/icons/person.svg" class="bicon"></span>
+		</div>
+		<input type="text" class="form-control" id="cc_name" placeholder="Kart Üzerindeki İsim">
+	    </div>
+	    <div class="input-group mb-3">
+		<div class="input-group-prepend">
+		    <span class="input-group-text"><img src="img/icons/credit-card-2-front.svg"
+							class="bicon"></span>
+		</div>
+		<!-- KART FORMATLAMA EKLENECEK -->
+		<input maxlength="16" type="number" class="form-control" id="cc_number" placeholder="Kart No"/>
+	    </div>
+	    <div class="input-group mb-3">
+		<div class="input-group-prepend">
+		    <span class="input-group-text"><img src="img/icons/credit-card-2-back.svg"class="bicon"></span>
+		</div>
+		<input type="number" maxlength="3" class="form-control" id="cc_cvv" placeholder="Kart CVV"/>
+		<div class="input-group-prepend">
+		    <span class="input-group-text"><img src="img/icons/calendar-date.svg" class="bicon"></span>
+		</div>
+		<input type="number" maxlength="4" class="form-control" id="cc_expire" placeholder="AAYY"/>
+	    </div>
+	</div>
     </div>
 
     <div class="row center_item">
-        <div class="col-md-12">
-            <button onclick="app.formControl('fastpayment_form')" type="submit" class="form-green-button">
-                Ödeme
-            </button>
-        </div>
+	<div class="col-md-12">
+	    <button onclick="app.actionPayCc()" type="submit" class="form-green-button">
+		Ödeme
+	    </button>
+	</div>
     </div>
 </div>
-<script>
-    if (app.formDataArr.name && app.formDataArr.amount) {
-        $('#cc_amount')[0].value = app.formDataArr.amount;
-        $('#cc_name')[0].value = app.formDataArr.name;
-    }
-</script>

@@ -3,12 +3,12 @@ body,
 main,
 #main_cover,
 #main_body {
-  /* height: 100%; */
 }
 
 body {
-  font-weight: lighter;
-  font-family: "Quicksand", sans-serif;
+  font-weight: regular;
+  font-size:1.1em !important;
+  font-family: "Univia Pro", sans-serif;
   background-image: url(../../img/background.svg),
     linear-gradient(#e4f4f6, #ffffff);
   background-repeat: repeat-x;
@@ -22,6 +22,7 @@ body {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
+  margin-bottom: 60px;
 }
 p {
   color: #013f69;
@@ -33,4 +34,13 @@ small {
 }
 .typ_content {
   color: #373b44;
+}
+button{
+      font-weight: 400;
+}
+.handy{
+  font-family: "Dancing Script", sans-serif;
+  font-weight: 700;
+  color: #007094;
+  line-height: .7em;
 }

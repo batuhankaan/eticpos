@@ -13,12 +13,14 @@
             <input type="tel" onkeypress="return app.isNumber(event)" maxlength="11" placeholder="TC Kimlik No/Vergi No" id="registernewcustomer_cid" class="form-input">
             <input type="tel" onkeypress="return app.isNumber(event)" maxlength="11" placeholder="Telefon Numarası" id="registernewcustomer_phone" class="form-input">
             <input type="email" placeholder="E-Posta Adresi" id="registernewcustomer_email" class="form-input">
-        <select id="iller" class="form-control">
-            <option value="0">Lütfen Bir İl Seçiniz</option>
-        </select>
-        <select id="ilceler" disabled="disabled" class="form-control">
-            <option value="0">Lütfen Önce bir İl seçiniz</option>
-        </select>  
+	    <select id="registernewcustomer_city" class="form-control">
+		<option>İl</option>
+		<option value="istanbul">İstanbul</option>
+	    </select>
+	    <select id="registernewcustomer_address" class="form-control">
+		<option>İlçe</option>
+		<option value="kadikoy">Kadıköy</option>
+	    </select>
         </div>
     </div>
 
@@ -30,4 +32,3 @@
         </div>
     </div>
 </div>
-<script src="../js/city.js"></script>

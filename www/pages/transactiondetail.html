@@ -1,0 +1,42 @@
+<div class="zone">
+	<div class="row center_item">
+		<div class="col-md-12 m-4 center_text">
+			<h4 class="center_text">Ödeme Detayları</h4>
+		</div>
+	</div>
+	<div class="row">
+		<div id="fastpayment_form" class="col-md-12">
+			<table class="table table-striped ">
+				<tr>
+					<td>Tutar</td>
+					<td id="transaction_amount"></td>
+				</tr>
+				<tr>
+					<td>İşlem No</td>
+					<td id="transaction_id"></td>
+				</tr>
+				<tr>
+					<td>Tarih</td>
+					<td id="transaction_date"></td>
+				</tr>
+				<tr>
+					<td>Sonuç</td>
+					<td id="transaction_status"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<hr/>
+	<div class="row">
+		<div class="col-sm-4" id="cancel_button_container">
+			<button onclick="app.cancelTransaction()" type="submit" class="btn btn-warning">
+				İptal
+			</button>
+		</div>
+		<hr/>
+		<div class="col-sm-4" id="refund_button_container">
+			<button onclick="app.refundTransaction()" type="submit" class="btn btn-danger">
+				İade
+			</button>
+		</div>
+	</div>

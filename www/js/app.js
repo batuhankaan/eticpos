@@ -29,9 +29,9 @@ class EmlakPosApp {
             'registernewcustomersuccess',
             'recoverapplication',
             'login',
-            //            'registercustomer_attn',
-            //            'registercustomer_comp',
-            //            'registercustomer_docs',
+//'registercustomer_attn',
+//'registercustomer_comp',
+//'registercustomer_docs',
             'registernewcustomer',
             'registernewcompany',
             'resetpassword',
@@ -42,14 +42,13 @@ class EmlakPosApp {
             'login',
             'dashboard',
         ]
-        this.userPaymentDatas = new Array();
 
         this.defines = {
             external_content: {
                 tos: 'http://localhost/wtf/apps/static/apiclient/pages/static/tos.html'
             }
         };
-        // document.addEventListener("backbutton", leavePage, false);
+// document.addEventListener("backbutton", leavePage, false);
     }
 
     init() {
@@ -64,8 +63,8 @@ class EmlakPosApp {
 
         this.back_buttonDisplay.includes(view) ? $("#back_button").hide() : $("#back_button").show();
         this.pagesHistory.includes(view) ? null : this.pagesHistory.push(view)
-        // this.pagesHistory.includes('dashboard') ? this.pagesHistory.splice(this.pagesHistory.indexOf('login'),1) : null
-        // Giriş yaptıktan sonra bug düzenlenecek
+// this.pagesHistory.includes('dashboard') ? this.pagesHistory.splice(this.pagesHistory.indexOf('login'),1) : null
+// Giriş yaptıktan sonra bug düzenlenecek
         this.view = view;
 
         console.log("App::run(" + view + ")");
@@ -76,13 +75,18 @@ class EmlakPosApp {
             if (this.public_pages.indexOf(view) === -1) { // is the view public or requires to be logged 
                 this.viewlogin();
                 return this.displayMessage(this.l('Lütfen giriş yapınız.'));
-
             }
         }
 
         let view_name = 'view' + view;
         if (typeof this[view_name] === "function") {
             console.log(view + " called");
+            if (this.public_pages.indexOf(view) !== -1) { // is the view public or requires to be logged 
+                $(".footer").hide();
+            } else {
+                $(".footer").show();
+
+            }
             return this[view_name]();
         } else {
             console.log(view_name + " function not found");
@@ -95,7 +99,7 @@ class EmlakPosApp {
         $("div#main_messages").hide();
         console.log('handling response');
         this.last_response = response;
-        // Refresh the token if set in response
+// Refresh the token if set in response
         if (this.last_response.header.token) {
             this.setToken(this.last_response.header.token);
         }
@@ -104,12 +108,28 @@ class EmlakPosApp {
             this.displayMessage(this.last_response.header.result_message + " (" + this.last_response.header.result_code + ')');
         }
 
-        // Redirect view if set in response
+// Redirect action if set in response
+        if (this.last_response.header.redirect_action) {
+            let action = this.last_response.header.redirect_action;
+            if (typeof this[action] === "function") {
+                console.log("Redirect Action " + this.last_response.header.redirect_action);
+                return this[action]();
+            }
+        }
+// Redirect view if set in response
         if (this.last_response.header.redirect) {
-            console.log("Redirecting " + this.last_response.header.redirect)
+            console.log("Redirecting " + this.last_response.header.redirect);
             this.run(this.last_response.header.redirect);
         }
 
+    }
+
+    clearApiParams() {
+        ac.clearHeadParams();
+        ac.clearRequestParams();
+        ac.setHeadParam('token', this.getFromLocal('token'));
+        ac.setHeadParam('phone', this.getFromLocal('user_info_login_phone'));
+        return;
     }
 
     actionCheckAuth() {
@@ -129,20 +149,16 @@ class EmlakPosApp {
         this.loadTemplate('pages/login', 'main_body', 'renderLogin');
     }
 
-    viewresetpassword() {
-        this.loadTemplate('pages/resetpassword', 'main_body',);
-    }
-
     renderLogin() {
         $("#login_phone").val(this.getFromLocal('user_info_login_phone'));
     }
 
     actionLogin() {
         this.saveToLocal('user_info_login_phone', $("input#login_phone").val());
-        ac.clearHeadParams();
+        this.clearApiParams();
         ac.setHeadParam('phone', $("input#login_phone").val());
         ac.setHeadParam('password', $("input#login_password").val());
-        ac.setCallAction('apitoken/gettoken');
+        ac.setCallAction('accesstoken/gettoken');
         ac.callApi();
         return;
     }
@@ -153,7 +169,7 @@ class EmlakPosApp {
 
     setToken(token) {
         this.saveToLocal('token', token);
-        return this.ac.setHeadParam('token', token);
+        return ac.setHeadParam('token', token);
     }
 
     renderAlertPage(message) {
@@ -161,8 +177,7 @@ class EmlakPosApp {
         if (typeof message.header !== 'undefined') {
             $("h2#alert_view_header").html(message.header);
             $("div#alert_view_body").html(message.body);
-        }
-        else {
+        } else {
             $("div#alert_view_body").html(message);
         }
 
@@ -174,9 +189,10 @@ class EmlakPosApp {
 
     renderDashboard() {
         $("span#userinfo_name").html(
-            this.getFromLocal('user_info_firstname')
-            + " " + this.getFromLocal('user_info_lastname')
-        );
+                this.getFromLocal('user_info_firstname')
+                + " " + this.getFromLocal('user_info_lastname')
+                );
+        return;
     }
 
     viewmodalexternal(url, header = false, footer = false) {
@@ -198,14 +214,12 @@ class EmlakPosApp {
         $("#main_modal_body").html(content).show();
         if (header) {
             $("#main_modal_header").html(header).show();
-        }
-        else {
+        } else {
             $("#main_modal_header").hide();
         }
         if (footer) {
             $("#main_modal_footer").html(footer).show();
-        }
-        else {
+        } else {
             $("#main_modal_footer").hide();
         }
         $("#main_modal").modal();
@@ -251,35 +265,15 @@ class EmlakPosApp {
         this.loadTemplate('pages/newpayment', 'main_body');
     }
 
-    viewnewpaymentstep() {
-        this.loadTemplate('pages/newpaymentstep', 'main_body');
-    }
-
     viewnewpayment_options() {
         this.loadTemplate('pages/newpayment_options', 'main_body');
-    }
-
-    viewcc_form() {
-        this.loadTemplate('pages/cc_form', 'main_body');
-    }
-
-    viewsend_email() {
-        this.loadTemplate('pages/send_email', 'main_body');
-    }
-
-    viewsend_sms() {
-        this.loadTemplate('pages/send_sms', 'main_body');
-    }
-
-    viewqr_generate() {
-        this.loadTemplate('pages/qr_generate', 'main_body');
     }
 
     viewregister() {
         if (this.getFromLocal('id_application') && this.getFromLocal('application_status') && this.getFromLocal('application_key')) {
             let message = 'Bu cihazla yapılmış bir başvurunuz var. Bu başvurunun durumunu sorgulamak için '
-                + '<input type="number" id="recover_phone" placeholder="Cep telefonu numaranızı girin" class="form-input"/><br/>'
-                + '<button class="form-green-button" onclick="app.actionGetApplicationStatus()"> buraya dokunun </button>. ';
+                    + '<input type="number" id="recover_phone" placeholder="Cep telefonu numaranızı girin" class="form-control"/><br/>'
+                    + '<button class="form-green-button" onclick="app.actionGetApplicationStatus()"> buraya dokunun </button>. ';
             return this.displayWarning(message);
         }
         this.loadTemplate('pages/register', 'main_body');
@@ -291,25 +285,20 @@ class EmlakPosApp {
     }
 
     actionRegisterCustomer() {
+        $("div#main_messages").hide();
         if (!ev.email("input#customer_email"))
             return this.displayMessage('E-posta adresinizi kontrol ediniz.');
         if (!ev.mobilephone("input#customer_phone"))
             return this.displayMessage('Cep telefonunuzu kontrol ediniz.');
         if (!ev.mobilephone("input#customer_phone"))
             return this.displayMessage('Cep telefonunuzu kontrol ediniz.');
-        if (!$("#checkbox_tos").prop("checked"))
-            return this.displayMessage('Devam etmek için Kullanıcı sözleşmesini okuyup onaylamalısınız.');
         if (!$("#checkbox_kvkk").prop("checked"))
             return this.displayMessage('Devam etmek için KVKK Aydınlatma Metinini okuyup onaylamalısınız.');
         if (!$("#checkbox_kvkk2").prop("checked"))
             return this.displayMessage('Devam etmek için KVKK Açık Rıza Sözleşmesini okuyup onaylamalısınız.');
-        if (!$("#checkbox_pfc").prop("checked"))
-            return this.displayMessage('Devam etmek için Çerçeve Sözleşmesini okuyup onaylamalısınız.');
 
-        $("div#main_messages").hide();
 
-        ac.clearHeadParams();
-        ac.clearRequestParams();
+        this.clearApiParams();
         ac.setRequestDataParam('phone', $("input#customer_phone").val());
         ac.setRequestDataParam('email', $("input#customer_email").val());
         ac.setRequestDataParam('cid', $("input#customer_cid").val());
@@ -334,8 +323,7 @@ class EmlakPosApp {
         if (!$("select#id_person").val())
             return this.displayMessage('Adınızı kontrol ediniz.');
 
-        ac.clearHeadParams();
-        ac.clearRequestParams();
+        this.clearApiParams();
         ac.setRequestDataParam('id_application', this.getFromLocal('id_application'));
         ac.setRequestDataParam('application_key', this.getFromLocal('application_key'));
         ac.setRequestDataParam('id_person', $("select#id_person").val());
@@ -352,15 +340,15 @@ class EmlakPosApp {
     renderregistercompany() {
         $.each(app.last_response.data.Firm.AddressList, function (key, value) {
             $('select#company_address')
-                .append($("<option></option>")
-                    .attr("value", value.AddressId)
-                    .text(value.Location));
+                    .append($("<option></option>")
+                            .attr("value", value.AddressId)
+                            .text(value.Location));
         });
         $.each(app.last_response.data.Firm.AccountList, function (key, value) {
             $('select#company_account')
-                .append($("<option></option>")
-                    .attr("value", value.AccountNumber)
-                    .text(value.AccountName));
+                    .append($("<option></option>")
+                            .attr("value", value.AccountNumber)
+                            .text(value.AccountName));
         });
     }
 
@@ -374,32 +362,31 @@ class EmlakPosApp {
         if (!$("select#customer_mcc").val())
             return this.displayMessage('Kategori seçiminizi kontrol ediniz.');
 
-        // if ($("input#customer_company").val().length < 3)
-        // return this.displayMessage('İşyeri ünvanınızı kontrol ediniz.');
+// if ($("input#customer_company").val().length < 3)
+// return this.displayMessage('İşyeri ünvanınızı kontrol ediniz.');
 
-        // if ($("select#customer_city").val().length < 3)
-        // return this.displayMessage('Şehir bilgisini kontrol ediniz.');
+// if ($("select#customer_city").val().length < 3)
+// return this.displayMessage('Şehir bilgisini kontrol ediniz.');
 
-        // if ($("select#customer_town").val().length < 3)
-        // return this.displayMessage('İlçe bilgisini kontrol ediniz.');
+// if ($("select#customer_town").val().length < 3)
+// return this.displayMessage('İlçe bilgisini kontrol ediniz.');
 
-        // if ($("select#customer_address").val() === null)
-        // return this.displayMessage('Adresinizi kontrol ediniz.');
+// if ($("select#customer_address").val() === null)
+// return this.displayMessage('Adresinizi kontrol ediniz.');
 
-        // if ($("select#customer_iban").val() === null)
-        // return this.displayMessage('Hesap numarasını kontrol ediniz.');
+// if ($("select#customer_iban").val() === null)
+// return this.displayMessage('Hesap numarasını kontrol ediniz.');
 
-        // if ($("input#customer_tax_info_office").val().length < 3)
-        // return this.displayMessage('Vergi dairesini kontrol ediniz.');
+// if ($("input#customer_tax_info_office").val().length < 3)
+// return this.displayMessage('Vergi dairesini kontrol ediniz.');
 
-        // if ($("input#customer_tax_info_id").val().length !== 10)
-        // return this.displayMessage('Vergi numarasını kontrol ediniz.');
+// if ($("input#customer_tax_info_id").val().length !== 10)
+// return this.displayMessage('Vergi numarasını kontrol ediniz.');
 
-        // if (!$("select#customer_mcc").val() === null)
-        // return this.displayMessage('Kategori kodunuzu kontrol ediniz.');
+// if (!$("select#customer_mcc").val() === null)
+// return this.displayMessage('Kategori kodunuzu kontrol ediniz.');
 
-        ac.clearHeadParams();
-        ac.clearRequestParams();
+        this.clearApiParams();
         ac.setRequestDataParam('id_application', this.getFromLocal('id_application'));
         ac.setRequestDataParam('application_key', this.getFromLocal('application_key'));
 
@@ -417,8 +404,12 @@ class EmlakPosApp {
     }
 
     actionRegisterCustomerFiles() {
-        ac.clearHeadParams();
-        ac.clearRequestParams();
+        if (!$("#checkbox_tos").prop("checked"))
+            return this.displayMessage('Devam etmek için Kullanıcı sözleşmesini okuyup onaylamalısınız.');
+        if (!$("#checkbox_pfc").prop("checked"))
+            return this.displayMessage('Devam etmek için Çerçeve Sözleşmesini okuyup onaylamalısınız.');
+
+        this.clearApiParams();
         ac.setRequestDataParam('id_application', this.getFromLocal('id_application'));
         ac.setRequestDataParam('application_key', this.getFromLocal('application_key'));
 
@@ -445,7 +436,7 @@ class EmlakPosApp {
             reader.readAsDataURL(current_file);
         } else {
             return this.displayMessage(file_name + ' dosyasını kontrol ediniz.');
-        }
+    }
     }
 
     setFile(file_id, context, file_name) {
@@ -453,7 +444,7 @@ class EmlakPosApp {
         if (!file) {
             return this.displayMessage(file_name + ' dosyası hatalı.');
         }
-        if (file.size > 1000000) {
+        if (file.size > 5 * 1000000) {
             return this.displayMessage(file_name + ' dosyası çok büyük.');
         }
         this.uploadedfiles[file_id] = {
@@ -474,9 +465,9 @@ class EmlakPosApp {
     rendercustomercontact() {
         $.each(app.last_response.data.person, function (key, value) {
             $('select#id_person')
-                .append($("<option></option>")
-                    .attr("value", key)
-                    .text(value.NameAndSurname));
+                    .append($("<option></option>")
+                            .attr("value", key)
+                            .text(value.NameAndSurname));
         });
 
     }
@@ -498,9 +489,6 @@ class EmlakPosApp {
             fontColor: '#003b65',
             autostart: false,
             onComplete: function () {
-                $('#validatesms').attr("disabled", true);
-                $('#validatesms').addClass("disabled");
-
                 $('#resendsms').attr("disabled", false);
                 $('#resendsms').removeClass("disabled");
             }
@@ -511,8 +499,7 @@ class EmlakPosApp {
         $("div#main_messages").hide();
         if (!ev.mobilephone("input#recover_phone"))
             return this.displayMessage('Lütfen cep telefonunuzu başında sıfır ile doğru girdiğinizden emin olunuz. ');
-        ac.clearHeadParams();
-        ac.clearRequestParams();
+        this.clearApiParams();
         ac.setRequestDataParam('id_application', this.getFromLocal('id_application'));
         ac.setRequestDataParam('application_key', this.getFromLocal('application_key'));
         ac.setRequestDataParam('phone', $('input#recover_phone').val());
@@ -532,15 +519,15 @@ class EmlakPosApp {
             }
             if (data.data.status === 'pending' || data.data.status === 'prevalidation') {
                 let message = 'Bu başvuru henüz tamamlanmamış. Tamamlamak için '
-                    + '<button class="form-green-button" onclick="app.actionGetApplicationStatus()"> buraya dokunun </button>. ';
+                        + '<button class="form-green-button" onclick="app.actionGetApplicationStatus()"> buraya dokunun </button>. ';
                 return this.run('registercustomersms');
             }
             if (data.data.status === 'approved') {
-                let message = { header: "Tebrikler !", body: "Başvurunuz onaylandı. Giriş bilgileriniz size e-posta ve/veya sms yoluyla iletilmektedir." };
+                let message = {header: "Tebrikler !", body: "Başvurunuz onaylandı. Giriş bilgileriniz size e-posta ve/veya sms yoluyla iletilmektedir."};
                 return this.displaySuccess(message);
             }
             if (data.data.status === 'rejected') {
-                let message = { header: "Üzgünüz !", body: "Başvurunuz onaylanmadı. Yeniden başvuru yapmak için yardım menüsünden destek ekibimize ulaşabilirsiniz." };
+                let message = {header: "Üzgünüz !", body: "Başvurunuz onaylanmadı. Yeniden başvuru yapmak için yardım menüsünden destek ekibimize ulaşabilirsiniz."};
                 return this.displayError(message);
             }
         }
@@ -548,8 +535,7 @@ class EmlakPosApp {
 
     }
 
-
-    /* START RegisterNewCustomer I want to be a customer  */
+    /* START RegisterNewCustomer I want to be a customer*/
     viewregisternewcustomer() {
         this.loadTemplate('pages/registernewcustomer', 'main_body');
     }
@@ -557,8 +543,7 @@ class EmlakPosApp {
     actionRegisterNewCustomer() {
         if (!ev.mobilephone("input#registernewcustomer_phone"))
             return this.displayMessage('Lütfen cep telefonunuzu başında sıfır ile doğru girdiğinizden emin olunuz. ');
-        ac.clearHeadParams();
-        ac.clearRequestParams();
+        this.clearApiParams();
         ac.setRequestDataParam('phone', $("input#registernewcustomer_phone").val());
         ac.setCallAction('application/prevalidatenewcustomer');
         ac.callApi('handleRegisterNewCustomer');
@@ -580,8 +565,7 @@ class EmlakPosApp {
     actionRegisterCustomerSmsRequest() {
         console.log("SMS requesting");
         $("div#main_messages").hide();
-        ac.clearHeadParams();
-        ac.clearRequestParams();
+        this.clearApiParams();
         ac.setRequestDataParam('id_application', this.getFromLocal('id_application'));
         ac.setRequestDataParam('application_key', this.getFromLocal('application_key'));
         ac.setCallAction('application/requestsms');
@@ -600,8 +584,7 @@ class EmlakPosApp {
         if ($("input#registercustomersmscode").val().length !== 6)
             return this.displayMessage('SMS doğrulama kodunu kontrol ediniz.');
 
-        ac.clearHeadParams();
-        ac.clearRequestParams();
+        this.clearApiParams();
         ac.setRequestDataParam('id_application', this.getFromLocal('id_application'));
         ac.setRequestDataParam('application_key', this.getFromLocal('application_key'));
         ac.setRequestDataParam('sms_code', $("input#registercustomersmscode").val());
@@ -621,8 +604,7 @@ class EmlakPosApp {
     }
 
     actionRegisterNewCustomerComplete() {
-        ac.clearHeadParams();
-        ac.clearRequestParams();
+        this.clearApiParams();
         ac.setRequestDataParam('id_application', this.getFromLocal('id_application'));
         ac.setRequestDataParam('application_key', this.getFromLocal('application_key'));
         ac.setRequestDataParam('cid', $("input#registernewcustomer_cid").val());
@@ -640,55 +622,172 @@ class EmlakPosApp {
         this.loadTemplate('pages/registernewcustomersuccess', 'main_body');
     }
 
-    /* END RegisterNewCustomer I want to be a customer  */
+    /* END RegisterNewCustomer I want to be a customer*/
 
     viewregisternewcompany() {
         this.loadTemplate('pages/registernewcompany', 'main_body');
     }
 
-    viewlisttransactions() {
-        this.loadTemplate('pages/listtransactions', 'main_body');
+//* TRANSACTION SERVICES *//
+    viewcc_form() {
+        this.loadTemplate('pages/cc_form', 'main_body');
     }
 
+    actionPayCc() {
+        $("div#main_messages").hide();
+        if (!ev.amount("input#cc_amount"))
+            return this.displayMessage('Tutarı kontrol ediniz.');
+        if (!ev.cardholder("input#cc_name"))
+            return this.displayMessage('Kart üzerindeki ismi kontrol ediniz.');
+        if (!ev.number("input#cc_number"))
+            return this.displayMessage('Kart numarasını kontrol ediniz.');
+        if (!ev.number("input#cc_cvv"))
+            return this.displayMessage('Kart güvenlik kodunu kontrol ediniz.');
+        if (!ev.cardexpiredate("input#cc_expire"))
+            return this.displayMessage('Kart son kullanım tarihini kontrol ediniz.');
+
+        this.clearApiParams();
+        ac.setRequestDataParam('amount', $("input#cc_amount").val());
+        ac.setRequestDataParam('cc', {
+            holder: $("input#cc_name").val(),
+            number: $("input#cc_number").val(),
+            cvv: $("input#cc_cvv").val(),
+            expire: $("input#cc_expire").val()
+        });
+        ac.setCallAction('transaction/paycc');
+        ac.callApi('handleRegisterCustomer');
+
+    }
+
+    viewsend_email() {
+        this.loadTemplate('pages/send_email', 'main_body');
+    }
+
+    viewsend_sms() {
+        this.loadTemplate('pages/send_sms', 'main_body');
+    }
+
+    viewqr_generate() {
+        this.loadTemplate('pages/qr_generate', 'main_body');
+    }
+
+    actionGetTransactions() {
+        this.clearApiParams();
+        ac.setCallAction('transaction/list');
+        ac.callApi('handleGetTransactions');
+    }
+
+    handleGetTransactions(data) {
+        this.handleResponse(data);
+    }
+
+    viewlisttransactions() {
+        this.loadTemplate('pages/listtransactions', 'main_body', 'renderListTransactions');
+    }
+
+    renderListTransactions() {
+        $('div#transactionlist').html(" ");
+        let total = 0.00;
+        $.each(app.last_response.data, function (key, value) {
+
+            $('div#transactionlist')
+                    .append($('<div class="row no-gutters">'
+                            + '<div class="col-4"> ' + value.date + '</div>'
+                            + '<div class="col-3">' + (app.transactionGetBadge(value.status)) + '</div>'
+                            + '<div class="col-3">' + (value.amount) + '₺</div>'
+                            + '<div class="col-2">'
+                            + '<button onclick="app.actionTransactionDetails(' + value.id + ')" class="btn btn-info btn-sm" >Detay</button>'
+                            + '</div></div>')
+                            );
+        });
+    }
+
+    actionTransactionDetails(id) {
+        this.clearApiParams();
+        ac.setRequestDataParam('id', id);
+        ac.setCallAction('transaction/gettransaction');
+        ac.callApi();
+    }
+//
+//    handleTransactionDetails(data) {
+//        $("div#main_messages").hide();
+//    }
+
+    viewtransactiondetail() {
+        this.loadTemplate('pages/transactiondetail', 'main_body', 'rendertransactiondetails');
+    }
+
+    rendertransactiondetails() {
+        let tr = app.last_response.data;
+        $("td#transaction_amount").text(tr.amount + " TRY");
+        $("td#transaction_id").text(tr.id);
+        $("td#transaction_date").text(tr.date);
+        $("td#transaction_status").html(this.transactionGetBadge(tr.status));
+    }
+
+    transactionGetBadge(status) {
+        let badge = '';
+        if (status === 'refused') {
+            badge = '<span class="badge badge-warning">Ret</span>';
+        }
+        if (status === 'failed') {
+            badge = '<span class="badge badge-danger">Başarısız</span>';
+        }
+        if (status === 'completed') {
+            badge = '<span class="badge badge-success">Başarılı</span>';
+        }
+        if (status === 'created' || status === 'processing') {
+            badge = '<span class="badge badge-info">Bekleniyor</span>';
+        }
+        return badge;
+    }
+
+// Common
     loadTemplate(template, to = 'main', callback = false, data = false) {
         if (!callback) {
-            $("#" + to + "").load(template + '.html');
+            return $("#" + to + "").load(template + '.html');
         } else {
-            $("#" + to + "").load(template + '.html', function () {
+            $("#" + to + "").load(template + '.html', function (response, status, xhr) {
+                if (status === "error") {
+                    console.log("something goes wrong ! " + template + callback + xhr.status + " " + xhr.statusText);
+                }
                 if (typeof app[callback] === "function") {
-                    app[callback](data);
+                    return app[callback](data);
+                } else {
+                    console.log(callback + " is not a function");
+                    return false;
                 }
             });
-        }
+    }
     }
 
-    // codes inside this function will be changed depending on the app platform
-    // currently it is saving to browser local storage
+// codes inside this function will be changed depending on the app platform
+// currently it is saving to browser local storage
     saveToLocal(key, value) {
         return localStorage.setItem(key, value);
     }
 
-    // codes inside this function will be changed depending on the app platform
-    // currently it is deleting to browser local storage by key
+// codes inside this function will be changed depending on the app platform
+// currently it is deleting to browser local storage by key
     deleteLocal(key) {
         return localStorage.removeItem(key);
     }
 
-    // codes inside this function will be changed depending on the app platform
-    // currently it is saving to browser local storage
+// codes inside this function will be changed depending on the app platform
+// currently it is saving to browser local storage
     getFromLocal(key) {
         return localStorage.getItem(key);
     }
 
-    // codes inside this function will be changed depending on the app platform
+// codes inside this function will be changed depending on the app platform
     redirect(action) {
 
         $("select#function").val(action);
         $("select#function").change();
     }
 
-    // Language translate 
-    // To-Do 
+// Language translate 
+// To-Do 
     l(text) {
         return text;
     }
@@ -719,23 +818,23 @@ class EmlakPosApp {
         }
 
         event.target.value = event.target.value.replace(
-            /^([1-9]\/|[2-9])$/g, '0$1/'
-        ).replace(
-            /^(0[1-9]|1[0-2])$/g, '$1/'
-        ).replace(
-            /^([0-1])([3-9])$/g, '0$1/$2'
-        ).replace(
-            /^(0?[1-9]|1[0-2])([0-9]{2})$/g, '$1/$2'
-        ).replace(
-            /^([0]+)\/|[0]+$/g, '0'
-        ).replace(
-            /[^\d\/]|^[\/]*$/g, ''
-        ).replace(
-            /\/\//g, '/'
-        );
+                /^([1-9]\/|[2-9])$/g, '0$1/'
+                ).replace(
+                /^(0[1-9]|1[0-2])$/g, '$1/'
+                ).replace(
+                /^([0-1])([3-9])$/g, '0$1/$2'
+                ).replace(
+                /^(0?[1-9]|1[0-2])([0-9]{2})$/g, '$1/$2'
+                ).replace(
+                /^([0]+)\/|[0]+$/g, '0'
+                ).replace(
+                /[^\d\/]|^[\/]*$/g, ''
+                ).replace(
+                /\/\//g, '/'
+                );
     }
     backButton() {
-        // this.loadTemplate(this.pagesHistory[this.pagesHistory.length - 2], 'main_body')
+// this.loadTemplate(this.pagesHistory[this.pagesHistory.length - 2], 'main_body')
         this.run(this.pagesHistory[this.pagesHistory.length - 2])
         this.pagesHistory.splice(this.pagesHistory.length - 1, 1)
     }
@@ -748,14 +847,14 @@ class EmlakPosApp {
         for (let index = 0; index < input.length; index++) {
             if (!input[index].value) {
                 this.displayMessage("Lütfen girdiğiniz bilgileri kontrol ediniz.")
-                // console.log("eksik bilgiler var")
+// console.log("eksik bilgiler var")
                 return;
             }
 
             this.formDataArr[input[index].name] = input[index].value;
             this.run(page);
             console.log(this.formDataArr);
-        }
+    }
     }
 
     viewcashupz() {
@@ -764,14 +863,6 @@ class EmlakPosApp {
 
     viewusermanagement() {
         this.loadTemplate('pages/usermanagement', 'main_body');
-    }
-
-    viewhelp() {
-        this.loadTemplate('pages/help', 'main_body',);
-    }
-
-    formatMoney(n) {
-        return parseFloat(n.value).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1.').replace(/\.(\d+)$/, ',$1')
     }
 
 }

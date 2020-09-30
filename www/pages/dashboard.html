@@ -2,7 +2,7 @@
     <p>Hoşgeldiniz Sayın <span id="userinfo_name"></span></p>
 
 
-    <div class="col-xl-3 col-lg-6">
+    <div class="m-4">
         <div class="card l-bg-blue-dark">
             <div class="card-statistic-3 p-4">
                 <div class="card-icon card-icon-large"><i class="fas fa-shopping-cart"></i></div>
@@ -99,10 +99,7 @@
     <button onclick="app.run('newpayment');" class="form-blue-button">
         Yeni Ödeme Formu
     </button>
-    <button onclick="app.run('newpaymentstep');" class="form-blue-button">
-        Yeni Ödeme Formu(Yenilenmiş)
-    </button>
-    <button onclick="app.run('listtransactions');" class="form-blue-button">
+    <button onclick="app.actionGetTransactions();" class="form-blue-button">
         Geçmiş İşlemler
     </button>
     <button onclick="app.run('cashupz');" class="form-blue-button">
@@ -116,6 +113,3 @@
     </button>
     <a class="nav-link" href="#" onclick="app.actionLogout();" tabindex="-1" aria-disabled="true">Çıkış</a>
 </div>
-<script>
-    app.pagesHistory = ["dashboard"];
-</script>
