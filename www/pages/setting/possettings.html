@@ -1,0 +1,42 @@
+<div class="row">
+	<div class="col-md-12 text-center">
+		<h4>Ana Ürün Adı</h4>
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text"><img src="img/icons/pencil-square.svg" class="bicon"></span>
+			</div>
+			<input  class="form-control bg-white" id="possetting_main_product_name" value="" type="text" maxlength="12" />
+		</div>
+		<hr/>
+		<h4>KDV oranı</h4>
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text"><img src="img/icons/percent.svg" class="bicon"></span>
+			</div>
+			<input  class="form-control bg-white" id="possetting_tax" value="" type="number" maxlength="99" />
+		</div>
+		<hr/>
+		<h4>Hızlı Ürünler</h4>
+		<table class="table table-sm settingtable" id="quickprossettingtable"> 
+			<tr>
+				<td> Ürün Adı</td>
+				<td> Birim Fiyatı</td>
+			</tr>
+		</table>
+		<hr/>
+		<h4>Taksit Oranları</h4>
+		<table class="table table-sm settingtable" id="installmentsettingtable">
+			<tr>
+				<td> Taksit Sayısı</td>
+				<td> Vade Farkı</td>
+			</tr>
+		</table>
+
+	</div>
+</div>
+
+<div class="numbers">
+	<button onclick="app.actionsavepossettings()" type="submit" class="form-green-button">
+		Kaydet
+	</button>
+</div>

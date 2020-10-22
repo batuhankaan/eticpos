@@ -1,0 +1,36 @@
+<div class="text-center col-12">
+	<img src="img/icons/payment-white-background.png" style="margin-top: 10px;"/>
+</div>
+<div id="total_to_pay">0.00</div>
+<div class="row no-gutters">
+	<div onclick="app.run('cc_form')" class="col-6 payment_option_box">
+		<div class="box-content">
+			<img src="img/icons/credit-card-2-front.svg" class="bicon-blue">
+			<br/>
+			Kredi Kartı ile Ödeme
+		</div>
+	</div>	
+	<div class="col-6 payment_option_box">
+		<div onclick="app.run('send_email');" class="box-content">
+			<img src="img/icons/envelope.svg" class="bicon-blue">
+			<br/>
+			E-mail Gönder
+
+		</div>
+	</div>	
+	<div onclick="app.run('send_sms');" class="col-6 payment_option_box" style="border-bottom:none">
+		<div class="box-content">
+			<img src="img/icons/phone-vibrate.svg" class="bicon-blue">
+			<br/>
+			SMS ile Gönder
+
+		</div>
+	</div>	
+	<div onclick="app.run('qr_generate');" class="col-6 payment_option_box" style="border-bottom:none">
+		<div class="box-content">
+			<img src="img/icons/hr.svg" class="bicon-blue">
+			<br/>
+			QR Kodu Oluştur
+		</div>
+	</div>	
+</div>

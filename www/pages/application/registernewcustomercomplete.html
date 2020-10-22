@@ -1,0 +1,40 @@
+<div class="zone">
+    <div class="row center_item">
+        <div class="col-md-12 center_text">
+            <h4 class="center_text">Üye Ol</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <input type="text" placeholder="Adınız" id="registernewcustomer_firstname" class="form-input" maxlength="20">
+            <input type="text" placeholder="Soyadınız" id="registernewcustomer_lastname" class="form-input" maxlength="30">
+            <input type="text" placeholder="Firma Unvanı" id="registernewcustomer_company" class="form-input" maxlength="40">
+            <input type="number" placeholder="TC Kimlik veya Vergi No" id="registernewcustomer_cid" class="form-input" maxlength="11" minlength="10">
+            <input type="number" placeholder="Telefon Numarası" id="registernewcustomer_phone" class="form-input">
+            <input type="email" placeholder="E-Posta Adresi" id="registernewcustomer_email" class="form-input">
+			<select id="registernewcustomer_city" onchange="app.actionassignCounties()" class="form-control">
+		<option>İl</option>
+	    </select>
+	    <select id="registernewcustomer_county" class="form-control">
+		<option>İlçe</option>
+	    </select>
+        </div>
+    </div>
+
+    <div class="row center_item">
+        <div class="col-md-12">
+            <button onclick="app.actionRegisterNewCustomerComplete();" class="form-green-button">
+                Devam
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-12 mt-5">
+		<div class="text-center">
+			<a style="" onclick="app.run('cancelregister')">İptal</a>
+		</div>
+	</div>
+</div>

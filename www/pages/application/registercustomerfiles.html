@@ -4,34 +4,9 @@
 			<h4 class="center_text">Dökümanlar</h4>
 		</div>
     </div>
-	<div class="row">
-		<div class="mb-3 mt-2">
-			<div class="form-check">
-				<label class="checkbox-button-container">Çerçeve Sözleşmesi
-					<input type="checkbox" id="checkbox_pfc" value="1">
-					<span class="checkbox-button-checkmark"></span>
-					<a
-						onclick="app.viewmodalexternal(app.defines.external_content.tos, 'Çerçeve Sözleşmesi')"><img
-							src="img/icons/link.svg"></a>
-				</label>
-			</div>
-		</div>
-		<div class="mb-3 mt-2">
-			<div class="form-check pull-left">
-				<label class="checkbox-button-container">Kullanıcı Sözleşmesi
-					<input type="checkbox" id="checkbox_tos">
-					<span class="checkbox-button-checkmark"></span>
-					<a
-						onclick="app.viewmodalexternal(app.defines.external_content.tos, 'Kullanıcı Sözleşmesi')"><img
-							src="img/icons/link.svg"></a>
-				</label>
-			</div>
-		</div>
-
-	</div>
 </div>
 <div class="row">
-	<div class="col-md-10">
+	<div class="col-md-10" id="files_div">
 		<div class="file-field">
 			<div class="sm-5 float-left">
 				<label for="file_vergi">
@@ -91,6 +66,31 @@
 
 	</div>
 </div>
+<div class="row">
+		<div class="mb-3 mt-2">
+			<div class="form-check">
+				<label class="checkbox-button-container">Çerçeve Sözleşmesi
+					<input type="checkbox" id="checkbox_pfc" value="1">
+					<span class="checkbox-button-checkmark"></span>
+					<a
+						onclick="app.viewmodalexternal(app.defines.external_content.pos, 'Çerçeve Sözleşmesi')"><img
+							src="img/icons/link.svg"></a>
+				</label>
+			</div>
+		</div>
+		<div class="mb-3 mt-2">
+			<div class="form-check pull-left">
+				<label class="checkbox-button-container">Kullanıcı Sözleşmesi
+					<input type="checkbox" id="checkbox_tos">
+					<span class="checkbox-button-checkmark"></span>
+					<a
+						onclick="app.viewmodal(app.last_response.data.aggrement,  'Kullanıcı Sözleşmesi')"><img
+							src="img/icons/link.svg"></a>
+				</label>
+			</div>
+		</div>
+
+	</div>
 
 <div class="row">
 	<div class="col-md-12">
@@ -99,4 +99,10 @@
 		</button>
 	</div>
 </div>
+<div class="row">
+	<div class="col-md-12 mt-5">
+		<div class="text-center">
+			<a style="" onclick="app.run('cancelregister')">İptal</a>
+		</div>
+	</div>
 </div>

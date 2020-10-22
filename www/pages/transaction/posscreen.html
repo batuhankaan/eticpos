@@ -1,0 +1,82 @@
+<div id="payment" class="col-12" style="padding-left: 5px; padding-right: 5px">
+	<div class="calculator">
+		<div class="amount_input row no-gutters" id="input">
+			<div style="height: -webkit-fill-available;overflow-x: scroll" class="col-7">
+				<table class="item_table" >
+					<thead>
+						<tr>
+							<th>Ad.</th>
+							<th>Ürün</th>
+							<th>Tutar</th>
+						</tr>
+					</thead>
+					<tbody id="items_list">
+
+					</tbody>
+				</table>
+
+			</div>
+			<div class="col-5 no-gutters">
+				<div class="col-12" id="total_container">		
+					<span>Toplam  <br/><b id="total">0</b> TL</span>
+					<hr/>
+				</div>
+				<div class="col-12 new_item_box">
+					<span id="new_item_quantity"> 1x</span> -
+					<span id="new_item_name">Ürün </span> <br/>
+					<span id="new_item_price"></span>
+				</div>
+			</div>
+		</div>
+		<div class="buttons">
+			<div class="numbers row">
+				<div class="col" id="clearPaymentForm">SİL</div>
+				<div class="col" id="settings" onclick="app.run('possettings')"><img src="img/icons/gear.svg" style="" class=" bicon-dark"></div>
+				<div class="col number">1</div>
+				<div class="col number">2</div>
+				<div class="col number">3</div>
+			</div>
+			<div class="numbers row">
+				<div class="col quick_product" id="qp1" onclick="app.actionaddqp(0)">Ürün A</div>
+				<div class="col quick_product" id="qp2" onclick="app.actionaddqp(1)">Ürün B</div>
+				<div class="col number">4</div>
+				<div class="col number">5</div>
+				<div class="col number">6</div>
+			</div>
+			<div class="numbers row">
+				<div class="col quick_product" id="qp3" onclick="app.actionaddqp(2)">Hizm. C</div>
+				<div class="col quick_product" id="qp4" onclick="app.actionaddqp(3)">Hizm. D</div>
+				<div class="col number">7</div>
+				<div class="col number">8</div>
+				<div class="col number">9</div>
+			</div>
+			<div class="numbers row">
+				<div class="col tax_button" id="tax_button" onclick="cart.toggleTaxRate(app.getFromLocal('tax_rate'))"> + <br/>KDV</div>
+				<div class="col tax_button" id="fee_button" onclick="$('#installments').toggle(500)">Taksit <br/> Kom.</div>
+				<div class="col number" id="add_sep">.</div>
+				<div class="col number">0</div>
+				<div class="col" id="collectPaymentForm">+</div>
+			</div>
+			<div id="installments" style="display: none" class="p-2">
+				<select class="form-control" id="installmentselect" onchange="cart.toggleFee()">
+					<option value="0"> Vade Farksız </option>
+				</select>
+
+			</div>
+			
+			<div class="mt-2 row p-2">
+				<button onclick="app.run('newpayment_options')" type="submit"
+						class="form-green-button ">
+					Ödeme
+				</button>
+			</div>
+		</div>
+	</div>
+
+
+    <div class="row center_item">
+        <div class="col-md-12">
+
+        </div>
+    </div>
+</div>

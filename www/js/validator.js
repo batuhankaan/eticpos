@@ -19,7 +19,7 @@ class EmValidator {
     }
 
     amount(id) {
-        if (/^\d+\.\d{0,2}$/.test($(id).val()))
+        if (/^\d+\.\d{0,2}$/.test($(id).val().replace(/\s/g, '')))
         {
             return true;
         }
@@ -27,7 +27,7 @@ class EmValidator {
     }
 
     number(id) {
-        if (/^\d+$/.test($(id).val()))
+        if (/^\d+$/.test($(id).val().replace(/\s/g, '')))
         {
             return true;
         }
@@ -35,7 +35,7 @@ class EmValidator {
     }
 
     cardexpiredate(id) {
-        if (/^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/.test($(id).val()))
+        if (/^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/.test($(id).val().replace(/\s/g, '')))
         {
             return true;
         }
@@ -43,7 +43,14 @@ class EmValidator {
     }
 
     cardholder(id) {
-        if (/^((?:[A-Za-z]+ ?){1,3})$/.test($(id).val())) {
+       if( /^((?:[A-Za-çşğüıöÇÖŞĞİÜ\ ]+ ?){1,3})$/.test($(id).val()) && $(id).val() && $(id).val() !== null){
+            return true;
+        }
+        return false;
+    }
+
+    name(id) {
+       if( /^((?:[A-Za-çşğüıöÇÖŞĞİÜ\ ]+ ?){1,3})$/.test($(id).val()) && $(id).val() && $(id).val() !== null){
             return true;
         }
         return false;

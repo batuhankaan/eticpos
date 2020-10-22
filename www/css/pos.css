@@ -1,0 +1,122 @@
+/* POS SCREEN */
+
+.calculator {
+    background: #fff;
+    -webkit-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 1px;
+}
+
+#total_container{
+    text-align: center;
+    background: #005077;
+    border-bottom-left-radius: 16px;
+}
+#total{
+    font-size: 1.5em;
+}
+
+.item_table{
+    width: 100%;
+    font-size: 0.8em;
+}
+.item_table tr td {
+    border-bottom: 1px solid #cce;
+}
+
+.new_item_price{
+    font-size: 1.4em;
+}
+
+.amount_input {
+    border: 1px solid #ddd;
+    border-radius: 1px;
+    height: 160px;
+    padding:5px;
+    font-size: 1rem;
+    /* overflow-x: auto; */
+    transition: all 0.2s ease-in-out;
+    background: #007094;
+    color: #fff;
+}
+
+.amount_input:hover {
+    border: 1px solid #bbb;
+    -webkit-box-shadow: inset 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.numbers div {
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 1px;
+    text-align: center;
+    padding: 18px 10px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    transition: border-color 0.2s ease-in-out, background-color 0.2s,
+        box-shadow 0.2s;
+    color: #007094;
+    font-weight: bold;
+    max-height: 60px;
+}
+
+.numbers div:hover {
+    background-color: #f1f1f1;
+    -webkit-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+    border-color: #bbb;
+}
+
+.numbers div:active {
+    font-weight: bold;
+}
+
+#clearPaymentForm {
+    background: #be0000;
+    color: #fff;
+}
+
+#collectPaymentForm {
+    background: radial-gradient(47% 18% at top ,#41a113 142%,#1e7900 154%, #277900 29%);
+    color: #fff;
+    font-size: 2em;
+    padding-top: 0;
+}
+
+.quick_product {
+    font-size: 0.7em;
+    background-color: #f3f1c4 !important;
+}
+
+.tax_button{
+    font-size: 13px;
+    padding-top: 10px !important;
+}
+
+.tax_button_active{
+    font-size: 13px;
+    padding-top: 10px !important;
+    background-color: #393 !important;
+    color:#fff !important;
+}
+.settingtable{
+    background: #00577d;
+    color: #fff;
+}
+.settingtable tr td{
+    padding: 0 !important;
+}
+.settingtable tr td input{
+    width: 100%;
+}
+
+.new_item_box{
+    text-align: center;
+     margin-top: -10px;
+}
+#new_item_price{
+    font-size: 1.6em;
+    font-weight: bold;
+}
+/* END POS SCREEN */

@@ -1,0 +1,46 @@
+<div class="zone">
+    <div class="row center_item">
+	<div class="col-md-12 center_text">
+	    <h4 class="center_text">Firma Bilgileri</h4>
+	</div>
+    </div>
+
+    <div class="row spacing_10">
+	<div class="col-md-12">
+	    <div class="selectbox-container">
+			<!-- SERVIS İLE BAĞLANTI YAPILACAK -->
+		<select id="company_address" class="">
+			<option disabled="1">Kayıtlı Adresinizi Seçiniz</option>
+		</select>
+	    </div>
+	    <div class="selectbox-container">	   
+		<select  id="company_account" class="">
+		    <option disabled="1">Bağlı Hesap</option>
+		</select>
+		</div>
+		<!-- SERVIS İLE BAĞLANTI YAPILACAK -->
+	    <div class="selectbox-container">
+		<select name="account"  id="customer_mcc" >
+		    <option value="0">Kategori Kodu</option>
+		</select>
+	    </div>
+	</div>
+    </div>
+
+    <div class="row">
+	<div class="col-md-12">
+	    <button onclick="app.actionAddCompany();" class="form-green-button">
+		Devam
+	    </button>
+	</div>
+    </div>
+</div>
+
+
+<div class="row">
+	<div class="col-md-12 mt-5">
+		<div class="text-center">
+			<a style="" onclick="app.run('cancelregister')">İptal</a>
+		</div>
+	</div>
+</div>

@@ -7,12 +7,10 @@
 	<div class="row">
 		<div class="col-md-12 mt-5">
 			<div class="input-group mb-3">
-				<input onkeypress="return app.isNumber(event)" type="tel" maxlength="11" id="customer_cid"
-					   class="form-input" placeholder="Kimlik No veya Vergi No">
+				<input type="number" maxlength="11" id="customer_cid"  class="form-input" placeholder="Kimlik No veya Vergi No">
 			</div>
 			<div class="input-group mb-3">
-				<input onkeypress="return app.isNumber(event)" type="tel" maxlength="11" id="customer_phone"
-					   class="form-input" placeholder="Cep Telefonu">
+				<input type="number" maxlength="11" id="customer_phone" class="form-input" placeholder="Cep Telefonu">
 			</div>
 			<div class="input-group mb-3">
 				<input type="email" class="form-input" id="customer_email" placeholder="E-posta">
@@ -25,7 +23,7 @@
 							<input type="checkbox" id="checkbox_kvkk">
 							<span class="checkbox-button-checkmark"></span>
 							<a
-								onclick="app.viewmodalexternal(app.defines.external_content.tos, 'KVKK Aydınlatma Metni')"><img
+								onclick="app.viewmodalexternal(app.defines.external_content.kvkk, 'KVKK Aydınlatma Metni')"><img
 									src="img/icons/link.svg"></a>
 						</label>
 					</div>
@@ -36,7 +34,7 @@
 							<input type="checkbox" id="checkbox_kvkk2">
 							<span class="checkbox-button-checkmark"></span>
 							<a
-								onclick="app.viewmodalexternal(app.defines.external_content.tos, 'KVKK Açık Rıza Sözleşmesi')"><img
+								onclick="app.viewmodalexternal(app.defines.external_content.kvkk2, 'KVKK Açık Rıza Sözleşmesi')"><img
 									src="img/icons/link.svg"></a>
 						</label>
 					</div>
@@ -49,6 +47,14 @@
 					</button>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12 mt-2">
+		<div class="text-center">
+			<a style="" onclick="app.run('register')">Geri</a>
 		</div>
 	</div>
 </div>

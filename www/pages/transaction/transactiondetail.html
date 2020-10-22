@@ -1,0 +1,71 @@
+<div class="zone">
+	<div class="row center_item">
+		<div class="col-md-12 m-4 center_text">
+			<h4 class="center_text">Ödeme Detayları</h4>
+		</div>
+	</div>
+	<div class="row">
+		<div id="" class="col-md-12">
+			<table class="table table-striped ">
+				<tr>
+					<td>Tutar</td>
+					<td class="transaction_amount"></td>
+				</tr>
+				<tr>
+					<td>İşlem No</td>
+					<td class="transaction_id"></td>
+				</tr>
+				<tr>
+					<td>Tarih</td>
+					<td class="transaction_date"></td>
+				</tr>
+				<tr>
+					<td>Sonuç</td>
+					<td class="transaction_status"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<hr/>
+	<div class="row">
+		<div class="col-sm-4" id="cancel_button_container">
+			<button class="btn btn-warning"
+					data-toggle="modal" data-target="#cancel_modal" data-backdrop="false">
+				İptal
+			</button>
+		</div>
+		<hr/>
+		<div class="col-sm-4" id="refund_button_container">
+			<button onclick="app.refundTransaction()" type="submit" class="btn btn-danger" data-backdrop="false">
+				İade
+			</button>
+		</div>
+	</div>
+	<input type="hidden" id="id_transaction" />
+
+	<div class="modal fade" id="cancel_modal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Emin Misiniz ?</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Bu işlemi iptal ettiğinizde ilgili tutar hesabınızdan düşülecek ve ödeme yapılan karta geri aktarılacaktır. 
+					<hr/>
+					<strong class="transaction_date"></strong> tarihli, 
+					<strong class="transaction_id">  </strong> numaralı ve 
+					<strong class="transaction_amount"></strong> ₺ tutarındaki 
+					işlemi iptal etmek istediğinize emin misiniz ?
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" onclick="app.actionCancelTransaction(app.last_response.data.id)" class="btn btn-warning">Onaylıyorum</button>
+					<hr/>
+					<button type="button" class="btn btn-info" data-dismiss="modal">Kapat</button>
+				</div>
+			</div>
+		</div>
+	</div>

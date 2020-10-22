@@ -1,25 +1,17 @@
 <div id="view_dahsboard">
-    <p>Hoşgeldiniz Sayın <span id="userinfo_name"></span></p>
+    <p>Merhaba, <br/> <span id="userinfo_name"></span></p>
 
 
-    <div class="m-4">
-        <div class="card l-bg-blue-dark">
-            <div class="card-statistic-3 p-4">
-                <div class="card-icon card-icon-large"><i class="fas fa-shopping-cart"></i></div>
-                <div class="mb-4">
-                    <h2 class="card-title mb-0">Günlük Toplam</h2>
-                </div>
-                <div class="row align-items-center mb-2 d-flex">
-                    <div class="col-8">
-                        <h2 class="d-flex align-items-center mb-0">
-                            3,243 ₺
-                        </h2>
-                    </div>
-                    <div class="col-4 text-right">
-                        <span>12.5 </span> <img src="img/icons/credit-card.svg" class="bicon">
-                    </div>
-                </div>
-            </div>
+   	<h4 class="text-center mt-3">Geçmiş İşlemler</h4>
+
+	<div class="row mb-3 " id="summary_row">
+        <div class="col-6">
+            <div class="col-12 summary_header">Yapılan Tahsilat Sayısı</div>
+            <div class="col-12 summary_total" id="daily_total_noft"></div>
+        </div>
+        <div class="col-6">
+            <div class="col-12 summary_header">Yapılan Tahsilat Tutarı</div>
+            <div class="col-12 summary_total" id="daily_total_amount"></div>
         </div>
     </div>
     <!--
@@ -96,14 +88,14 @@
     <button onclick="app.run('cc_form');" class="form-green-button">
         Hızlı Tahsilat
     </button>
-    <button onclick="app.run('newpayment');" class="form-blue-button">
+<!--    <button onclick="app.run('newpayment');" class="form-blue-button">
         Yeni Ödeme Formu
-    </button>
+    </button>-->
     <button onclick="app.actionGetTransactions();" class="form-blue-button">
         Geçmiş İşlemler
     </button>
     <button onclick="app.run('cashupz');" class="form-blue-button">
-        İstatistikler
+        Raporlar
     </button>
     <button onclick="app.run('usermanagement');" class="form-blue-button">
         Kullanıcı Yönetimi

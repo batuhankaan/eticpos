@@ -2,15 +2,7 @@ var deafultins = 1083.56;
 var cards = new Array();
         cards['axess'] = new Array();
         cards["axess"]["1"] = "1083.56";
-        cards["axess"]["2"] = "1094.08";
-        cards["axess"]["3"] = "1104.60";
-        cards["axess"]["6"] = "1136.16";
-        cards["axess"]["7"] = "1146.68";
-        cards["axess"]["8"] = "1052.00";
-        cards["axess"]["9"] = "1167.72";
-        cards["axess"]["10"] = "1178.24";
-        cards["axess"]["11"] = "1052.00";
-        cards["axess"]["12"] = "1157.20";
+
         cards['bonus'] = new Array();
         cards["bonus"]["1"] = "1073.04";
         cards["bonus"]["2"] = "1073.04";
