@@ -1,150 +1,115 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+		<script src="js/jquery-3.5.1.min.js"></script>
+		<script src="js/axios.min.js"></script>
+		<script src="js/bootstrap.bundle.min.js"></script>
+		<script src="js/apiclient.js"></script>
+		<script src="js/vendor/jquery/countdown.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/validator.js"></script>
+		<script src="js/jquery.payment.min.js"></script>
+		<script src="js/posscreen.js"></script>
+		<script src="js/init.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link href="css/google-fonts/quicksand.css" rel="stylesheet" type="text/css" />
+		<link href="css/google-fonts/dancing.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="css/app.css">
+		<link rel="stylesheet" href="css/pos.css">
+		<link href="css/theme/gray.css" rel="stylesheet" type="text/css" />
+		<link href="css/items.css" rel="stylesheet" type="text/css" />
+	</head>
 
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-	<script src="js/jquery-3.5.1.min.js"></script>
-	<script src="js/axios.min.js"></script>
-	<script src="js/bootstrap.bundle.min.js"></script>
-	<script src="js/apiclient.js"></script>
-	<script src="js/vendor/jquery/countdown.js"></script>
-	<script src="js/app.js"></script>
-	<script src="js/validator.js"></script>
-	<script src="js/jquery.payment.min.js"></script>
-	<script src="js/posscreen.js"></script>
-	<script src="js/init.js"></script>
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link href="css/google-fonts/quicksand.css" rel="stylesheet" type="text/css" />
-	<link href="css/google-fonts/dancing.css" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="css/app.css">
-	<link rel="stylesheet" href="css/pos.css">
-	<link href="css/theme/gray.css" rel="stylesheet" type="text/css" />
-	<link href="css/items.css" rel="stylesheet" type="text/css" />
-</head>
+	<body id="eticsoft_body">
+		<main role="main" class="container">
 
-<body id="eticsoft_body">
-	<main role="main" class="container">
-
-		<div class="modal" tabindex="-1" role="dialog" id="main_modal">
-			<div class="modal-dialog modal-dialog-scrollable" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="main_modal_header"></h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body" id="main_modal_body">
-						<p></p>
-					</div>
-					<div class="modal-footer" id="main_modal_footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			<div class="modal" tabindex="-1" role="dialog" id="main_modal">
+				<div class="modal-dialog modal-dialog-scrollable" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="main_modal_header"></h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" id="main_modal_body">
+							<p></p>
+						</div>
+						<div class="modal-footer" id="main_modal_footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-
-
-		<div id="loader"></div>
-		<div id="main_cover">
-			<div id="main_head">
-				<div class="row login_menu" id="main_logo_container">
-					<div class="row text-center container-fluid">
-						<div class="col-4">
-							<div class="header_menu">
-								<img src="img/icons/list.svg" class="bicon" id="menu_open" onclick="$('#sidenav').width(250)">
-								<div id="sidenav" class="sidenav">
-									<a class="closebtn" onclick="$('#sidenav').width(0)">
-										<img src="img/icons/x.svg" class="bicon">
-									</a>
-									<a onclick="app.run('posscreen');">POS</a>
-									<a onclick="app.actionGetTransactions();">İşlemler</a>
-									<a onclick="app.run('cashupz');">Günlük</a>
-									<a onclick="">Profil</a>
-									<a onclick="">Kullanıcı Yönetimi</a>
-									<a onclick="app.actionLogout();">Çıkış</a>
+			<div id="loader"></div>
+			<div id="main_cover">
+				<div id="main_head">
+					<div class="row login_menu" id="main_logo_container">
+						<div class="row text-center container-fluid">
+							<div class="col-2">
+								<div class="header_menu">
+									<img src="img/icons/list.svg" class="bicon" onclick="$('#sidenav').width('100%')">
+									<div id="sidenav" class="sidenav">
+										<a class="closebtn" onclick="$('#sidenav').width(0)">
+											<img src="img/icons/x.svg" class="bicon">
+										</a>
+										<a class="sidemenuitem" onclick="app.run('posscreen');">POS</a>
+										<a class="sidemenuitem" onclick="app.actionGetTransactions();">İşlemler</a>
+										<a class="sidemenuitem" onclick="">Profil</a>
+										<a class="sidemenuitem" onclick="app.run('usermenu')">Kullanıcılar</a>
+										<a class="sidemenuitem" onclick="app.actionLogout();">Çıkış</a>
+										<a class="sidemenuitem" onclick="app.run('cashupz');">Gün Sonu</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-8">
+								<div class="app_logo">
+									<img id="main_logo" src="img/logo.png">
+								</div>
+							</div>
+							<div class="col-2">
+								<div class="header_menu float-right">
+									<img src="img/icons/bell-fill.svg" class="bicon">
 								</div>
 							</div>
 						</div>
-						<div class="col-4 my-auto">
-							<div class="app_logo">
-								<img id="main_logo" src="img/logo.png">
-							</div>
-						</div>
-						<div class="col-4">
-							<div class="header_menu float-right">
-								<img src="img/icons/bell-fill.svg" class="bicon">
-							</div>
-						</div>
+					</div>
+					<div class="col-md-12 text-center">
+						<img id="login_logo" src="img/logo2.png">
 					</div>
 				</div>
-				<div class="col-md-12 login_logo text-center">
-					<img style="height: 150px;" id="main_logo" src="img/logo.png">
-				</div>
-			</div>
-			<!-- <div id="main_head">
-	<nav class="navbar navbar-dark bg-dark" id="main_nav_top">
-		<button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
-		data-target="#man_app_nav" aria-controls="man_app_nav" aria-expanded="false"
-		aria-label="Toggle navigation">
-		<img src="img/app_logo.png" width="25px" />
-		</button>
-		<a class="navbar-brand" href="#">
-		EmlakPOS
-		</a>
-		<div class="navbar-collapse collapse" id="man_app_nav" style="">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active">
-			<a class="nav-link" href="#" onclick="app.run('dashboard');">Başlangıç<span
-				class="sr-only">(current)</span></a>
-			</li>
-			<li class="nav-item">
-			<a class="nav-link" href="#" onclick="app.actionLogout();" tabindex="-1"
-				aria-disabled="true">Çıkış</a>
-			</li>
-		</ul>
-		</div>
-	</nav>
-	</div> -->
-			<div id="main_messages"></div>
-			<!-- style sonradan eklendi main body'e -->
-			<div id="main_body"></div>
-			<div style="position:absolute; left:0; top:0;" id="main_footer">
-				<div id="status_es">
+				<div id="main_messages"></div>
+				<div id="main_body"></div>
+				<div style="position:absolute; left:0; top:0;" id="main_footer">
+					<div id="status_es">
 
+					</div>
 				</div>
-				<!--
-		    <div id="back_button" style="position:absolute; left:0; top:0;">
-			    <a style="display:flex; justify-content: center;" href="#" onclick="app.backButton()">
-				    <img style="height: 30px;" src="img/icons/arrow-left.svg" />
-			    </a>
-		    </div>
-		    -->
+
 			</div>
 
-		</div>
-
-	</main><!-- /.container -->
-	<footer class="footer fixed-bottom text-center">
-		<div class="row text-center container-fluid">
-			<div class="col-4">
-				<div class="footer-menu-item">
-					<img src="img/icons/house.svg" class="bicon" onclick="app.run('dashboard')">
+		</main><!-- /.container -->
+		<footer class="footer fixed-bottom text-center">
+			<div class="row text-center container-fluid">
+				<div class="col-4">
+					<div class="footer-menu-item">
+						<img src="img/icons/house.svg" class="bicon" onclick="app.run('dashboard')">
+					</div>
+				</div>
+				<div class="col-4 text-center ">
+					<div class="footer-menu-item center-block text-center fast-pay" onclick="app.run('posscreen')">
+						<img src="img/icons/cart3.svg" style="height: 34px;" class="bicon">
+					</div>
+				</div>
+				<div class="col-4 ">
+					<div class="footer-menu-item float-right">
+						<img src="img/icons/graph-up.svg" class="bicon" onclick="app.actionGetTransactions();">
+					</div>
 				</div>
 			</div>
-			<div class="col-4 text-center ">
-				<div class="footer-menu-item center-block text-center fast-pay" onclick="app.run('posscreen')">
-					<img src="img/icons/cart3.svg" style="height: 34px;" class="bicon">
-				</div>
-			</div>
-			<div class="col-4 ">
-				<div class="footer-menu-item float-right">
-					<img src="img/icons/graph-up.svg" class="bicon" onclick="app.actionGetTransactions();">
-				</div>
-			</div>
-		</div>
-	</footer>
-</body>
+		</footer>
+	</body>
 
 </html>

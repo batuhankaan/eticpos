@@ -1,0 +1,35 @@
+<div class="text-center col-12">
+	<img src="img/icons/person-lines-fill.svg" class="bicon-blue" style="margin-top: 10px; width: 120px; height: 120px"/>
+</div>
+<div id="total_to_pay">Kullanıcı Ayarları</div>
+<div class="row no-gutters">
+	<div onclick="app.run('resetpassword')" class="col-6 payment_option_box">
+		<div class="box-content">
+			<img src="img/icons/shield-lock.svg" class="bicon-blue">
+			<br/>
+			Şifremi Değiştir
+		</div>
+	</div>	
+	<div class="col-6 payment_option_box">
+		<div onclick="app.actionuserlist();" class="box-content">
+			<img src="img/icons/people.svg" class="bicon-blue">
+			<br/>
+			Alt Kullanıcılar
+
+		</div>
+	</div>	
+	<div onclick="app.viewuserprofileCreate()" class="col-6 payment_option_box" style="border-bottom:none">
+		<div class="box-content">
+			<img src="img/icons/person-plus.svg" class="bicon-blue">
+			<br/>
+			Yeni Kullanıcı 
+		</div>
+	</div>	
+	<div onclick="app.run('userprofile');" class="col-6 payment_option_box" style="border-bottom:none">
+		<div class="box-content">
+			<img src="img/icons/person-badge.svg" class="bicon-blue">
+			<br/>
+			Profil Bilgileri
+		</div>
+	</div>	
+</div>

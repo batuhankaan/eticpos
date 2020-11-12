@@ -1,0 +1,46 @@
+<div class="text-center col-12 mt-3">
+	<img src="img/icons/person-plus.svg" class="bicon-blue" style="margin-top: 10px; width: 80px; height: 80px"/>
+</div>
+<div class="block_title" id="block_title">Yeni Kullanıcı Oluştur</div>
+<div class="col-md-12 mt-2 mb-5 text-center">
+	<div class="badge badge-info" id="title"></div>
+
+	<table  id="userdetails" class="table table-striped">
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text"><img src="img/icons/person.svg" class="bicon-blue"></span>
+			</div>
+			<input type="text" class="form-control" id="firstname" placeholder="Ad">
+		</div>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text"><img src="img/icons/person-fill.svg" class="bicon-blue"></span>
+			</div>
+			<input type="text" class="form-control" id="lastname" placeholder="Soyad">
+		</div>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text"><img src="img/icons/phone-vibrate.svg" class="bicon-blue"></span>
+			</div>
+			<input type="number" maxlength="11" class="form-control" id="mobile" placeholder="Cep">
+		</div>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text"><img src="img/icons/envelope.svg" class="bicon-blue"></span>
+			</div>
+			<input type="email" class="form-control" id="email" placeholder="E-posta">
+		</div>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text"><img src="img/icons/key.svg" class="bicon-blue"></span>
+			</div>
+			<input type="number" maxlength="6" class="form-control" id="password" placeholder="Geçici Şifre" min="0" step="1">
+		</div>
+		<small>Geçici şifre tek kullanımlıktır.</small>
+	</table>
+	<input type="hidden" id="userprofile_hash" value="" />
+	<button class="btn btn-info" onclick="app.actionUserProfileCreate()">Oluştur</button>
+</div>
+<div class="text-center m-3">
+	<a onclick="app.run('usermenu')"> <img style="vertical-align: text-bottom;" src="img/icons/arrow-left-square.svg" class="bicon-blue"  /> Geri - Kullanıcı menüsü</a>
+</div>

@@ -38,7 +38,7 @@ class EmlakPosApiClient {
     }
 
     setHeadParam(name, value) {
-        console.log("head:"+name+" set as:"+value);
+   //     console.log("head:"+name+" set as:"+value);
         return this.call_params.head[name] = value;
     }
 
@@ -80,7 +80,7 @@ class EmlakPosApiClient {
         return true;
     }
 
-    callApi(callback = 'handleResponse') {
+    callApi(callback = 'handleResponse', calbackdata = null) {
 
         //let end_url = this.api_base + this.call_action +'&' +(new Date().getTime()) + Math.random() + "";
         let end_url = this.api_base + this.call_action;
@@ -93,7 +93,7 @@ class EmlakPosApiClient {
                     ac.last_response = response.data;
 
                     if (typeof app[callback] === "function") {
-                        return app[callback](response.data);
+                        return app[callback](response.data, calbackdata);
                     }
                     app.handleResponse(response.data);
 

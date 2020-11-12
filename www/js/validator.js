@@ -43,17 +43,33 @@ class EmValidator {
     }
 
     cardholder(id) {
-       if( /^((?:[A-Za-çşğüıöÇÖŞĞİÜ\ ]+ ?){1,3})$/.test($(id).val()) && $(id).val() && $(id).val() !== null){
+        if (/^((?:[A-Za-çşğüıöÇÖŞĞİÜ\ ]+ ?){1,3})$/.test($(id).val()) && $(id).val() && $(id).val() !== null) {
             return true;
         }
         return false;
     }
 
     name(id) {
-       if( /^((?:[A-Za-çşğüıöÇÖŞĞİÜ\ ]+ ?){1,3})$/.test($(id).val()) && $(id).val() && $(id).val() !== null){
+        if (/^((?:[A-Za-çşğüıöÇÖŞĞİÜ\ ]+ ?){1,3})$/.test($(id).val()) && $(id).val() && $(id).val() !== null) {
             return true;
         }
         return false;
+    }
+
+       tckn(tcno) {
+        let toplam = Number(tcno.substring(0, 1)) + Number(tcno.substring(1, 2)) +
+                Number(tcno.substring(2, 3)) + Number(tcno.substring(3, 4)) +
+                Number(tcno.substring(4, 5)) + Number(tcno.substring(5, 6)) +
+                Number(tcno.substring(6, 7)) + Number(tcno.substring(7, 8)) +
+                Number(tcno.substring(8, 9)) + Number(tcno.substring(9, 10));
+        let strtoplam = String(toplam);
+        let onunbirlerbas = strtoplam.substring(strtoplam.length, strtoplam.length - 1);
+
+        if (onunbirlerbas === tcno.substring(10, 11)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

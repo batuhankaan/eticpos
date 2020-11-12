@@ -1,0 +1,31 @@
+<div class="zone">
+    <div class="row r_desc center_item">
+        <div class="col-md-12">
+            <h2 style="text-align: center;">Doğrulama</h2>
+            <p style="text-align: center;">Lütfen cep Telefonunuza gönderilen tek kullanımlık doğrulama kodunu giriniz.</p>
+        </div>
+    </div>
+
+    <div class="row r_button center_item">
+        <div class="col-md-12">
+
+            <input type="number" placeholder="" class="form-control form-control-lg sms-code" id="registercustomersmscode">
+	    <br/>
+            <div style="text-align: center;">
+                <div id="countdown"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row u_button center_item">
+        <div class="col-md-12">
+            <button onclick="app.actionLoginOtp()" id="validatesms" class="form-green-button">
+                Devam
+            </button>
+	    <hr/>
+            <button onclick="app.actionRequestOtp();" id="resendsms" disabled="disabled" class="disabled form-green-button">
+                Tekrar Gönder
+            </button>
+        </div>
+    </div>
+</div>

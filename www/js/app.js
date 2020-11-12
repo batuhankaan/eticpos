@@ -6,7 +6,7 @@ class EmlakPosApp {
         this.default_view = 'dashboard';
         this.view = null;
         this.last_views = new Array();
-
+        this.min_amount = 5.00;
 
         this.lang = 'tr';
         this.render_params = {};
@@ -35,10 +35,14 @@ class EmlakPosApp {
             //'registercustomer_docs',
             'registernewcustomer',
             'registernewcompany',
-            'resetpassword',
-            'error',
+            'error'
         ];
         this.pagesHistory = new Array();
+        this.application_remaining_files = [
+            {id: "61", name: "Kimlik Fotokopisi"},
+            {id: "63", name: "İmza Sirküleri"},
+            {id: "69", name: "Vergi Levhası"}
+        ];
         this.back_buttonDisplay = [
             'login',
             'dashboard'
@@ -61,6 +65,7 @@ class EmlakPosApp {
     init() {
         if (!this.getFromLocal('quick_products')) {
             this.createQuickProducts();
+            this.saveToLocal('tax_rate', 0.18);
         }
         if (!this.getFromLocal('installments')) {
             this.createInstallments();
@@ -90,7 +95,7 @@ class EmlakPosApp {
     createInstallments() {
         let installments = [];
         let i;
-        for (i = 1; i < 12; i++) {
+        for (i = 2; i <= 12; i++) {
             installments.push(new Installment(i, i * 1.8, i * 2.0));
         }
         this.saveToLocal('installments', JSON.stringify(installments));
@@ -114,13 +119,16 @@ class EmlakPosApp {
         if (typeof this[view_name] === "function") {
             console.log(view + " called");
             if (this.public_pages.indexOf(view) !== -1) { // is the view public or requires to be logged 
+                $('#login_logo').show();
+                $('#login_logo').css('height', '150px');
                 $(".footer, .login_menu").hide();
                 $('body').css('margin-bottom', "0");
+                $('#main_cover').css('padding-top', "0");
             } else {
                 $(".footer, .login_menu").show();
-                $('.login_logo').hide();
+                $('#login_logo').hide();
                 $('#main_cover').css('padding-bottom', "70px");
-                $('#main_cover').css('margin-top', "100px");
+                $('#main_cover').css('padding-top', "50px");
             }
 
             if (this.message_to_display !== null) {
@@ -169,10 +177,10 @@ class EmlakPosApp {
             console.log("Redirecting " + this.last_response.header.redirect);
             return this.run(this.last_response.header.redirect);
         }
-
-        this.displayMessage(this.message_to_display.message, this.message_to_display.type);
-        this.message_to_display = null;
-
+        if (this.message_to_display !== null) {
+            this.displayMessage(this.message_to_display.message, this.message_to_display.type);
+            this.message_to_display = null;
+        }
     }
 
     clearApiParams() {
@@ -201,10 +209,15 @@ class EmlakPosApp {
     }
 
     renderLogin() {
-        $("#login_phone").val(this.getFromLocal('user_info_login_phone'));
+        if (this.getFromLocal('user_info_firstname')) {
+            $("#login_phone").val(this.getFromLocal('user_info_login_phone'));
+            $("#logged_before_company").html(this.getFromLocal('user_info_firstname') + this.getFromLocal('user_info_lastname')).fadeIn(500);
+        }
+        $("#login_logo").animate({height: 250}, 500);
     }
 
     actionLogin() {
+        $("#login_logo").animate({height: 150}, 200);
         this.saveToLocal('user_info_login_phone', $("input#login_phone").val());
         this.clearApiParams();
         ac.setHeadParam('phone', $("input#login_phone").val());
@@ -218,6 +231,7 @@ class EmlakPosApp {
         if (typeof data.data.user_info !== 'undefined') {
             this.saveToLocal('user_info_firstname', data.data.user_info.firstname);
             this.saveToLocal('user_info_lastname', data.data.user_info.lastname);
+            this.saveToLocal('profile_level', data.data.user_info.profile_level);
         }
         return this.handleResponse(data);
     }
@@ -245,7 +259,7 @@ class EmlakPosApp {
     viewdashboard() {
         this.loadTemplate('pages/dashboard', 'main_body', 'renderDashboard');
         if (this.getFromLocal('daily_total_noft') === null || this.getFromLocal('daily_stats_update') === null
-                || parseInt(this.getFromLocal('daily_stats_update')) + (1000 * 60 * 60) < Date.now()) {
+                || parseInt(this.getFromLocal('daily_stats_update')) + (1000 * 30) < Date.now()) {
             this.actiongetsummary();
         }
     }
@@ -268,7 +282,7 @@ class EmlakPosApp {
             }
         });
         $("#daily_total_amount").prop('Counter', 0.00).animate({
-            Counter: parseFloat(this.getFromLocal('daily_total_amount'))
+            Counter: parseFloat((this.getFromLocal('daily_total_amount')).replace(/[^0-9]./g, ''))
         }, {
             duration: 1000,
             easing: 'swing',
@@ -297,6 +311,204 @@ class EmlakPosApp {
         }
         return this.handleResponse(data);
 
+    }
+
+    viewrenewpassword() {
+        this.loadTemplate('pages/user/renewpassword', 'main_body', 'renderusermenu');
+
+    }
+
+    viewusermenu() {
+        this.loadTemplate('pages/user/user_menu', 'main_body', 'renderusermenu');
+    }
+
+    renderusermenu() {
+
+    }
+
+    actionuserlist() {
+        if (this.getFromLocal('profile_level') !== 'master')
+            return this.displayMessage('Bu işlemi yapmaya yetkiniz yok.');
+
+        this.clearApiParams();
+        ac.setCallAction('user/list');
+        ac.callApi();
+
+    }
+
+    viewuserlist() {
+        this.loadTemplate('pages/user/userlist', 'main_body', 'renderuserlist');
+    }
+
+    renderuserlist() {
+        $('div#userlist').html(" ");
+        $.each(app.last_response.data, function (key, user) {
+            let row = '<div class="row no-gutters">'
+                    + '<div class="col-3">' + user.user_level + ' #' + (user.rel_object_id) + '</div>'
+                    + '<div class="col-7"> ' + user.firstname + ' ' + user.lastname + '</div>'
+                    + '<div class="col-2">'
+                    + '<button onclick="app.actionUserDetails(\'' + user.id + '\')" class="btn btn-info btn-sm" >Detay</button>'
+                    + '</div></div>';
+            $('div#userlist').append(row);
+        }, this);
+
+    }
+
+    getUserBadge(level) {
+        if (level === 'pos') {
+            return 'Pos Kullanıcısı';
+        }
+    }
+
+    actionUserDetails(id) {
+        this.clearApiParams();
+        ac.setRequestDataParam('hash', id);
+        ac.setCallAction('user/getuser');
+        ac.callApi();
+    }
+
+    viewuserprofile() {
+        this.loadTemplate('pages/user/profile', 'main_body', 'renderuserprofile');
+    }
+
+    renderuserprofile() {
+        $('#userdetails').html(" ");
+        let user = app.last_response.data;
+        $('#block_title').html(user.firstname + ' ' + user.lastname);
+        $('#title').html(app.getUserBadge(user.rel_object));
+        $('#userdetails').append('<tr><td>Telefon</td><td>' + user.phone + '</td></tr>');
+        $('#userdetails').append('<tr><td>Email</td><td>' + user.email + '</td></tr>');
+        $('#userdetails').append('<tr><td>Oluşturma</td><td>' + user.date_create + '</td></tr>');
+        if (app.getFromLocal('user_info_login_phone') === user.phone) {
+            $('#updateuserprofilebutton').attr('disabled', '1');
+        } else {
+            $('#updateuserprofilebutton').removeAttr('disabled');
+        }
+    }
+
+    viewupdateuserprofile() {
+        this.loadTemplate('pages/user/userprofileupdate', 'main_body', 'renderupdateuserprofile');
+    }
+
+    renderupdateuserprofile() {
+        $('#userdetails').html(" ");
+        if( typeof app.last_response.data === 'undefined' ){
+            return this.displayError('Kullanıcı işleminde bir hata oldu. Lütfen tekrar deneyiniz.');
+        }
+        let user = app.last_response.data;
+        $('#firstname').val(user.firstname);
+        $('#lastname').val(user.lastname);
+        $('#mobile').val(user.phone);
+        $('#email').val(user.email);
+        $('#userprofile_id').val(user.id);
+    }
+
+    actionUserProfileUpdate() {
+        let user = app.last_response.data;
+
+        if (!ev.name('#firstname'))
+            return this.displayMessage('Lütfen kullanıcının adını doğru girdiğinizden emin olunuz. ');
+        if (!ev.name('#lastname'))
+            return this.displayMessage('Lütfen kullanıcının soyadını doğru girdiğinizden emin olunuz. ');
+        if (!ev.mobilephone('#mobile'))
+            return this.displayMessage('Telefon numarasını doğru girdiğinizden emin olunuz. ');
+        if (!ev.email('#email'))
+            return this.displayMessage('Lütfen e-posta adresinizi doğru girdiğinizden emin olunuz. ');
+        if ($('#new_password').val() !== "") {
+            if (($('#new_password').val()).length !== 6)
+                return this.displayMessage('Şifreyi doğru girdiğinizden emin olunuz. ');
+        }
+
+        ac.setRequestDataParam('firstname', $('#firstname').val());
+        ac.setRequestDataParam('lastname', $('#lastname').val());
+        ac.setRequestDataParam('mobile', $('#mobile').val());
+        ac.setRequestDataParam('email', $('#email').val());
+        ac.setRequestDataParam('id', $('#userprofile_id').val());
+        ac.setRequestDataParam('password', $('#new_password').val());
+        ac.setCallAction('user/updatesubuser');
+        ac.callApi();
+
+
+    }
+
+    viewuserprofileCreate() {
+        this.loadTemplate('pages/user/userprofilecreate', 'main_body');
+    }
+
+    actionUserProfileCreate() {
+        if (!ev.name('#firstname'))
+            return this.displayMessage('Lütfen kullanıcının adını doğru girdiğinizden emin olunuz. ');
+        if (!ev.name('#lastname'))
+            return this.displayMessage('Lütfen kullanıcının soyadını doğru girdiğinizden emin olunuz. ');
+        if (!ev.mobilephone('#mobile'))
+            return this.displayMessage('Telefon numarasını doğru girdiğinizden emin olunuz. ');
+        if (!ev.email('#email'))
+            return this.displayMessage('Lütfen e-posta adresinizi doğru girdiğinizden emin olunuz. ');
+        if (($('#password').val()).length !== 6)
+            return this.displayMessage('Geçici şifrenizi doğru girdiğinizden emin olunuz. ');
+
+        ac.setRequestDataParam('firstname', $('#firstname').val());
+        ac.setRequestDataParam('lastname', $('#lastname').val());
+        ac.setRequestDataParam('mobile', $('#mobile').val());
+        ac.setRequestDataParam('email', $('#email').val());
+        ac.setRequestDataParam('password', $('#password').val());
+        ac.setCallAction('user/addsubuser');
+        ac.callApi();
+
+
+    }
+
+    viewresetpassword() {
+        this.loadTemplate('pages/user/resetpassword', 'main_body', 'renderusermenu');
+    }
+
+    forceresetpassword() {
+        this.loadTemplate('pages/user/resetpassword', 'main_body');
+        $("footer").hide();
+        $(".header_menu").hide();
+        this.displayMessage('Güvenliğiniz için şifrenizi yenilemeniz gerekmektedir. Lütfen yeni bir şifre belirleyiniz.', 'info');
+    }
+
+    forceloginotp() {
+        this.loadTemplate('pages/user/smsotp', 'main_body', 'setsmscounter');
+        $("footer").hide();
+        $(".header_menu").hide();
+        this.displayMessage('Güvenliğiniz cep telefonunuza gönderilen tek kullanımlık giriş kodunu giriniz.', 'info');
+    }
+
+    actionLoginOtp() {
+
+    }
+
+    actionRequestOtp() {
+
+    }
+
+    actionresetpassword() {
+        if (!$('#current_password').val() || ($('#current_password').val()).length !== 6)
+            return this.displayMessage('Mevcut şifrenizi kontrol ediniz');
+        if (!$('#new_password').val() || ($('#new_password').val()).length !== 6)
+            return this.displayMessage('Yeni şifrenizi kontrol ediniz');
+        if ($('#new_password').val() !== $('#new_password_again').val())
+            return this.displayMessage('Yeni şifreler uyuşmuyor.');
+        if ($('#new_password').val() === $('#current_password').val())
+            return this.displayMessage('Yeni şifre ile eski şifre aynı olamaz.');
+
+        this.clearApiParams();
+        ac.setRequestDataParam('current_password', $('input#current_password').val());
+        ac.setRequestDataParam('new_password', $("input#new_password").val());
+        ac.setCallAction('user/resetpassword');
+        ac.callApi('handleResetPassword');
+    }
+
+    handleResetPassword(data) {
+        if (data.header.result_code === 1) {
+            $("footer").show();
+            $(".header_menu").show();
+            this.actionLogout();
+            return this.displayMessage('Şifreniz başarıyla değiştirildi', 'info');
+        }
+        return this.handleResponse(data);
     }
 
     viewmodalexternal(url, header = false, footer = false) {
@@ -339,6 +551,9 @@ class EmlakPosApp {
     }
     displaySuccess(message) {
         $(window).scrollTop(0);
+        $('body#eticsoft_body').removeClass();
+        $('body#eticsoft_body').addClass('fullpage_alert fullpage_alert_success');
+
         this.loadTemplate('pages/success', 'main_body', 'renderAlertPage', message);
     }
     displayInfo(message) {
@@ -400,7 +615,7 @@ class EmlakPosApp {
 
     actionRegisterCustomer() {
         $("div#main_messages").hide();
-        if (!ev.email("input#customer_email"))
+        if (!ev.email("input#customer_email") || $("input#customer_email").val().length < 10)
             return this.displayMessage('E-posta adresinizi kontrol ediniz.');
         if (!ev.mobilephone("input#customer_phone"))
             return this.displayMessage('Cep telefonunuzu kontrol ediniz.');
@@ -424,7 +639,7 @@ class EmlakPosApp {
     }
 
     handleRegisterCustomer(data) {
-        if (data.header.result_code == 1 && data.data.id_application) {
+        if (data.data.id_application && data.header.result_code === 1) {
             this.saveToLocal('id_application', data.data.id_application);
             this.saveToLocal('application_status', data.data.application_status);
             this.saveToLocal('application_key', data.data.application_key);
@@ -461,7 +676,7 @@ class EmlakPosApp {
         $.each(app.last_response.data.firm.AccountList, function (key, value) {
             $('select#company_account')
                     .append($("<option></option>")
-                            .attr("value", value.AccountNumber)
+                            .attr("value", value.AccountNumber + "-" + value.AccountSuffix)
                             .text(value.AccountName));
         });
         $.each(app.last_response.data.MCC, function (key, value) {
@@ -500,19 +715,22 @@ class EmlakPosApp {
     }
 
     renderregistercustomerfiles() {
-        console.log("renderregistercustomerfiles");
-        $.each(app.last_response.data.documents, function (key, value) {
-            let file_input_row = '<div class="file-field">\n\
-<div class="sm-5 float-left">\n\
-    <label for="'+key+'">Vergi Levhası</label></div>\n\
-    <div class="sm-5  float-right"><small id="file_vergi_info"></small></div>\n\
-        <div class="sm-2 float-right"><label for="'+key+'"><img src="img/icons/cloud-arrow-up-fill.svg" style="height: 36px" class="bicon-dark"></label>\n\
-<input type="file" class="fileupload" id="'+key+'" type="hidden" />\n\
-</div>\n\
-</div>';
-            $('div#files_div').append(file_input_row);
-        });
 
+        console.log("renderregistercustomerfiles");
+        $('div#files_div').html(null);
+        this.application_remaining_files = [];
+        if (typeof app.last_response.data.documents !== 'undefined' && Object.keys(app.last_response.data.documents).length > 0) {
+            $.each(app.last_response.data.documents, function (key, value) {
+                let file_input_row = '<div class="file-field">\n\
+<div class="sm-5 float-left">\n\
+    <label for="file_' + value.id + '">' + value.name + '</label></div>\n\
+    <div class="sm-5  float-right"><small id="file_' + value.id + '_info"></small></div>\n\
+        <div class="sm-2 float-right"><label for="file_' + value.id + '"><img src="img/icons/cloud-arrow-up-fill.svg" style="height: 36px" class="bicon-dark"></label>\n\
+<input type="file" class="fileupload" id="file_' + value.id + '" hidden onchange="app.readfilecontent(\'' + value.id + '\', \'' + value.name + '\')" />\n\</div>\n\</div><div class="clearfix"></div><hr/>';
+                $('div#files_div').append(file_input_row);
+                app.application_remaining_files.push(value);
+            });
+        }
     }
 
     actionRegisterCustomerFiles() {
@@ -520,14 +738,23 @@ class EmlakPosApp {
             return this.displayMessage('Devam etmek için Kullanıcı sözleşmesini okuyup onaylamalısınız.');
         if (!$("#checkbox_pfc").prop("checked"))
             return this.displayMessage('Devam etmek için Çerçeve Sözleşmesini okuyup onaylamalısınız.');
-
+        let missed_files = false;
+        app.application_remaining_files.map(function (file, index) {
+            if (typeof app.uploadedfiles[file.id] === 'undefined') {
+                missed_files = true;
+                return app.displayMessage('Lütfen geçerli bir ' + file.name + " dosyası yükleyiniz.");
+            }
+        });
+        if (missed_files) {
+            console.log("blocked");
+            return;
+        }
         this.clearApiParams();
         ac.setRequestDataParam('id_application', this.getFromLocal('id_application'));
         ac.setRequestDataParam('application_key', this.getFromLocal('application_key'));
-
-        ac.setRequestDataParam('file_vergi', JSON.stringify(this.uploadedfiles.file_vergi));
-        ac.setRequestDataParam('file_imza', JSON.stringify(this.uploadedfiles.file_imza));
-        ac.setRequestDataParam('file_kimlik', JSON.stringify(this.uploadedfiles.file_kimlik));
+        this.uploadedfiles.forEach(function (file, index) {
+            ac.setRequestDataParam(file.code, JSON.stringify(file));
+        });
 
         ac.setCallAction('application/addfiles');
         ac.callApi();
@@ -536,8 +763,9 @@ class EmlakPosApp {
 
     readfilecontent(file_id, file_name = "vergi") {
         $("div#main_messages").hide();
+
         console.log(file_id + " is reading !");
-        let current_file = document.querySelector("#" + file_id).files[0];
+        let current_file = document.querySelector("#file_" + file_id).files[0];
         let reader = (new FileReader());
 
         reader.onload = function () {
@@ -551,7 +779,7 @@ class EmlakPosApp {
     }
 
     setFile(file_id, context, file_name) {
-        let file = document.querySelector("#" + file_id).files[0];
+        let file = document.querySelector("#file_" + file_id).files[0];
         if (!file) {
             return this.displayMessage(file_name + ' dosyası hatalı.');
         }
@@ -564,11 +792,12 @@ class EmlakPosApp {
         this.uploadedfiles[file_id] = {
             name: file_name,
             oname: file.name,
+            code: file_id,
             type: file.type,
             size: file.size,
             file_context: context
         };
-        $("#" + file_id + "_info").text(file.name);
+        $("#file_" + file_id + "_info").text(file.name);
 
     }
 
@@ -601,7 +830,7 @@ class EmlakPosApp {
             </tr>\n\
             <tr>\n\
             <td>Vergi/TCKN<td>\n\
-            <td>0' + person.TaxNumber + '<td>\n\
+            <td>' + person.TaxNumber + '<td>\n\
             </tr>\n\
         ');
     }
@@ -800,12 +1029,15 @@ class EmlakPosApp {
             return this.displayMessage('Kimlik/Vergi numaranızın doğru girdiğinizden emin olunuz. ');
         if (!ev.mobilephone('#registernewcustomer_phone'))
             return this.displayMessage('Telefon numaranızın doğru girdiğinizden emin olunuz. ');
-        if (!ev.email('#registernewcustomer_email'))
+        if (!ev.email('#registernewcustomer_email') || $("input#registernewcustomer_email").val().length < 10)
             return this.displayMessage('Lütfen e-posta adresinizi doğru girdiğinizden emin olunuz. ');
-        if (parseInt($('#registernewcustomer_city').val()) <= 0)
+        if (isNaN($('#registernewcustomer_city').val()) || parseInt($('#registernewcustomer_city').val()) <= 0)
             return this.displayMessage('Lütfen şehir seçiminizi kontrol ediniz. ');
-        if (parseInt($('#registernewcustomer_county').val()) <= 0)
+        if (isNaN($('#registernewcustomer_county').val()) || parseInt($('#registernewcustomer_county').val()) <= 0)
             return this.displayMessage('Lütfen ilçe seçiminizi kontrol ediniz. ');
+        if (($('#registernewcustomer_cid').val()).length === 11 && !ev.tckn($('#registernewcustomer_cid').val()))
+            return this.displayMessage('Kimlik numaranızı doğru girdiğinizden emin olunuz. ');
+
         this.clearApiParams();
         ac.setRequestDataParam('id_application', this.getFromLocal('id_application'));
         ac.setRequestDataParam('application_key', this.getFromLocal('application_key'));
@@ -849,9 +1081,10 @@ class EmlakPosApp {
 
         this.installments.forEach(function (ins, index) {
             $("#installmentselect").append($("<option></option>")
-                    .attr("value", ins.customer_rate)
+                    .attr("value", ins.month)
                     .text(ins.month + " Taksit"));
         });
+        $('#installmentselect > option[value="' + cart.installment + '"]').attr('selected', 'selected');
 
         $("#clearPaymentForm").click();
 
@@ -888,10 +1121,20 @@ class EmlakPosApp {
     }
 
     refreshposscreen() {
+
+        cart.calculate();
         $("#items_list").html(null);
         cart.items.forEach(function (it, index) {
             $("#items_list").append("<tr><td>" + it.quantity + "</td><td> " + it.name + " </td><td> " + (it.price * it.quantity).toFixed(2) + " </td></tr>");
         });
+
+        $('#installmentselect > option[value="' + cart.installment + '"]').attr('selected', 'selected');
+
+        if (cart.installment > 1) {
+            $("#installmentbutton").text(cart.installment + ' Taksit');
+        } else {
+            $("#installmentbutton").text('Taksitsiz');
+        }
 
         $("#new_item_price").text(null);
         $("#total").text(cart.total_amount);
@@ -979,9 +1222,31 @@ class EmlakPosApp {
     }
 
     rendercc_form() {
+        if (cart.total_amount <= 0) {
+            cart.clear();
+            cart.add(new PosCartItem('Ürün-Hizmet', 100, 1));
+            cart.calculate();
+        }
+
         if (cart.total_amount > 0) {
             $('#cc_amount').val(cart.total_amount);
         }
+
+        $("#installmentselect").html('<option value="0">Taksitsiz </option>');
+        this.installments.forEach(function (ins, index) {
+            $("#installmentselect").append($("<option></option>")
+                    .attr("value", ins.month)
+                    .text(ins.month + " Taksit"));
+        });
+        $('#installmentselect > option[value="' + cart.installment + '"]').attr('selected', 'selected');
+
+        if (cart.installment > 1) {
+            $("#installmentbutton").text(cart.installment + ' Taksit');
+        } else {
+            $("#installmentbutton").text('Taksitsiz');
+        }
+        $("input#cc_expire").payment('formatCardExpiry');
+
     }
 
     actionPayCc() {
@@ -991,6 +1256,9 @@ class EmlakPosApp {
 
 //        $('.validation').removeClass('text-danger text-success');
 //        $('.validation').addClass($('.has-error').length ? 'text-danger' : 'text-success');
+        let  cardType = $.payment.cardType($("input#cc_number").val());
+        console.log(cardType);
+
 
         if (!ev.amount("input#cc_amount"))
             return this.displayMessage('Tutarı kontrol ediniz.');
@@ -1000,22 +1268,33 @@ class EmlakPosApp {
             return this.displayMessage('Kart numarasını kontrol ediniz.');
         if (!ev.number("input#cc_cvv"))
             return this.displayMessage('Kart güvenlik kodunu kontrol ediniz.');
-        if (!ev.cardexpiredate("input#cc_expire"))
+
+        if (!$("input#cc_expire").val()) {
             return this.displayMessage('Kart son kullanım tarihini kontrol ediniz.');
+        } else {
+            let parsed_expire = ($("input#cc_expire").val()).split(" / ");
+            // Auto complete bug
+            if ((parsed_expire[1]).length === 4) {
+                parsed_expire[1] = (parsed_expire[1]).substr(2);
+            }
+            if (!$.payment.validateCardExpiry(parsed_expire[0], parsed_expire[1]))
+                return this.displayMessage('Kart son kullanım tarihini kontrol ediniz.');
+        }
 
-        let  cardType = $.payment.cardType($("input#cc_number").val());
-        console.log(cardType);
-
+        let parsed_expire = ($("input#cc_expire").val()).split(" / ");
         let cc_no = $("input#cc_number").val();
         cc_no = cc_no.replace(/[^0-9]/g, '');
+        let cc_expire = parsed_expire[0] + "" + "" + parsed_expire[1];
 
         this.clearApiParams();
+        ac.setRequestDataParam('cart', cart);
         ac.setRequestDataParam('amount', $("input#cc_amount").val());
+        ac.setRequestDataParam('installment', cart.installment);
         ac.setRequestDataParam('cc', {
             holder: $("input#cc_name").val(),
-            number: $("input#cc_number").val(),
+            number: cc_no,
             cvv: $("input#cc_cvv").val(),
-            expire: $("input#cc_expire").val()
+            expire: cc_expire
         });
         ac.setCallAction('transaction/paycc');
         ac.callApi('handlePayCc');
@@ -1026,7 +1305,7 @@ class EmlakPosApp {
         if (typeof data.data.tds_url !== 'undefined') {
             console.log("frame: " + data.data.tds_url);
             app.displayMessage('İşlem yönlendiriliyor. Lütfen bekleyiniz.', 'info');
-            $("#main_body").html('<iframe src="' + data.data.tds_url + '" frameborder="none" width="100%" height="450px" id="tds_frame"></iframe>');
+            $("#main_body").html('<iframe src="' + data.data.tds_url + '" frameborder="none" width="100%" height="450px" id="tds_frame" style="margin-top: -20px;"></iframe>');
             $("#loader").show();
             $('#tds_frame').on('load', function () {
                 $("#loader").hide();
@@ -1036,8 +1315,40 @@ class EmlakPosApp {
         return this.handleResponse(data);
     }
 
-    handletdsresponse(data) {
+    actionRegisterTransaction(callback = 'createqr') {
+        if (cart.total_amount <= this.min_amount)
+            return this.displayMessage('Tutarı kontrol ediniz. Minimum tutar ' + this.min_amount + '₺ olmalıdır.');
+        if (callback === 'sendemail' && (!$('#targetemail').val() || !ev.email('#targetemail')))
+            return this.displayMessage('Alıcı e-posta adresini kontrol ediniz.');
+        if (callback === 'sendsms' && !ev.mobilephone('#targetphone'))
+            return this.displayMessage('Alıcı cep telefonunu kontrol ediniz.');
 
+        this.clearApiParams();
+        ac.setRequestDataParam('cart', cart);
+        ac.setRequestDataParam('callback', callback);
+
+        if (callback === 'sendemail')
+            ac.setRequestDataParam('email', $('#targetemail').val());
+        if (callback === 'sendsms')
+            ac.setRequestDataParam('phone', $('#targetphone').val());
+
+        ac.setCallAction('transaction/registerTransaction');
+        ac.callApi('handleRegisterTransaction');
+    }
+
+    handleRegisterTransaction(data) {
+        if (data.header.result_code === 1) {
+            cart.clear();
+        }
+        return this.handleResponse(data);
+    }
+
+    viewtransactionregistersuccess() {
+        this.deleteLocal('daily_stats_uptodate');
+        let message = {
+            header: "İşlem Başarılı !", body: 'Ödeme Gönderildi\n\
+                <hr/><br/><button class="btn btn-info" onclick="app.actionGetTransactions()">İşlemler listesi</button><hr/><br/>'};
+        return this.displaySuccess(message);
     }
 
     viewtransactionsuccess() {
@@ -1049,15 +1360,33 @@ class EmlakPosApp {
     }
 
     viewsend_email() {
-        this.loadTemplate('pages/send_email', 'main_body');
+        this.loadTemplate('pages/transaction/send_email', 'main_body', 'renderSendEmail');
+    }
+
+    renderSendEmail() {
+        $("#total_to_pay").text(cart.total_amount + ' ₺');
     }
 
     viewsend_sms() {
-        this.loadTemplate('pages/send_sms', 'main_body');
+        this.loadTemplate('pages/transaction/send_sms', 'main_body', 'rendersendSMS');
+    }
+
+    rendersendSMS() {
+        $("#total_to_pay").text(cart.total_amount + ' ₺');
     }
 
     viewqr_generate() {
-        this.loadTemplate('pages/qr_generate', 'main_body');
+        this.loadTemplate('pages/transaction/qr_generate', 'main_body', 'rendergenerateqr');
+    }
+
+    rendergenerateqr() {
+        let tr = app.last_response.data;
+        if (!tr || typeof tr.link === 'undefined') {
+            app.displayError('Bir hata oluştu. Lütfen tekrar deneyin');
+        }
+        $("#qr_container_div").html('Bağlantıyı <a href="' + tr.link + '"> buraya tıklayarak</a> veya aşağıdaki QR kodunu okutarak açabilirsiniz. <hr/>\n\
+            <img src="https://chart.googleapis.com/chart?chs=280x280&cht=qr&chl=' + tr.link + '&choe=UTF-8"/>');
+
     }
 
     actionGetTransactions() {
@@ -1067,6 +1396,7 @@ class EmlakPosApp {
     }
 
     handleGetTransactions(data) {
+        this.run('listtransactions');
         this.handleResponse(data);
     }
 
@@ -1075,9 +1405,12 @@ class EmlakPosApp {
     }
 
     renderListTransactions() {
+        this.renderLastTransactions();
+        this.renderAllTransactions();
+    }
+
+    renderLastTransactions() {
         $('div#lasttransactionlist').html(" ");
-        $('div#alltransactionlist').html(" ");
-        let total = 0.00;
         let i = 0;
         $.each(app.last_response.data, function (key, value) {
             let row = '<div class="row no-gutters">'
@@ -1087,13 +1420,27 @@ class EmlakPosApp {
                     + '<div class="col-2">'
                     + '<button onclick="app.actionTransactionDetails(' + value.id + ')" class="btn btn-info btn-sm" >Detay</button>'
                     + '</div></div>';
-            $('div#alltransactionlist').append($(row));
             i++;
-            if (i < 5) {
+            if (i < 30) {
                 $('div#lasttransactionlist').append($(row));
+            } else {
+                return;
             }
         });
+    }
 
+    renderAllTransactions() {
+        $('div#alltransactionlist').html(" ");
+        $.each(app.last_response.data, function (key, value) {
+            let row = '<div class="row no-gutters">'
+                    + '<div class="col-4"> ' + value.date + '</div>'
+                    + '<div class="col-3">' + (app.transactionGetBadge(value.status)) + '</div>'
+                    + '<div class="col-3">' + (value.amount) + '₺</div>'
+                    + '<div class="col-2">'
+                    + '<button onclick="app.actionTransactionDetails(' + value.id + ')" class="btn btn-info btn-sm" >Detay</button>'
+                    + '</div></div>';
+            $('div#alltransactionlist').append($(row));
+        });
     }
 
     actionTransactionDetails(id) {
@@ -1119,14 +1466,25 @@ class EmlakPosApp {
         $(".transaction_amount").text(tr.amount + " TRY");
         $(".transaction_id").text(tr.id);
         $("#id_transaction").val(tr.id);
-        $(".transaction_date").text(tr.date);
+        $(".transaction_date").text(tr.date_full);
         $(".transaction_status").html(this.transactionGetBadge(tr.status));
+
         if (tr.cancelable && tr.status === 'completed') {
             $("#cancel_button_container").show();
         }
-        if (!tr.cancelable && tr.status === 'completed') {
-            $("#refund_button_container").show();
+        if (tr.status === 'created' && tr.link) {
+            $("#payment_link_container").html('Bağlantıyı <a href="' + tr.link + '"> buraya tıklayarak</a> veya aşağıdaki QR kodunu okutarak açabilirsiniz. <br/>\n\
+            <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=' + tr.link + '&choe=UTF-8"/>');
         }
+
+        if (!tr.cancelable && tr.status === 'completed') {
+            if (this.getFromLocal('profile_level') === 'master') {
+                $("#refund_button_container").show();
+            } else {
+                $('#payment_info_container').html('Not: İade işlemlerini sadece ana kullanıcı yapabilir.');
+            }
+        }
+
     }
 
     transactionGetBadge(status) {
@@ -1152,6 +1510,27 @@ class EmlakPosApp {
         return badge;
     }
 
+    filterTransactionList() {
+        $("#special_date_filters_div").hide();
+        if (!$("#transactionlist_filter_select").val()) {
+            return this.displayError('Seçilen filtre geçerli değil');
+        }
+        if ($("#transactionlist_filter_select").val() === 'select_date') {
+            $("#special_date_filters_div").show();
+            return;
+        }
+
+        this.clearApiParams();
+        ac.setRequestDataParam('filter_date', $("#transactionlist_filter_select").val());
+        ac.setCallAction('transaction/list');
+        ac.callApi('handlefilterTransactionList');
+    }
+
+    handlefilterTransactionList(data) {
+        this.handleResponse(data);
+        this.renderAllTransactions();
+    }
+
     // Cancel 
     actionCancelTransaction(id) {
         $('#cancel_modal').modal('hide');
@@ -1173,6 +1552,27 @@ class EmlakPosApp {
         return this.displaySuccess(message);
     }
 
+    // Refund 
+    actionRefundTransaction(id) {
+        $('#refund_modal').modal('hide');
+        if (id !== $("#id_transaction").val()) {
+            return this.displayError('İşlem numaraları eşleşmedi. Lütfen tekrar deneyiniz.');
+        }
+        this.deleteLocal('daily_stats_uptodate');
+        this.clearApiParams();
+        ac.setRequestDataParam('id', id);
+        ac.setCallAction('transaction/refundtransaction');
+        ac.callApi();
+    }
+
+    viewtransactionrefundsuccess() {
+        this.deleteLocal('daily_stats_uptodate');
+        let message = {
+            header: "İşlem Başarılı !", body: 'Ödeme iade edildi\n\
+                <hr/><br/><button class="btn btn-info" onclick="app.actionGetTransactions()">İşlemler listesi</button><hr/><br/>'};
+        return this.displaySuccess(message);
+    }
+
     // Common
     loadTemplate(template, to = 'main', callback = false, data = false) {
         if (!callback) {
@@ -1180,7 +1580,7 @@ class EmlakPosApp {
         } else {
             $("#" + to + "").load(template + '.html', function (response, status, xhr) {
                 if (status === "error") {
-                    console.log("something goes wrong ! " + template + callback + xhr.status + " " + xhr.statusText);
+                    console.log("something goes wrong ! " + template + " " + callback + xhr.status + " " + xhr.statusText);
                 }
                 if (typeof app[callback] === "function") {
                     return app[callback](data);

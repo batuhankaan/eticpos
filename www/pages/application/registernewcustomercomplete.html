@@ -10,8 +10,8 @@
             <input type="text" placeholder="Adınız" id="registernewcustomer_firstname" class="form-input" maxlength="20">
             <input type="text" placeholder="Soyadınız" id="registernewcustomer_lastname" class="form-input" maxlength="30">
             <input type="text" placeholder="Firma Unvanı" id="registernewcustomer_company" class="form-input" maxlength="40">
-            <input type="number" placeholder="TC Kimlik veya Vergi No" id="registernewcustomer_cid" class="form-input" maxlength="11" minlength="10">
-            <input type="number" placeholder="Telefon Numarası" id="registernewcustomer_phone" class="form-input">
+            <input type="number" placeholder="TC Kimlik veya Vergi No" id="registernewcustomer_cid" class="form-input" maxlength="11"  min="0" step="1">
+            <input type="number" placeholder="Telefon Numarası" id="registernewcustomer_phone" class="form-input" maxlength="11" min="0" step="1">
             <input type="email" placeholder="E-Posta Adresi" id="registernewcustomer_email" class="form-input">
 			<select id="registernewcustomer_city" onchange="app.actionassignCounties()" class="form-control">
 		<option>İl</option>

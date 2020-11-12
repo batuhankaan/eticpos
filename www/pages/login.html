@@ -1,33 +1,34 @@
-<div class="zone p-3">
-    <div class="row center_item">
-        <div class="col-md-12 text-center mt-3 mb-2">
-            <h1 class="handy text-center" >İyi <br/>Günler</h1>
-            <img style="height: 100px;background: #00709461;padding: 5px;" class="md-avatar rounded-circle"
-				 src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" />
-            <p>A İşletmesi</p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 ">
-            <input type="number" name="phone" id="login_phone" value="javascript(app.getFromLocal('userinfo_phone'))" placeholder="05XXAAABBCC" class="form-input" maxlength="11">
-            <input type="password" name="password" id="login_password" placeholder="Şifre" class="form-input">
-            <div class="checkbox">
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <button onclick="app.actionLogin()" id="actionlogin_button" class="form-green-button">
-                Giriş
-            </button>
-        </div>
-        <div class="col-6">
-            <a onclick="app.run('register');" href="#">Üye Ol</a>
-        </div>
-        <div class="col-6 text-right">
-            <a onclick="app.run('resetpassword');" href="#">Şifremi Unuttum</a>
-        </div>
-    </div>
+<div class="row center_item">
+	<div class="col-md-12 text-center mt-3 mb-2">
+		<h1 class="handy text-center" >İyi <br/>Günler</h1>
+<!--		<img style="height: 100px;background: #00709461;padding: 5px;" class="md-avatar rounded-circle"
+			 src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" />-->
+		<p class="mt-4" id="logged_before_company"></p>
+	</div>
 </div>
+
+<div class="row">
+	<div class="col-md-12 ">
+		<input type="number" name="phone" id="login_phone" value="javascript(app.getFromLocal('userinfo_phone'))" placeholder="05XXAAABBCC" class="form-input" maxlength="11">
+		<input type="password" name="password" id="login_password" placeholder="Şifre" class="form-input">
+		<div class="checkbox">
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<button onclick="app.actionLogin()" id="actionlogin_button" class="form-green-button">
+			Giriş
+		</button>
+	</div>
+</div>
+<div class="row mb-3">
+	<div class="col-6">
+		<a onclick="app.run('register');" href="#">Üye Ol</a>
+	</div>
+	<div class="col-6">
+		<a onclick="app.run('resetpassword');" href="#">Şifremi Unuttum</a>
+	</div>
+</div>
+

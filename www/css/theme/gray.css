@@ -5,19 +5,12 @@ main,
 #main_body {
 }
 
-html{
-    height: 100%;
-}
-
 body {
+    background: linear-gradient(to bottom, #e9eaea, #f7f8f8) !important;
+    color: #005f84;
     font-weight: regular;
     font-size:1.1em !important;
     font-family: "Quicksand", sans-serif;
-    background:linear-gradient(45deg, #e4f4f6, #fff);
-    background-repeat: repeat-x;
-    background-position: center;
-    background-size: contain;
-    background-size: cover;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari *
     -khtml-user-select: none; /* Konqueror HTML */
@@ -25,6 +18,7 @@ body {
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
+    min-height: 100vh;
 }
 p {
     color: #013f69;
@@ -47,11 +41,7 @@ button{
     line-height: .7em;
 }
 
-body{
-    background: linear-gradient(to bottom, #e9eaea, #f7f8f8) !important;
-    color: #005f84;
-    /* background: linear-gradient(to bottom, #005f84, #00234f) !important; */
-}
+
 
 
 input.sms-code {
@@ -77,11 +67,12 @@ input.sms-code {
 }
 
 #summary_row .summary_total {
-    background: linear-gradient(0deg, #019945, #016f74);
+    background: radial-gradient(43% 27% at top ,#41a113 166%,#1e7900 194%, #277900 8%);
     text-align: center;
     color: #fff;
     font-weight: bold;
     padding: 5px;
+    font-size: 1.2em;
 }
 
 .payment_option_box{

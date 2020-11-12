@@ -1,4 +1,6 @@
 
+/* global app */
+
 class PosCartItem {
     constructor(name, price, quantity = 1) {
         this.name = name;
@@ -15,6 +17,7 @@ class PosCart {
         this.tax_rate = 0.00;
         this.fee_rate = 0.00;
         this.fee_amount = 0.00;
+        this.installment = 1;
     }
 
     add(item) {
@@ -50,21 +53,37 @@ class PosCart {
         this.items.forEach(function (item, index) {
             this.total_amount = (parseFloat(this.total_amount) + item.quantity * parseFloat(item.price)).toFixed(2);
         }, this);
+        
         if (this.tax_rate > 0) {
             this.tax_amount = (this.total_amount * this.tax_rate);
             this.total_amount = (parseFloat(this.total_amount) + parseFloat(this.tax_amount)).toFixed(2);
             this.items.push(new PosCartItem('KDV', this.tax_amount));
+            $('#tax_button').addClass('tax_button_active');
+            $('#tax_button').removeClass('tax_button');
+        } else {
+            $('#tax_button').addClass('tax_button');
+            $('#tax_button').removeClass('tax_button_active');
         }
+        
         if (this.fee_rate > 0) {
             this.fee_amount = (this.total_amount * this.fee_rate);
             this.total_amount = (parseFloat(this.total_amount) + parseFloat(this.fee_amount)).toFixed(2);
             this.items.push(new PosCartItem('Islem Ucreti', this.fee_amount));
+            $('#fee_button').addClass('tax_button_active');
+            $('#fee_button').removeClass('tax_button');
+        } else {
+            $('#fee_button').removeClass('tax_button_active');
+            $('#fee_button').addClass('tax_button');
         }
     }
 
     clear() {
         this.total_amount = 0;
         this.items = [];
+        this.tax_amount = 0;
+        this.tax_rate = 0;
+        this.installment = 0;
+        this.fee_rate = 0;
     }
 
     setTaxRate(rate) {
@@ -77,25 +96,22 @@ class PosCart {
         } else {
             this.setTaxRate(rate);
         }
-        $('#tax_button').toggleClass('tax_button_active')
-        $('#tax_button').toggleClass('tax_button');
-
         this.calculate();
         return app.refreshposscreen();
     }
 
     toggleFee() {
-        let fee_rate = $("#installmentselect").val();
-        this.fee_rate = parseFloat(fee_rate)/100;
-
-        if (this.fee_rate > 0) {
-            $('#fee_button').addClass('tax_button_active');
-            $('#fee_button').removeClass('tax_button');
-        } else {
-            $('#fee_button').removeClass('tax_button_active');
-            $('#fee_button').addClass('tax_button');
+        let ins = parseInt($("#installmentselect").val());
+        if(ins === 0){
+            this.fee_rate = 0;
+            this.installment = 1;
         }
-
+        this.installment = ins;
+        let fee_rate = 0;
+        if (typeof app.installments.find(o => o.month === ins) !== 'undefined' && parseFloat((app.installments.find(o => o.month === ins)).customer_rate) > 0) {
+            fee_rate = (app.installments.find(o => o.month === ins)).customer_rate;
+        }
+        this.fee_rate = parseFloat(fee_rate) / 100;
         this.calculate();
         return app.refreshposscreen();
     }

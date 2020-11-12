@@ -1,0 +1,26 @@
+<div class="row text-center mt-5 mb-3">
+	<div class="text-center col-12">
+		<img src="img/payment-white-background.png"  style="height: 150px">
+		<h4>SMS İle Gönder</h4>
+	</div>
+</div>
+			<div id="total_to_pay">0.00</div>
+			<hr/>
+
+<div class="row text-center">
+
+    <div class="col-md-12">
+        <fieldset id="send_e" class="hidden">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="img/icons/phone-vibrate.svg" class="bicon-blue"></span>
+                </div>
+            <input type="number" name="targetphone" class="form-control" id="targetphone" placeholder="Telefon Numarası">
+        </div>
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button onclick="app.actionRegisterTransaction('sendsms')"  type="submit" class="form-green-button">Gönder</button>
+            </div>
+        </div>
+    </div>
+</div>

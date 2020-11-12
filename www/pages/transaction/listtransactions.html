@@ -1,5 +1,5 @@
 <div class="zone">
-	<div class="col-md-12">
+	<div class="col-md-12 mt-5">
 
 		<ul class="nav nav-tabs" id="transactionlist_tabs" role="tablist">
 			<li class="nav-item">
@@ -9,6 +9,7 @@
 				<a class="nav-link" id="all-tab" data-toggle="tab" href="#alltransactions" role="tab" aria-controls="alltransactions" aria-selected="false">Tüm İşlemler</a>
 			</li>
 		</ul>
+		<hr/>
 		<div class="tab-content" id="myTabContent">
 			<div class="tab-pane fade show active" id="lasttransactions" role="tabpanel" aria-labelledby="lasttransactions">
 				<div id="lasttransactionlist" class="transactionlist">
@@ -16,8 +17,20 @@
 				</div>
 			</div>
 			<div class="tab-pane fade" id="alltransactions" role="tabpanel" aria-labelledby="alltransactions">
+				
+				<div class="row mt-2 mb-2" id="filter_select_container">
+					<div class="col-4">Filtrele</div>
+					<div class="col-8">
+					<select class="form-control " onchange="app.filterTransactionList()" id="transactionlist_filter_select">
+						<option value="today">Bugün</option>
+						<option value="yesterday">Dün</option>
+						<option value="week">Bu Hafta</option>
+						<option value="month">Bu Ay</option>
+						<option value="select_date">Özel Tarih</option>
+					</select>
+					</div>
+				</div>
 				<div id="alltransactionlist" class="transactionlist">
-
 				</div>
 			</div>
 		</div>

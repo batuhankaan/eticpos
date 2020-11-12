@@ -1,7 +1,7 @@
 <div id="payment" class="col-12" style="padding-left: 5px; padding-right: 5px">
 	<div class="calculator">
 		<div class="amount_input row no-gutters" id="input">
-			<div style="height: -webkit-fill-available;overflow-x: scroll" class="col-7">
+			<div class="col-7">
 				<table class="item_table" >
 					<thead>
 						<tr>
@@ -59,11 +59,10 @@
 			</div>
 			<div id="installments" style="display: none" class="p-2">
 				<select class="form-control" id="installmentselect" onchange="cart.toggleFee()">
-					<option value="0"> Vade Farksız </option>
+					<option value="1"> Vade Farksız </option>
 				</select>
 
 			</div>
-			
 			<div class="mt-2 row p-2">
 				<button onclick="app.run('newpayment_options')" type="submit"
 						class="form-green-button ">
@@ -74,9 +73,9 @@
 	</div>
 
 
-    <div class="row center_item">
-        <div class="col-md-12">
+	<div class="row center_item">
+		<div class="col-md-12">
 
-        </div>
-    </div>
+		</div>
+	</div>
 </div>

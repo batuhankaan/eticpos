@@ -15,10 +15,9 @@ input[type="number"] {
 .footer {
     height: 40px;
     line-height: 34px;
-    background: linear-gradient(to bottom, #007094, #005a81) !important;
+    background: linear-gradient(to bottom, #2f7a93, #164167) !important;
     text-align: center;
     padding: 5px;
-    z-index:auto;
 }
 .footer-menu-item {
     display: block;
@@ -30,7 +29,7 @@ input[type="number"] {
     height: 70px;
     width: 70px;
     border-radius: 100%;
-    border: 6px solid #fefdfd;
+    border: 6px solid #f5f6f6;
     position: absolute;
     bottom: 0%;
     left: 0;
@@ -159,7 +158,7 @@ input[type="number"] {
 }
 
 .login_menu{
-    background: linear-gradient(to bottom, #005f84, #00234f) !important;
+    background:linear-gradient(to bottom, #2f7a93, #164167) !important;
     display: block;
     width: 100%;
     height: 50px;
@@ -187,7 +186,7 @@ input[type="number"] {
     z-index: 1;
     top: 0;
     left: 0;
-    background: linear-gradient(to right, #00476f, #006e92);
+    background: linear-gradient(312deg, #33768c, #164167) !important;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -218,7 +217,7 @@ input[type="number"] {
 }
 
 .app_logo img {
-    height: 20px;
+    height: 100px;
 }
 
 #main_nav_top {
@@ -226,6 +225,13 @@ input[type="number"] {
 }
 #main_logo {
     filter: drop-shadow(0px 2px 10px #002652);
+    height: 23px;
+    margin-top:12px;
+    /* padding: 0px; */
+}
+
+#login_logo{
+    height: 150px;
 }
 
 .btn {
@@ -238,7 +244,8 @@ input[type="number"] {
 }
 
 .btn-info {
-    background: linear-gradient(to right, #373b44, #005baa);
+    background: #148664;
+    border-color: #377772;
 }
 .btn-success {
     background: linear-gradient(to right, #374439, #28a745);
@@ -256,7 +263,7 @@ input[type="number"] {
 #main_cover {
     height: inherit;
     color: #00678c;
-    margin-bottom: 20px;
+    padding-top: 50px;
 }
 
 div#main_body {
@@ -309,12 +316,12 @@ img.bicon-dark {
 
 img.bicon-blue {
     filter:invert(0.4) sepia(260) saturate(100) hue-rotate(-169deg);
+    height: 25px;
 }
 
 .input-group-text {
-    background: linear-gradient(to bottom, #007094, #023f6b) !important;
     border: 1px solid #ced4da;
-    color: #fff;
+    color: #00678c;
 }
 
 .input-group-text img.bicon {
@@ -479,11 +486,21 @@ div.alert img.bicon {
     color: #fff;
     padding: 25px;
     text-align: center;
-    height: 100vh;
     padding-top: 35px;
 }
 .fullpage_alert h2 {
     margin: 20px 10px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.fullpage_alert div#alert_view_body {
+    color: #fff;
+}
+
+.fullpage_alert button.btn-info {
+    background: #148664;
+    border-color: #377772;
 }
 
 .fullpage_alert_error {
@@ -491,18 +508,18 @@ div.alert img.bicon {
 }
 
 .fullpage_alert_warning {
-    background: linear-gradient(to top, #d8d21a 53%, #e5f5f7 95%);
+    background: linear-gradient(to top, #d8d21a 53%, #ebecec 95%);
     color: #333;
 }
 
 .fullpage_alert_info {
-    background: linear-gradient(to top, #8dbfcf 51%, #e7f5f7 97%);
+    background: linear-gradient(to top, #8dbfcf 51%, #eceded 97%);
     color: #113;
 }
 
 .fullpage_alert_success {
-    background: linear-gradient(to top, #35f109, #e6f5f6);
-    color: #333;
+    background: linear-gradient(312deg, #33768c, #164167) !important;
+    color: #fff;
 }
 
 .fullpage_alert img.fullpage_alert_icon {
@@ -543,5 +560,25 @@ div.alert img.bicon {
 
 .fileupload {
 }
+#installmentbutton {
+    border: 1px solid #cbd6dc;
+    color: #00668a;
+    border-bottom: 0;
+    border-radius: 5px
+}
 
+body.viewregisternewcustomersuccess{
+    background: linear-gradient(to right, #164267, #225877) !important;
+}
 
+div#block_title {
+    border: 2px solid #005f841c;
+    margin: 15px 5% 0 5%;
+    padding: 9px;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #005f84;
+    border-radius: 15px;
+    background: #faf9f9;
+}
